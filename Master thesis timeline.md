@@ -41,16 +41,15 @@ One point that I forgot to ask is that whether there is requirement for real tim
 ### About the procedure
 * Supervisor/examiner at university
 * When start/end and  how long  
- Start working now and expect to finish at June/July 2020. In the middle,from 15.1.2020-10.2.2020 back to China.  
+	* Start working now and expect to finish at June/July 2020. In the middle,from 15.1.2020-10.2.2020 back to China.  
 * Form of project—internship or not
-eScience center can make it as internship, it could also be possible not. My question: what Is the difference? Salary, different form of supervision or presence on office?
+	* eScience center can make it as internship, it could also be possible not. My question: what Is the difference? Salary, different form of supervision or presence on office?
 One thing should concern is that  since I will be back to China in the middle, I can not meet the requirement for compulsory presence at that time.
 * Bigger and more well defined research question
-To make it more acceptable for university , one formal research question covering our scenario should be made. 
-Discuss it with supervisor from university. Set a goal for publishing.
+	* To make it more acceptable for university , one formal research question covering our scenario should be made. Discuss it with supervisor from university. Set a goal for publishing.
 * cluster for experiment(DAS5?) and account
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4MTQ1OTgyODksLTQyNzA5MDAzMV19
+eyJoaXN0b3J5IjpbMTI2MTQ2ODI0NV19
 -->
