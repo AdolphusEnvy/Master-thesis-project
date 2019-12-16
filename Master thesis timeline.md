@@ -54,6 +54,8 @@ Participant: You Hu, Jason Maassen and Adam Belloum
 ### Points
 #### When and schedule
 * From now on to Feb 10th , literature study. After Feb 10th , practical work
+#### 	Research Question:
+* 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2NzM0NTc4MywxMjYxNDY4MjQ1XX0=
+eyJoaXN0b3J5IjpbLTE1MjA5MzMzNjIsMTI2MTQ2ODI0NV19
 -->
