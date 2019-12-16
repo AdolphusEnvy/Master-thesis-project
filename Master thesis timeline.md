@@ -48,8 +48,9 @@ One thing should concern is that  since I will be back to China in the middle, I
 * Bigger and more well defined research question
 	* To make it more acceptable for university , one formal research question covering our scenario should be made. Discuss it with supervisor from university. Set a goal for publishing.
 * cluster for experiment(DAS5?) and account
+## Dec 16th, meeting for more details 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI2MTQ2ODI0NV19
+eyJoaXN0b3J5IjpbLTE5MTgxNzkxMDMsMTI2MTQ2ODI0NV19
 -->
