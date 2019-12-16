@@ -61,7 +61,24 @@ Participant: You Hu, Jason Maassen and Adam Belloum
 *	Compare Ibis with MPI and Spark on their properties
 *	Find as much related solutions as possible in multiple dimensions such as  dock for packing environment, kubernetes for organizing/auto provision
 *	Meeting in the middle, 6th of Jan.
-#### 
+#### Ibis vs MPI and Spark
+*	Ibis: Join/leave -> MPI: ×, Spark: √ but another way -> a place for auto provision
+*	Ibis: Cross area -> MPI ×, Spark:× -> DAS5
+#### Questions
+*	Real time processing requirement? 
+i.	There is a potential for real time processing  good for auto provisioning
+ii.	Since there is a Spark version, we first consider it as batch task
+b)	Fault tolerance?
+i.	Ibis does not provide it, it should be handle by ourselves
+ii.	We can achieve it in another way: provisioning/scalability/elasticity
+c)	Data locality?
+i.	We need first to see the solution of  MPI and Spark versions
+ii.	I assume MPI one utilizes features from cluster and Spark uses Hadoop
+iii.	Ibis+Hadoop could be a solution
+d)	If we can apply auto provision, how can we pack calibrator?
+i.	Use docker
+ii.	Assume calibrator has been already installed in each node
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTE2MjUyNjAxLDEyNjE0NjgyNDVdfQ==
+eyJoaXN0b3J5IjpbNjcxNTQyMTQ1LDEyNjE0NjgyNDVdfQ==
 -->
