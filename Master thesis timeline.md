@@ -66,19 +66,24 @@ Participant: You Hu, Jason Maassen and Adam Belloum
 *	Ibis: Cross area -> MPI ×, Spark:× -> DAS5
 #### Questions
 *	Real time processing requirement? 
-i.	There is a potential for real time processing  good for auto provisioning
-ii.	Since there is a Spark version, we first consider it as batch task
-b)	Fault tolerance?
-i.	Ibis does not provide it, it should be handle by ourselves
-ii.	We can achieve it in another way: provisioning/scalability/elasticity
-c)	Data locality?
-i.	We need first to see the solution of  MPI and Spark versions
-ii.	I assume MPI one utilizes features from cluster and Spark uses Hadoop
-iii.	Ibis+Hadoop could be a solution
-d)	If we can apply auto provision, how can we pack calibrator?
-i.	Use docker
-ii.	Assume calibrator has been already installed in each node
+	*	There is a potential for real time processing  good for auto provisioning
+	* Since there is a Spark version, we first consider it as batch task
+*	Fault tolerance?
+	*	Ibis does not provide it, it should be handle by ourselves
+	*	We can achieve it in another way: provisioning/scalability/elasticity
+*	Data locality?
+	*	We need first to see the solution of  MPI and Spark versions
+	*	I assume MPI one utilizes features from cluster and Spark uses Hadoop
+	*	Ibis+Hadoop could be a solution
+*	If we can apply auto provision, how can we pack calibrator?
+	*	Use docker
+	*	Assume calibrator has been already installed in each node
+### What to do next
+*	Wait for documents from Faruk Diblen
+*	Try to test MIP and Spark implementations
+*	Prepare for literature study
+* 	(apply for an  account on DAS5 or surfsara)
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjcxNTQyMTQ1LDEyNjE0NjgyNDVdfQ==
+eyJoaXN0b3J5IjpbMTA0ODE0NjM0OCwxMjYxNDY4MjQ1XX0=
 -->
