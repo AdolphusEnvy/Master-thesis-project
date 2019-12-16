@@ -50,7 +50,8 @@ One thing should concern is that  since I will be back to China in the middle, I
 * cluster for experiment(DAS5?) and account
 ## Dec 16th, meeting for more details 
 
+Participant: You Hu, Jason Maassen and Adam Belloum
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE5MTgxNzkxMDMsMTI2MTQ2ODI0NV19
+eyJoaXN0b3J5IjpbMzIyNzYyMTM5LDEyNjE0NjgyNDVdfQ==
 -->
