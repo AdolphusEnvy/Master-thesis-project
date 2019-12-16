@@ -51,7 +51,9 @@ One thing should concern is that  since I will be back to China in the middle, I
 ## Dec 16th, meeting for more details 
 
 Participant: You Hu, Jason Maassen and Adam Belloum
-
+### Points
+#### When and schedule
+* From now on to Feb 10th , literature study. After Feb 10th , practical work
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzIyNzYyMTM5LDEyNjE0NjgyNDVdfQ==
+eyJoaXN0b3J5IjpbLTE2NzM0NTc4MywxMjYxNDY4MjQ1XX0=
 -->
