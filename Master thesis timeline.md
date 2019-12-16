@@ -55,7 +55,13 @@ Participant: You Hu, Jason Maassen and Adam Belloum
 #### When and schedule
 * From now on to Feb 10th , literature study. After Feb 10th , practical work
 #### 	Research Question:
-* 
+* Should be proposed after literature study, abstract it from a set of problems encountered in existed solutions
+#### Literature study
+*	First, experiment on existing MPI and Spark solutions to find the bottleneck/shortcome
+*	Compare Ibis with MPI and Spark on their properties
+*	Find as much related solutions as possible in multiple dimensions such as  dock for packing environment, kubernetes for organizing/auto provision
+*	Meeting in the middle, 6th of Jan.
+#### 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MjA5MzMzNjIsMTI2MTQ2ODI0NV19
+eyJoaXN0b3J5IjpbOTE2MjUyNjAxLDEyNjE0NjgyNDVdfQ==
 -->
