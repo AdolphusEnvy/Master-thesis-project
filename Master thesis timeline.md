@@ -93,8 +93,9 @@ Participant: You Hu, Jason Maassen and Adam Belloum
 ### Points
 #### Research question
 Look into the current solution, in the same time, purpose as many questions as possible.
-Try to find solutions for those questions by literatures, the questions remind could be the final research question（take Ibis+calibration as experi） . 
+Try to find solutions for those questions by literatures, the questions remind could be the final research question(take Ibis+calibration as experiment sinario).
+####  
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEyMjcxNDg3NiwxMTk0NTgzMjM1LDY0ND
-g1ODY2OCwtMTM1OTY1MjMxNiwxMDQ4MTQ2MzQ4XX0=
+eyJoaXN0b3J5IjpbLTEyMDAyMjIwNzEsMTE5NDU4MzIzNSw2ND
+Q4NTg2NjgsLTEzNTk2NTIzMTYsMTA0ODE0NjM0OF19
 -->
