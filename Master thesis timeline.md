@@ -97,9 +97,9 @@ Try to find solutions for those questions by literatures, the questions remind c
 ####  Current solution-SAGECAL-Spark version
 The source code is on [github page](https://github.com/nlesc-dirac). 
 The current solution is based on spark and dock container.
-In the following days, I will look into this code and have some try.
+In the following days, I will look into this solution and have some try.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjAxOTE2Nzc3MiwtMTIwMDIyMjA3MSwxMT
+eyJoaXN0b3J5IjpbLTYxMDg0MDc5MiwtMTIwMDIyMjA3MSwxMT
 k0NTgzMjM1LDY0NDg1ODY2OCwtMTM1OTY1MjMxNiwxMDQ4MTQ2
 MzQ4XX0=
 -->
