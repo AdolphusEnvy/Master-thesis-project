@@ -93,8 +93,8 @@ Participant: You Hu, Jason Maassen and Adam Belloum
 ### Points
 #### Research question
 Look into the current solution, in the same time, purpose as many questions as possible.
-Try to find solut
+Try to find solutions for those questions by literatures, the questions that reminds
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3MzAwMTE2NTMsNjQ0ODU4NjY4LC0xMz
-U5NjUyMzE2LDEwNDgxNDYzNDhdfQ==
+eyJoaXN0b3J5IjpbMTE5NDU4MzIzNSw2NDQ4NTg2NjgsLTEzNT
+k2NTIzMTYsMTA0ODE0NjM0OF19
 -->
