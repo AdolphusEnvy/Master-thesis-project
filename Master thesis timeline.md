@@ -85,8 +85,8 @@ Participant: You Hu, Jason Maassen and Adam Belloum
 * 	(apply for an  account on DAS5 or surfsara)
 
 ## Till 6th Jan, Reading literatures
-Read about three pieces of document, and write down reviews on [markdown file]([https://github.com/AdolphusEnvy/Master-thesis-project/blob/master/Literature/reviews.md](https://github.com/AdolphusEnvy/Master-thesis-project/blob/master/Literature/reviews.md)).
+Read about three pieces of document, and write down reviews/summary on [markdown file]([https://github.com/AdolphusEnvy/Master-thesis-project/blob/master/Literature/reviews.md](https://github.com/AdolphusEnvy/Master-thesis-project/blob/master/Literature/reviews.md))(.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTU2MDAwMzc5MSw2NDQ4NTg2NjgsLTEzNT
-k2NTIzMTYsMTA0ODE0NjM0OF19
+eyJoaXN0b3J5IjpbLTE5MzM3MjAxNTQsNjQ0ODU4NjY4LC0xMz
+U5NjUyMzE2LDEwNDgxNDYzNDhdfQ==
 -->
