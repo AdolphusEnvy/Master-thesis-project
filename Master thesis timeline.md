@@ -84,9 +84,14 @@ Participant: You Hu, Jason Maassen and Adam Belloum
 *	Prepare for literature study
 * 	(apply for an  account on DAS5 or surfsara)
 
-## Till 6th Jan, Reading literatures
+## Till 6th of Jan, Reading literatures
 Read about three pieces of document, and write down reviews/summary on [markdown file]([https://github.com/AdolphusEnvy/Master-thesis-project/blob/master/Literature/reviews.md](https://github.com/AdolphusEnvy/Master-thesis-project/blob/master/Literature/reviews.md))(the following summary will be written here as well).
+
+## Jan 6th, meeting for current solutions 
+
+Participant: You Hu, Jason Maassen and Adam Belloum
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjEzNzU1MjY3MSw2NDQ4NTg2NjgsLTEzNT
+eyJoaXN0b3J5IjpbLTc3NjUwMTE1Niw2NDQ4NTg2NjgsLTEzNT
 k2NTIzMTYsMTA0ODE0NjM0OF19
 -->
