@@ -85,8 +85,8 @@ Participant: You Hu, Jason Maassen and Adam Belloum
 * 	(apply for an  account on DAS5 or surfsara)
 
 ## Till 6th Jan, Reading literatures
-Read about three pieces of document, and wri
+Read about three pieces of document, and write down 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzMzNjUyNTA3LC0xMzU5NjUyMzE2LDEwND
+eyJoaXN0b3J5IjpbNjQ0ODU4NjY4LC0xMzU5NjUyMzE2LDEwND
 gxNDYzNDhdfQ==
 -->
