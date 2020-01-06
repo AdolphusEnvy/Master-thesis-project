@@ -90,8 +90,9 @@ Read about three pieces of document, and write down reviews/summary on [markdown
 ## Jan 6th, meeting for current solutions 
 
 Participant: You Hu, Jason Maassen and Adam Belloum
-
+### Points
+#### r
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTc3NjUwMTE1Niw2NDQ4NTg2NjgsLTEzNT
+eyJoaXN0b3J5IjpbMTkzNDQzMTAzMiw2NDQ4NTg2NjgsLTEzNT
 k2NTIzMTYsMTA0ODE0NjM0OF19
 -->
