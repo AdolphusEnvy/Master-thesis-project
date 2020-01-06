@@ -91,8 +91,10 @@ Read about three pieces of document, and write down reviews/summary on [markdown
 
 Participant: You Hu, Jason Maassen and Adam Belloum
 ### Points
-#### r
+#### Research question
+Look into the current solution, in the same time, purpose as many questions as possible.
+Try to find solut
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTkzNDQzMTAzMiw2NDQ4NTg2NjgsLTEzNT
-k2NTIzMTYsMTA0ODE0NjM0OF19
+eyJoaXN0b3J5IjpbLTE3MzAwMTE2NTMsNjQ0ODU4NjY4LC0xMz
+U5NjUyMzE2LDEwNDgxNDYzNDhdfQ==
 -->
