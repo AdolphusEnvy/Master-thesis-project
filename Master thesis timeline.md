@@ -84,6 +84,8 @@ Participant: You Hu, Jason Maassen and Adam Belloum
 *	Prepare for literature study
 * 	(apply for an  account on DAS5 or surfsara)
 
+## Till 6th Jan, Reading literatures
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTA0ODE0NjM0OF19
+eyJoaXN0b3J5IjpbLTEzNTk2NTIzMTYsMTA0ODE0NjM0OF19
 -->
