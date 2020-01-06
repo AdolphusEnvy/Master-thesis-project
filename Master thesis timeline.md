@@ -96,10 +96,10 @@ Look into the current solution, in the same time, purpose as many questions as p
 Try to find solutions for those questions by literatures, the questions remind could be the final research question(take Ibis+calibration as experiment sinario).
 ####  Current solution-SAGECAL-Spark version
 The source code is on [github page](https://github.com/nlesc-dirac). 
-The current solution is based on spark and tog
+The current solution is based on spark and dock container.
 In the following days, I will look into this code and have some try.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE2MTM1MjgzNDIsLTEyMDAyMjIwNzEsMT
-E5NDU4MzIzNSw2NDQ4NTg2NjgsLTEzNTk2NTIzMTYsMTA0ODE0
-NjM0OF19
+eyJoaXN0b3J5IjpbMjAxOTE2Nzc3MiwtMTIwMDIyMjA3MSwxMT
+k0NTgzMjM1LDY0NDg1ODY2OCwtMTM1OTY1MjMxNiwxMDQ4MTQ2
+MzQ4XX0=
 -->
