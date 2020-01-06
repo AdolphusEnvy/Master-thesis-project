@@ -96,10 +96,10 @@ Look into the current solution, in the same time, purpose as many questions as p
 Try to find solutions for those questions by literatures, the questions remind could be the final research question(take Ibis+calibration as experiment sinario).
 ####  Current solution-SAGECAL-Spark version
 The source code is on [github page](https://github.com/nlesc-dirac). 
-The current solution is based on MPI and GPU, also another solution is based on  spark and docker container. The seco
+The current solution is based on MPI and GPU, also another solution is based on  spark and docker container. The second one is more easier for me to test.
 In the following days, I will look into this solution and have some try.
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NTcwNDY2NzYsLTYxMDg0MDc5MiwtMT
-IwMDIyMjA3MSwxMTk0NTgzMjM1LDY0NDg1ODY2OCwtMTM1OTY1
-MjMxNiwxMDQ4MTQ2MzQ4XX0=
+eyJoaXN0b3J5IjpbMTQzMzE1MDMwLC02MTA4NDA3OTIsLTEyMD
+AyMjIwNzEsMTE5NDU4MzIzNSw2NDQ4NTg2NjgsLTEzNTk2NTIz
+MTYsMTA0ODE0NjM0OF19
 -->
