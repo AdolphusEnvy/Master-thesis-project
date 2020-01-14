@@ -101,7 +101,7 @@ In the following days, I will look into this solution and have some try.
 
 ## Till Jan 14th, testing sagecal on spark
 Meet problem on starting `spark_hadoop` contrainer. I followed the  [instratction](https://github.com/nlesc-dirac/sagecal-spark-docker-swarm/blob/master/docs/INSTALL.md). And the spark nodes failed to start. The original resaon is that spark_hadoop contrainer failed to start service. The error is shown below by command `docker service logs spark_hadoop`.
-<code> spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:34:32,245 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+```spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:34:32,245 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:34:32,249 INFO supervisord started with pid 6
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:34:33,251 INFO spawned: 'sshd' with pid 9
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:34:33,253 INFO spawned: 'hadoop-dfs' with pid 10
@@ -137,9 +137,9 @@ spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:30,309 INFO spawned: 'h
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:41,434 INFO exited: hadoop (exit status 0; not expected)
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:44,442 INFO spawned: 'hadoop' with pid 3586
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:55,670 INFO exited: hadoop (exit status 0; not expected)
-spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:56,671 INFO gave up: hadoop entered FATAL state, too many start retries too quickly<code
+spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:56,671 INFO gave up: hadoop entered FATAL state, too many start retries too quickly
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI1OTIwNTAzNCwxNDMzMTUwMzAsLTYxMD
-g0MDc5MiwtMTIwMDIyMjA3MSwxMTk0NTgzMjM1LDY0NDg1ODY2
-OCwtMTM1OTY1MjMxNiwxMDQ4MTQ2MzQ4XX0=
+eyJoaXN0b3J5IjpbMjMyNjE4MzkwLDE0MzMxNTAzMCwtNjEwOD
+QwNzkyLC0xMjAwMjIyMDcxLDExOTQ1ODMyMzUsNjQ0ODU4NjY4
+LC0xMzU5NjUyMzE2LDEwNDgxNDYzNDhdfQ==
 -->
