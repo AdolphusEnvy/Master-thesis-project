@@ -100,9 +100,9 @@ The current solution is based on MPI and GPU, also another solution is based on 
 In the following days, I will look into this solution and have some try.
 
 ## Till Jan 14th, testing sagecal on spark
-Meet problem on 
+Meet problem on starting `spark_hadoop` contrainer. I followed the  [instratction](https://github.com/nlesc-dirac/sagecal-spark-docker-swarm/blob/master/docs/INSTALL.md). And
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODA2NDQ4MTYsMTQzMzE1MDMwLC02MTA4ND
-A3OTIsLTEyMDAyMjIwNzEsMTE5NDU4MzIzNSw2NDQ4NTg2Njgs
-LTEzNTk2NTIzMTYsMTA0ODE0NjM0OF19
+eyJoaXN0b3J5IjpbMTcxNjcwMTE0MCwxNDMzMTUwMzAsLTYxMD
+g0MDc5MiwtMTIwMDIyMjA3MSwxMTk0NTgzMjM1LDY0NDg1ODY2
+OCwtMTM1OTY1MjMxNiwxMDQ4MTQ2MzQ4XX0=
 -->
