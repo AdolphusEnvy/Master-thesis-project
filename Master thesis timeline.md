@@ -98,8 +98,11 @@ Try to find solutions for those questions by literatures, the questions remind c
 The source code is on [github page](https://github.com/nlesc-dirac). 
 The current solution is based on MPI and GPU, also another solution is based on  spark and docker container. The second one is more easier for me to test.
 In the following days, I will look into this solution and have some try.
+
+## Till Jan 14th, testing sagecal on spark
+Meet problem on 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQzMzE1MDMwLC02MTA4NDA3OTIsLTEyMD
-AyMjIwNzEsMTE5NDU4MzIzNSw2NDQ4NTg2NjgsLTEzNTk2NTIz
-MTYsMTA0ODE0NjM0OF19
+eyJoaXN0b3J5IjpbODA2NDQ4MTYsMTQzMzE1MDMwLC02MTA4ND
+A3OTIsLTEyMDAyMjIwNzEsMTE5NDU4MzIzNSw2NDQ4NTg2Njgs
+LTEzNTk2NTIzMTYsMTA0ODE0NjM0OF19
 -->
