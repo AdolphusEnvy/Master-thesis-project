@@ -138,8 +138,11 @@ spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:41,434 INFO exited: had
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:44,442 INFO spawned: 'hadoop' with pid 3586
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:55,670 INFO exited: hadoop (exit status 0; not expected)
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:56,671 INFO gave up: hadoop entered FATAL state, too many start retries too quickly
+```
+Keep debugging!
+
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjMyNjE4MzkwLDE0MzMxNTAzMCwtNjEwOD
-QwNzkyLC0xMjAwMjIyMDcxLDExOTQ1ODMyMzUsNjQ0ODU4NjY4
-LC0xMzU5NjUyMzE2LDEwNDgxNDYzNDhdfQ==
+eyJoaXN0b3J5IjpbLTY1MTIxNDEyMiwxNDMzMTUwMzAsLTYxMD
+g0MDc5MiwtMTIwMDIyMjA3MSwxMTk0NTgzMjM1LDY0NDg1ODY2
+OCwtMTM1OTY1MjMxNiwxMDQ4MTQ2MzQ4XX0=
 -->
