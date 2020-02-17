@@ -1,0 +1,90 @@
+version: '3'
+services:
+
+  master:
+    image: fdiblen/spark-master-dirac
+    hostname: sparkmaster
+    networks:
+      spark-net:
+        aliases:
+          - sparkmaster
+          - spark-master
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 2
+        window: 120s
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    env_file:
+      - ./cluster.env
+    volumes:
+      - "/home/yhu310/sagecal/excon_hdfs:/opt/dirac/excon"
+
+
+  worker:
+    image: fdiblen/spark-worker-dirac
+    hostname: sparkworker{{.Task.Slot}}
+    depends_on:
+      - master
+    networks:
+      spark-net:
+        aliases:
+          - sparkworker{{.Task.Slot}}
+    environment:
+      - SPARK_MASTER=spark://sparkmaster:7077
+    deploy:
+      replicas: 4
+      mode: replicated
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 2
+        window: 120s
+    ports:
+      - "8081:8081"
+    env_file:
+      - ./cluster.env
+    volumes:
+      - "/home/yhu310/sagecal/excon_hdfs:/opt/dirac/excon"
+
+
+  hadoop:
+    image: fdiblen/hadoop
+    hostname: hadoop
+    networks:
+      spark-net:
+        aliases:
+          - hadoop
+    environment:
+      - IMAGE=hadoop
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 2
+        window: 120s
+    ports:
+      - "50070:50070"
+      - "50075:50075"
+      - "8088:8088"
+      - "9000:9000"
+      - "8020:8020"
+      # - "50030:50030"
+      # - "9870:9870"
+      # - "50030:50030"
+      # - "50010:50010"
+      # - "50020:50020"
+      # - "50090:50090"
+    env_file:
+      - ./cluster.env
+
+
+networks:
+  spark-net:
+    # driver: "bridge"
+    external: true
