@@ -140,9 +140,12 @@ spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:55,670 INFO exited: had
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:56,671 INFO gave up: hadoop entered FATAL state, too many start retries too quickly
 ```
 Keep debugging!
-
+## Meeting on 20th of Feb
+Participant: You Hu, Jason Maassen, Faruk Diblen and Adam Belloum
+The slide for this meeting is uploaded to [github repo]()
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY1MTIxNDEyMiwxNDMzMTUwMzAsLTYxMD
-g0MDc5MiwtMTIwMDIyMjA3MSwxMTk0NTgzMjM1LDY0NDg1ODY2
-OCwtMTM1OTY1MjMxNiwxMDQ4MTQ2MzQ4XX0=
+eyJoaXN0b3J5IjpbMTY3NDMzOTQxNiwtMTk5Mzk4MDg3LC02NT
+EyMTQxMjIsMTQzMzE1MDMwLC02MTA4NDA3OTIsLTEyMDAyMjIw
+NzEsMTE5NDU4MzIzNSw2NDQ4NTg2NjgsLTEzNTk2NTIzMTYsMT
+A0ODE0NjM0OF19
 -->
