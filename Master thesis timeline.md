@@ -141,9 +141,10 @@ spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:56,671 INFO gave up: ha
 ```
 Keep debugging!
 ## Meeting on 20th of Feb
-Participant: You Hu, Jason Maassen and Adam Belloum
+Participant: You Hu, Jason Maassen, Faruk Diblen and Adam Belloum
+The slide for this meeting is uploaded to [github repo]()
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTkzNzk2MTA0MiwtMTk5Mzk4MDg3LC02NT
+eyJoaXN0b3J5IjpbMTY3NDMzOTQxNiwtMTk5Mzk4MDg3LC02NT
 EyMTQxMjIsMTQzMzE1MDMwLC02MTA4NDA3OTIsLTEyMDAyMjIw
 NzEsMTE5NDU4MzIzNSw2NDQ4NTg2NjgsLTEzNTk2NTIzMTYsMT
 A0ODE0NjM0OF19
