@@ -139,10 +139,26 @@ spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:44,442 INFO spawned: 'h
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:55,670 INFO exited: hadoop (exit status 0; not expected)
 spark_hadoop.0.lnbb3vjxwx7k@ubuntu    | 2020-01-14 12:35:56,671 INFO gave up: hadoop entered FATAL state, too many start retries too quickly
 ```
-Keep debugging!
+~~Keep debugging!~~
+**Solved**
+## Meeting on 20th of Feb
+Participant: You Hu, Jason Maassen, Faruk Diblen and Adam Belloum
 
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY1MTIxNDEyMiwxNDMzMTUwMzAsLTYxMD
-g0MDc5MiwtMTIwMDIyMjA3MSwxMTk0NTgzMjM1LDY0NDg1ODY2
-OCwtMTM1OTY1MjMxNiwxMDQ4MTQ2MzQ4XX0=
--->
+The slide for this meeting is uploaded to [github repo](Docs/pre2.20.pptx).
+
+In this meeting we discussed:
+* Spark version: features and possible issues
+	* HDFS is just a temporary choice for demonstration 
+	* The cost of each stage is unknown yet
+	* data locality issue, related to HDFS, can be solved by replacing HDFS
+* What Ibis could achieve:
+	* cross region--IPL provides easy way to connect 
+	* move compute instead of moving data
+	* combine two of them above
+	* auto-provision 
+* TODO(It can be traced in file [TODOList](Docs/TODOList.md)):
+	* run hello world application on spark plus JNI to get familiar to them
+	* (Faruk would fix the issues on current version first) testing the performance of spark version
+
+In last few pages of the presentation slides, the issues are summarized.
+First is about the volume, It has been solved. Now the problem is that the excon dir is not found. I tried to build image from github repo, but failed. Probably the docker image is out of date on docker hub. Hope Faruk can fix it. Thanks in advance!
