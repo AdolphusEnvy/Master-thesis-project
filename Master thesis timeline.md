@@ -162,3 +162,7 @@ In this meeting we discussed:
 
 In last few pages of the presentation slides, the issues are summarized.
 First is about the volume, It has been solved. Now the problem is that the excon dir is not found. I tried to build image from github repo, but failed. Probably the docker image is out of date on docker hub. Hope Faruk can fix it. Thanks in advance!
+
+## Feb 25th
+The hello world case of JNI on spark has been finished.
+The C++ function can be invoked by JAVA code and paramneter can be passed to C++ function to print.
