@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c8d5ec95-c1e6-4c89-a1f1-30a31e7cbcef" name="Default Changelist" comment="" />
+    <list default="true" id="c8d5ec95-c1e6-4c89-a1f1-30a31e7cbcef" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Driver.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HelloJNI.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HelloJNI.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HelloJNI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hello.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/libhello.so" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sagecal/sagecal-spark-docker-swarm/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../sagecal/sagecal-spark-docker-swarm/docker-compose.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -14,7 +31,14 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
   <component name="ProjectId" id="1YAKSdNg1gvK84VVAX8G37NC9vE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -22,8 +46,36 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="findjar.last.used.dir" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RunManager" selected="Makefile.JNI">
+    <configuration name="Driver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Driver" />
+      <module name="JNI-hello" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="JNI" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/src/Makefile" target="JNI" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Makefile.JNI" />
+        <item itemvalue="Application.Driver" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -36,6 +88,12 @@
       <option name="presentableId" value="Default" />
       <updated>1582379960423</updated>
       <workItem from="1582379965784" duration="1722000" />
+      <workItem from="1582459544428" duration="595000" />
+      <workItem from="1582460575060" duration="1003000" />
+      <workItem from="1582462131262" duration="17979000" />
+      <workItem from="1582541465833" duration="7468000" />
+      <workItem from="1582626486069" duration="569000" />
+      <workItem from="1582627080231" duration="2330000" />
     </task>
     <servers />
   </component>
@@ -43,9 +101,49 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="648" y="305" key="com.intellij.ide.util.TipDialog" timestamp="1582379970939">
+    <state x="450" y="134" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582461888021">
       <screen x="67" y="27" width="1851" height="901" />
     </state>
-    <state x="648" y="305" key="com.intellij.ide.util.TipDialog/67.27.1851.901@67.27.1851.901" timestamp="1582379970939" />
+    <state x="450" y="134" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1851.901@67.27.1851.901" timestamp="1582461888021" />
+    <state x="833" y="368" width="308" height="216" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1582460620253">
+      <screen x="67" y="27" width="1851" height="901" />
+    </state>
+    <state x="833" y="368" width="308" height="216" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/67.27.1851.901@67.27.1851.901" timestamp="1582460620253" />
+    <state x="570" y="134" width="824" height="684" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor" timestamp="1582460617507">
+      <screen x="67" y="27" width="1851" height="901" />
+    </state>
+    <state x="570" y="134" width="824" height="684" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/67.27.1851.901@67.27.1851.901" timestamp="1582460617507" />
+    <state x="765" y="234" width="424" height="484" key="FileChooserDialogImpl" timestamp="1582482411029">
+      <screen x="67" y="27" width="1851" height="901" />
+    </state>
+    <state x="765" y="234" width="424" height="484" key="FileChooserDialogImpl/67.27.1851.901@67.27.1851.901" timestamp="1582482411029" />
+    <state width="1805" height="228" key="GridCell.Tab.0.bottom" timestamp="1582465596618">
+      <screen x="67" y="27" width="1851" height="901" />
+    </state>
+    <state width="1805" height="228" key="GridCell.Tab.0.bottom/67.27.1851.901@67.27.1851.901" timestamp="1582465596618" />
+    <state width="1805" height="228" key="GridCell.Tab.0.center" timestamp="1582465596617">
+      <screen x="67" y="27" width="1851" height="901" />
+    </state>
+    <state width="1805" height="228" key="GridCell.Tab.0.center/67.27.1851.901@67.27.1851.901" timestamp="1582465596617" />
+    <state width="1805" height="228" key="GridCell.Tab.0.left" timestamp="1582465596609">
+      <screen x="67" y="27" width="1851" height="901" />
+    </state>
+    <state width="1805" height="228" key="GridCell.Tab.0.left/67.27.1851.901@67.27.1851.901" timestamp="1582465596609" />
+    <state width="1805" height="228" key="GridCell.Tab.0.right" timestamp="1582465596617">
+      <screen x="67" y="27" width="1851" height="901" />
+    </state>
+    <state width="1805" height="228" key="GridCell.Tab.0.right/67.27.1851.901@67.27.1851.901" timestamp="1582465596617" />
+    <state x="481" y="83" width="1024" height="845" key="SettingsEditor" timestamp="1582462110146">
+      <screen x="67" y="27" width="1851" height="901" />
+    </state>
+    <state x="481" y="83" width="1024" height="845" key="SettingsEditor/67.27.1851.901@67.27.1851.901" timestamp="1582462110146" />
+    <state x="648" y="305" key="com.intellij.ide.util.TipDialog" timestamp="1582459546526">
+      <screen x="67" y="27" width="1851" height="901" />
+    </state>
+    <state x="648" y="305" key="com.intellij.ide.util.TipDialog/67.27.1851.901@67.27.1851.901" timestamp="1582459546526" />
+    <state x="717" y="389" width="540" height="175" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1582493324501">
+      <screen x="67" y="27" width="1851" height="901" />
+    </state>
+    <state x="717" y="389" width="540" height="175" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/67.27.1851.901@67.27.1851.901" timestamp="1582493324501" />
   </component>
 </project>

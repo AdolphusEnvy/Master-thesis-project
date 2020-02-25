@@ -23,6 +23,7 @@ services:
       - ./cluster.env
     volumes:
       - "/home/yhu310/Master-thesis-project/sagecal/excon_hdfs:/opt/dirac/excon_hdfs"
+      - "/home/yhu310/Master-thesis-project/JNI-hello:/opt/dirac/JNI_hello"
 
 
 
@@ -52,6 +53,7 @@ services:
 
     volumes:
       - "/home/yhu310/Master-thesis-project/sagecal/excon_hdfs:/opt/dirac/excon_hdfs"
+      - "/home/yhu310/Master-thesis-project/JNI-hello:/opt/dirac/JNI_hello"
 
 
 
