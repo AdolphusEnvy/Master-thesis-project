@@ -5,7 +5,7 @@ import org.apache.hadoop.fs.Path;
 
 import org.apache.commons.io.FileUtils;
 
-//import org.apache.spark.SparkFiles;
+import org.apache.spark.SparkFiles;
 public class Driver {  // Save as HelloJNI.java
 //    static {
 //        System.loadLibrary("Driver"); // Load native library hello.dll (Windows) or libhello.so (Unixes)
@@ -14,7 +14,7 @@ public class Driver {  // Save as HelloJNI.java
 //    }
 
     // Declare an instance native method sayHello() which receives no parameter and returns void
-    private native void sayHello(String args);
+    private native int sayHello(String args);
     private void syaHello(String s)
     {
         System.out.println("normal:"+s);
@@ -24,8 +24,8 @@ public class Driver {  // Save as HelloJNI.java
         System.loadLibrary("Driver");
         Driver driver=new Driver();
         try {
-            driver.sayHello("123");
-
+            int stat=driver.sayHello("123");
+            System.out.println("STATUS:"+stat);
             driver.syaHello("123");
         }
         catch (Exception e) {

@@ -2,19 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c8d5ec95-c1e6-4c89-a1f1-30a31e7cbcef" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Driver.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HelloJNI.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HelloJNI.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HelloJNI.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hello.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libhello.so" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../sagecal/sagecal-spark-docker-swarm/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../sagecal/sagecal-spark-docker-swarm/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Driver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Driver.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Driver.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Driver.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/src/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/libDriver.so" beforeDir="false" afterPath="$PROJECT_DIR$/src/libDriver.so" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +89,9 @@
       <workItem from="1582462131262" duration="17979000" />
       <workItem from="1582541465833" duration="7468000" />
       <workItem from="1582626486069" duration="569000" />
-      <workItem from="1582627080231" duration="2668000" />
+      <workItem from="1582627080231" duration="3189000" />
+      <workItem from="1582668488396" duration="2231000" />
+      <workItem from="1582725772657" duration="3371000" />
     </task>
     <servers />
   </component>

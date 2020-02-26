@@ -4,9 +4,9 @@ LDFLAGS=-Wl,--rpath,/usr/lib/x86_64-linux-gnu,--rpath,../lib
 JAVAC=javac
 JAVAH=javah
 # JAVA_HOME=/usr/lib/jvm/java-1.8.0*
-JAVAINC=-I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux
+JAVAINC=-I${JAVA_HOME}/include -I${JAVA_HOME}/include/linux -I/opt/soft/spark/jars -I/opt/soft/hadoop/include/
 # HADOOP_CLASSPATH=$(shell /usr/bin/hadoop classpath)
-
+HADOOP_SPARK_CLASSPATH=$(HADOOP_CLASSPATH):/opt/soft/spark/jars/*
 default: build
 
 OBJECTS=Driver.o
@@ -15,7 +15,8 @@ OBJECTS=Driver.o
 #class:HelloJNI.java
 #	$(JAVAC) -classpath $(HADOOP_CLASSPATH) $<
 Driver.class:Driver.java
-	$(JAVAC) -classpath $(HADOOP_CLASSPATH) $<
+	#echo $(HADOOP_SPARK_CLASSPATH)
+	$(JAVAC) -classpath $(HADOOP_SPARK_CLASSPATH) $<
 Driver.h:Driver.class
 	$(JAVAH) $*
 Driver.o:Driver.cpp Driver.h
