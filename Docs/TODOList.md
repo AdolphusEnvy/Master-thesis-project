@@ -14,3 +14,8 @@ read about how spark place task  &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 NULL
 
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; on top of hadoop to achieve data locality 
+
+4. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2.27 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Build docker container for Ibis application  &nbsp;&nbsp;&nbsp;&nbsp;
+NULL
