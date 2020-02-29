@@ -1,0 +1,6 @@
+-shared
+-Wl,-soname,libhello.so
+-o
+/home/yhu310/basic-demo/build/libs/hello/shared/libhello.so
+/home/yhu310/basic-demo/build/objs/hello/shared/helloC/46gd7i53yh3z9kv2bj1ure0t2/hello.o
+-m64

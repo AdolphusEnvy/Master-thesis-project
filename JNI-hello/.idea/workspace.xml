@@ -3,14 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c8d5ec95-c1e6-4c89-a1f1-30a31e7cbcef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Driver.class" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Driver.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Driver.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Driver.jar" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Driver.o" beforeDir="false" afterPath="$PROJECT_DIR$/src/Driver.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/src/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libDriver.so" beforeDir="false" afterPath="$PROJECT_DIR$/src/libDriver.so" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +84,8 @@
       <workItem from="1582627080231" duration="3189000" />
       <workItem from="1582668488396" duration="2231000" />
       <workItem from="1582725772657" duration="3371000" />
+      <workItem from="1582963968098" duration="605000" />
+      <workItem from="1582965963912" duration="609000" />
     </task>
     <servers />
   </component>
@@ -111,10 +105,10 @@
       <screen x="67" y="27" width="1851" height="901" />
     </state>
     <state x="570" y="134" width="824" height="684" key="#com.intellij.openapi.projectRoots.ui.ProjectJdksEditor/67.27.1851.901@67.27.1851.901" timestamp="1582460617507" />
-    <state x="765" y="234" width="424" height="484" key="FileChooserDialogImpl" timestamp="1582482411029">
+    <state x="765" y="234" width="424" height="484" key="FileChooserDialogImpl" timestamp="1582966465308">
       <screen x="67" y="27" width="1851" height="901" />
     </state>
-    <state x="765" y="234" width="424" height="484" key="FileChooserDialogImpl/67.27.1851.901@67.27.1851.901" timestamp="1582482411029" />
+    <state x="765" y="234" width="424" height="484" key="FileChooserDialogImpl/67.27.1851.901@67.27.1851.901" timestamp="1582966465308" />
     <state width="1805" height="228" key="GridCell.Tab.0.bottom" timestamp="1582465596618">
       <screen x="67" y="27" width="1851" height="901" />
     </state>
@@ -139,6 +133,10 @@
       <screen x="67" y="27" width="1851" height="901" />
     </state>
     <state x="648" y="305" key="com.intellij.ide.util.TipDialog/67.27.1851.901@67.27.1851.901" timestamp="1582459546526" />
+    <state x="301" y="77" width="1372" height="799" key="new project wizard" timestamp="1582966573100">
+      <screen x="67" y="27" width="1851" height="901" />
+    </state>
+    <state x="301" y="77" width="1372" height="799" key="new project wizard/67.27.1851.901@67.27.1851.901" timestamp="1582966573100" />
     <state x="717" y="389" width="540" height="175" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1582493324501">
       <screen x="67" y="27" width="1851" height="901" />
     </state>

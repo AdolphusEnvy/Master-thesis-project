@@ -1,0 +1,8 @@
+See file:///home/yhu310/basic-demo/build/tmp/compileHelloSharedLibraryHelloCpp/output.txt for all output for compileHelloSharedLibraryHelloCpp.
+compiling hello.cpp failed.
+/home/yhu310/basic-demo/src/hello/cpp/hello.cpp:10:10: fatal error: jni.h: No such file or directory
+ #include <jni.h>
+          ^~~~~~~
+compilation terminated.
+
+Finished compileHelloSharedLibraryHelloCpp, see full log file:///home/yhu310/basic-demo/build/tmp/compileHelloSharedLibraryHelloCpp/output.txt.
