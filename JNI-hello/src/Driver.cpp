@@ -3,13 +3,14 @@
 #include <iostream>    // C++ standard IO header
 #include <string>
 #include "Driver.h"  // Generated
+#include "hdfs.h"
 using namespace std;
 
 // Implementation of the native method sayHello()
-JNIEXPORT void JNICALL Java_Driver_sayHello(JNIEnv *env, jobject thisObj,jstring inJNIStr) {
+JNIEXPORT jint JNICALL Java_Driver_sayHello(JNIEnv *env, jobject thisObj,jstring inJNIStr) {
  const char *inCStr = env->GetStringUTFChars(inJNIStr, NULL);
     //if (NULL == inCStr) return NULL;
     ///const char *inCStr="123";
 	cout << "Hello World from C++!"<<endl<< "The file is "<<inCStr<< endl;
-   return;
+   return 1;
 }

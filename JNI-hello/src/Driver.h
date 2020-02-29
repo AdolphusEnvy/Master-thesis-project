@@ -10,9 +10,9 @@ extern "C" {
 /*
  * Class:     Driver
  * Method:    sayHello
- * Signature: (Ljava/lang/String;)V
+ * Signature: (Ljava/lang/String;)I
  */
-JNIEXPORT void JNICALL Java_Driver_sayHello
+JNIEXPORT jint JNICALL Java_Driver_sayHello
   (JNIEnv *, jobject, jstring);
 
 #ifdef __cplusplus
