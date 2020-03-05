@@ -36,3 +36,6 @@ In the last paragraph of the paper, it mentions that the DI part can be parallel
 ## Towards a new paradigm for programming scientiﬁc workﬂows
 
 This paper aims to purpose a new programming paradigm for scientific computing.
+
+## The data locality of Spark
+The data locality of spark relies on RDD. The "executor code" will try to get as close as possible to the data. 

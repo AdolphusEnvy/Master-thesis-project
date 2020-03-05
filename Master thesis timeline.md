@@ -5,38 +5,38 @@ Participant: You Hu, Jason Maassen
 In the meeting, we talked about three kinds of topics:
 * develop the systems utilizing GPUs.
 * the efficient computing
-* modeling for pulsar searching on other systems for comparison with current approach
+* modeling for pulsar searching on other systems for comparison with the current approach
 * plus fast serialization for spark
 
-Later Jason provided more speific topics. Then I picked the calibration one.
+Later Jason provided more specific topics. Then I picked the calibration one.
 The calibration project was originally formalized as below:
 
 It is about calibration for radioastronomy observations. Today, such calibration is often done on a single machine with GPUs. To parallelize this, we are looking at two options in this project, a traditional MPI solution, and a solution using spark. Spark is not really a logical choice however, something like Ibis (developed at the VU) would make more sense. This project would be about porting the current spark version of the code to Ibis, and performing a comparison between this new solution and the spark and MPI ones. 
 
   
-## Till Nov 16th, Reading literatures
-Three literatures were :
+## Till Nov 16th, Reading literature
+Three kinds of literature were :
 * Ibis: a Flexible and Efﬁcient Java-based Grid Programming Environment
-	* the technology selection and details of Ibis
+	* The technology selection and details of Ibis
 * Real-World Distributed Computing  with Ibis
-	* an overview of ibis
+	* An overview of ibis
 * Towards Jungle Computing with Ibis/Constellation
-	* an use case of Ibis/constellation
+	* An use case of Ibis/constellation
 
-Besides, because i took course parallel programming practical, I have already practiced a little on Ibis.
+Besides, because I took course parallel programming practical, I have already practiced a little on Ibis.
 
 
-## Nov 27th, Meeting for calibration use case and procedure 
+## Nov 27th, Meeting for the calibration use case and procedure 
 Participant: You Hu, Jason Maassen and Faruk Diblen
 There are two parts:
 ### The project content
-The idea of the project is to utilize Ibis/Constellation for calibration. The solution is to invoke calibration tool(implemented by C/C++, consider it as black box) parallelly. Three options are JMI, JNA and system call.
+The idea of the project is to utilize Ibis/Constellation for calibration. The solution is to invoke the calibration tool(implemented by C/C++, consider it as black box) parallelly. Three options are JMI, JNA and system call.
 
-The existing implementations are based on Spark and MPI. We can make comparison among three of them.
+The existing implementations are based on Spark and MPI. We can make comparison among the three of them.
 
 To potential difficulties are data locality, job schedule, and perhaps fault tolerance. We can learn those points from Spark or any existing systems.
 
-One point that I forgot to ask is that whether there is requirement for real time processing and streaming processing.
+One point that I forgot to ask is whether there is a requirement for real-time processing and streaming processing.
 
 ### About the procedure
 * Supervisor/examiner at university
@@ -166,3 +166,38 @@ First is about the volume, It has been solved. Now the problem is that the excon
 ## Feb 25th
 The hello world case of JNI on spark has been finished.
 The C++ function can be invoked by JAVA code and paramneter can be passed to C++ function to print.
+
+## 4th of March 
+Participant: You Hu, and Adam Belloum
+
+In this meeting, we first discussed the shortcoming of MPI and Spark.
+And then we talked about three kinds of dimensions that Ibis could achieve beyond the current versions.
+
+The shortcoming of current versions is that the computation resources can not be scaled at the demand and adjusted to the environment.
+
+The details are shown below: 
+* The resource granularity of the MPI job is fixed. A cluster with 16 nodes won't run any job requesting over 6 nodes when a job using 10 nodes. This may cause a waste of usage of resources.
+* Spark system requires pre-allocated resources, and it is not easy for scaling( the current spark version based on docker swarm meets the auto-scaling on task level, not resource level)
+* MPI has a problem on accessing cross-region computation recourse; Spark is not clear yet, I assume it is not easy to do that.  
+* Both two versions view the file as remote data and do not try to get close to data( spark’s data locality strategy is based on RDD or  DataSet APIs, not valid on Driver)
+* Kubernetes cluster along has the same problem as spark system, we need a higher level to manage the resources.
+
+The three dimensions of features are：
+* self-adjust auto-scaling
+	* Master requests/release node according to the task quantity and job queue of the cluster
+	* Requesting and releasing rely on cluster API like Prun on DAS
+	* Tt can be managed by the master or by a server keeping running
+* cross region data locality 
+	* Long Term Archive has multiple sites store the different data set
+	* The data can be processed at cluster cloth to its archive site
+	* It can be evaluated on DAS
+* staging processing separation & parallelization.
+	* Not sure yet, maybe the downloading data from archive and processing can be run in parallel, not sequentially to save time.
+	* Should talk to Onno
+
+The idea of my solution is that for each cluster, we assume there is one node never crash convey ibis-server and service for: job submitting; computation node allocation and destroy; communication with other clusters.
+Once a node is assigned, it will join/create the docker swarm or kubernetes cluster.  The containers will execute the same code, and elect ibis master.
+The master receives job list and allocates tasks to workers. It also monitor the job list to send scaling up or down demand to the server( this part can be discussed in detail later).
+The job list or task arrangement can be persisted by something like Zookeeper to reduce the cost of the crash of master.
+
+
