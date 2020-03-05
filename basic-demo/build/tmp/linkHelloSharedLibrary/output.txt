@@ -1,0 +1,4 @@
+See file:///home/yhu310/basic-demo/build/tmp/linkHelloSharedLibrary/output.txt for all output for linkHelloSharedLibrary.
+linking libhello.so successful.
+
+Finished linkHelloSharedLibrary, see full log file:///home/yhu310/basic-demo/build/tmp/linkHelloSharedLibrary/output.txt.

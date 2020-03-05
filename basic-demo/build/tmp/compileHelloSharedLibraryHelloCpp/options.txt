@@ -1,0 +1,17 @@
+-x
+c++
+-c
+-fPIC
+-I
+/home/yhu310/basic-demo/src/hello/headers
+-I
+/usr/lib/gcc/x86_64-linux-gnu/7/include
+-I
+/usr/local/include
+-I
+/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed
+-I
+/usr/include/x86_64-linux-gnu
+-I
+/usr/include
+-m64

@@ -1,0 +1,4 @@
+See file:///home/yhu310/basic-demo/build/tmp/compileHelloSharedLibraryHelloC/output.txt for all output for compileHelloSharedLibraryHelloC.
+compiling hello.c successful.
+
+Finished compileHelloSharedLibraryHelloC, see full log file:///home/yhu310/basic-demo/build/tmp/compileHelloSharedLibraryHelloC/output.txt.
