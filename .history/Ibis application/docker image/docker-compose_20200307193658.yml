@@ -1,0 +1,42 @@
+version: '3'
+services:
+
+
+
+
+  worker:
+    image: fdiblen/spark-worker-dirac
+    hostname: sparkworker{{.Task.Slot}}
+    depends_on:
+      - master
+    networks:
+      spark-net:
+        aliases:
+          - sparkworker{{.Task.Slot}}
+    environment:
+      - SPARK_MASTER=spark://sparkmaster:7077
+    deploy:
+      replicas: 4
+      mode: replicated
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 2
+        window: 120s
+    ports:
+      - "8081:8081"
+    env_file:
+      - ./cluster.env
+
+    volumes:
+      - "/home/yhu310/Master-thesis-project/sagecal/excon_hdfs:/opt/dirac/excon_hdfs"
+      - "/home/yhu310/Master-thesis-project/JNI-hello:/opt/dirac/JNI_hello"
+
+
+
+  
+
+networks:
+  spark-net:
+    # driver: "bridge"
+    external: true

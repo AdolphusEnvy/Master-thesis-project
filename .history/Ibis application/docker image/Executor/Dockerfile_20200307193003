@@ -1,0 +1,5 @@
+FROM fdiblen/spark-master-dirac:latest
+MAINTAINER fdiblen
+
+USER root
+ENV DISPLAY :0
