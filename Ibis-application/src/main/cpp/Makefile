@@ -10,8 +10,8 @@ default: build
 
 OBJECTS=Driver.o
 
-Driver.h:Driver.class
-	$(JAVAH) $*
+Driver.h:/Master-thesis-project/Ibis-application/build/classes/java/main/Driver.class
+	$(JAVAH) /Master-thesis-project/Ibis-application/build/classes/java/main/Driver.class
 
 libDriver.so:Driver.h
 	#$(CXX) -shared $(CXXFLAGS) $(LDFLAGS) $(INCLUDES) $(LIBPATH) $(HDFSLIBPATH) -o $@  $(OBJECTS) $(MY_LIBS) $(LAPACK) $(CASA_LIBS) $(GLIBL) $(HDFSLIBS)

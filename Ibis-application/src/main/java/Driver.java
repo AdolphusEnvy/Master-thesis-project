@@ -24,7 +24,7 @@ public class Driver {
 
     IbisCapabilities ibisCapabilities = new IbisCapabilities(
             IbisCapabilities.ELECTIONS_STRICT);
-
+    private native int sayHello(String var1);
     private void server(Ibis myIbis) throws IOException {
 
         // Create a receive port and enable connections.
@@ -79,7 +79,9 @@ public class Driver {
     public static void main(String args[]) {
         System.loadLibrary("Driver");
         try {
-            new Driver().run();
+            Driver d=new Driver();
+            d.sayHello("123");
+            d.run();
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }

@@ -20,8 +20,10 @@ RUN git clone https://github.com/AdolphusEnvy/Master-thesis-project.git && \
     cd Master-thesis-project/Ibis-application && \
     ls && \
     # sed $'s/\r$//' ./gradlew > ./gradlew.unix && \
-    chmod 777 gradlew && \
+    chmod 775 gradlew && \
     dos2unix gradlew && \
     ./gradlew
+
+
 
 # CMD  ["./ibis-run"]
