@@ -77,6 +77,7 @@ public class Driver {
     }
 
     public static void main(String args[]) {
+        System.loadLibrary("Driver");
         try {
             new Driver().run();
         } catch (Exception e) {

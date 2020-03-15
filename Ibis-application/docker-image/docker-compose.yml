@@ -5,7 +5,7 @@ services:
 
 
   worker:
-    image: fdiblen/spark-worker-dirac
+    image: adolphusenvy/ibis-executor
     hostname: worker{{.Task.Slot}}
     # depends_on:
     #   - server
@@ -25,12 +25,24 @@ services:
         window: 120s
     ports:
       - "8081:8081"
-    env_file:
-      - ./cluster.env
 
-    volumes:
-      - "/home/yhu310/Master-thesis-project/sagecal/excon_hdfs:/opt/dirac/excon_hdfs"
-      - "/home/yhu310/Master-thesis-project/JNI-hello:/opt/dirac/JNI_hello"
+  ibis-server:
+    image: adolphusenvy/ibis-server
+    hostname: ibis-server
+    networks: 
+      ibis-net :
+        aliases: 
+          - ibis-server
+
+    deploy:
+      replicas: 1
+      restart_policy:
+      condition: on-failure
+      delay: 5s
+      max_attempts: 2
+      window: 120s
+
+
 
 
 

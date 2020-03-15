@@ -1,7 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="def937b6-80dc-4e75-9bbb-728a20b89bcd" name="Default Changelist" comment="" />
+    <list default="true" id="def937b6-80dc-4e75-9bbb-728a20b89bcd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Ibis-application/src/main/cpp/Diver.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Ibis-application/src/main/cpp/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/basic-demo.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Docs/Present porttype.pptx" beforeDir="false" afterPath="$PROJECT_DIR$/../Docs/Present porttype.pptx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../Ibis-application/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../Ibis-application/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../Ibis-application/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../Ibis-application/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../Ibis-application/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../Ibis-application/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/.gradle/vcs-1/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/docker-image/Executor/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Ibis-application/docker-image/Executor/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/docker-image/Executor/ibis-run" beforeDir="false" afterPath="$PROJECT_DIR$/../Ibis-application/docker-image/Executor/ibis-run" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/docker-image/Server/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Ibis-application/docker-image/Server/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/docker-image/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ibis-application/docker-image/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ibis-application/src/main/java/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Ibis-application/src/main/java/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JNI-hello/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JNI-hello/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../JNI-hello/out/production/desktop.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.project" beforeDir="false" afterPath="$PROJECT_DIR$/.project" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,10 +61,14 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1YUXK9xLT6YyeKmRAqbIGeKohmv" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -46,9 +76,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/hello/c" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="show.unlinked.gradle.project.popup" value="true" />
   </component>
   <component name="RecentsManager">
@@ -56,7 +87,26 @@
       <recent name="$PROJECT_DIR$/src/hello/c" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.basic-demo [runMyTask]">
+  <component name="RunManager" selected="Gradle.D:/Master_Study/Thesis/Master-thesis-project/basic-demo/build.gradle [runMyTask]">
+    <configuration name="D:/Master_Study/Thesis/Master-thesis-project/basic-demo/build.gradle [runMyTask]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/build.gradle" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="runMyTask" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="basic-demo [components]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -88,25 +138,6 @@
         <option name="taskNames">
           <list>
             <option value="dependencies" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="basic-demo [model]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="model" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -154,11 +185,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.D:/Master_Study/Thesis/Master-thesis-project/basic-demo/build.gradle [runMyTask]" />
         <item itemvalue="Gradle.basic-demo [runMyTask]" />
         <item itemvalue="Gradle.basic-demo [test]" />
         <item itemvalue="Gradle.basic-demo [dependencies]" />
         <item itemvalue="Gradle.basic-demo [components]" />
-        <item itemvalue="Gradle.basic-demo [model]" />
       </list>
     </recent_temporary>
   </component>
@@ -174,6 +205,7 @@
       <updated>1582998079482</updated>
       <workItem from="1582998090303" duration="7438000" />
       <workItem from="1583005789451" duration="1445000" />
+      <workItem from="1584311355283" duration="630000" />
     </task>
     <servers />
   </component>

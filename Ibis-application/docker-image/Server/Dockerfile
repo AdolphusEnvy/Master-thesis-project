@@ -10,7 +10,7 @@ RUN apt-get update && \
     echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
     echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
     apt-get update && \
-    apt-get -y install openjdk-8-jdk 
+    apt-get -y install openjdk-8-jdk iputils-ping net-tools
 
 COPY lib/* /lib/
 COPY ipl-server .

@@ -10,19 +10,18 @@ RUN apt-get update && \
     echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
     echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
     apt-get update && \
-    apt-get -y install openjdk-8-jdk git dos2unix
+    apt-get -y install openjdk-8-jdk git dos2unix net-tools build-essential
 
 
 COPY lib/* /lib/
 COPY ibis-run .
 
 RUN git clone https://github.com/AdolphusEnvy/Master-thesis-project.git && \ 
-    ls && \
-    cd Master-thesis-project && \
+    cd Master-thesis-project/Ibis-application && \
     ls && \
     # sed $'s/\r$//' ./gradlew > ./gradlew.unix && \
-    # chmod 777 gradlew.unix && \
+    chmod 777 gradlew && \
     dos2unix gradlew && \
     ./gradlew
 
-CMD  ["./ibis-run"]
+# CMD  ["./ibis-run"]
