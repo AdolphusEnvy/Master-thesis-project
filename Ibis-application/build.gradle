@@ -48,5 +48,43 @@ compileJava.doLast {
         workingDir = "$buildDir/classes/java/main"
         args = [ "." ]
     }
+    copy {
+        from("$buildDir/classes/java/main/Driver.class")
+        into("src/main/cpp")
+    }
+        exec {
+            //dependsOn compileJava
+            workingDir "src/main/cpp"
+            commandLine "make"
+
+            standardOutput = new ByteArrayOutputStream()
+
+            //extension method stopTomcat.output() can be used to obtain the output:
+            ext.output = {
+                return standardOutput.toString()
+            }
+        }
+    copy {
+        from("src/main/cpp/libDriver.so")
+        into("/lib")
+    }
 }
+//compileJava.finalizedBy cppCompile
+//task cppCompile (type: Exec){
+//    dependsOn compileJava
+//    workingDir "src/main/cpp"
+//    commandLine "make"
+//
+//    standardOutput = new ByteArrayOutputStream()
+//
+//    //extension method stopTomcat.output() can be used to obtain the output:
+//    ext.output = {
+//        return standardOutput.toString()
+//    }
+//}
+//project.gradle.buildFinished {
+//    cppCompile
+//    println "build finished"
+//}
+//clean.finalizedBy(cppCompile)
 defaultTasks 'clean', 'copyDeps', 'assemble'
