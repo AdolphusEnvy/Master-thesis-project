@@ -200,4 +200,29 @@ Once a node is assigned, it will join/create the docker swarm or kubernetes clus
 The master receives job list and allocates tasks to workers. It also monitor the job list to send scaling up or down demand to the server( this part can be discussed in detail later).
 The job list or task arrangement can be persisted by something like Zookeeper to reduce the cost of the crash of master.
 
+## 11th of March 
+Participant: You Hu, and Jason Maassen
 
+A short recap:
+* Issues of MPI and spark – resources can be not able to be completely used
+* A prototype design and features to tackle on – self adjusted provisioning, cross region and data  locality
+* Plan for the project
+
+There are few feedback and self thinking:
+* VMs is the straight forward solution for resources management, what kind of strategy are used for resource management on VMs
+* IPL is designed for communication between the clusters, whether this feature can help in our case
+* This most key point is the strategy on managing tasks, we can start from a simple one
+* With this framework, we can replace sagecal with any computation efficient program
+* Xenon can be used for communication with cluster
+
+## 19th of March
+Participant: You Hu, Adam Belloum
+
+* presented detailed proposal
+* literature study: read the guide on canvas
+	* architecture or resource management?
+* design need for more literature
+* proposal: a more clear statement of research questions
+	* plan: a draft before next Monday(23th of March)
+* Plan: too rough
+	* need a plan for every week and few milestones 

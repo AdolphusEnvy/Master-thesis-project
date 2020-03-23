@@ -1,0 +1,534 @@
+%%
+%% This is file `sample-sigchi.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% samples.dtx  (with options: `sigchi')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from sample-sigchi.tex.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file samples.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%%
+%% The first command in your LaTeX source must be the \documentclass command.
+\documentclass[sigchi]{acmart}
+
+%%
+%% \BibTeX command to typeset BibTeX logo in the docs
+% \AtBeginDocument{%
+%   \providecommand\BibTeX{{%
+%     \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
+
+\settopmatter{printacmref=false} % Removes citation information below abstract
+\renewcommand\footnotetextcopyrightpermission[1]{} % removes footnote with conference information in first column
+\pagestyle{plain} % removes running headers
+\usepackage{caption}
+\usepackage{svg}
+\usepackage{graphics}
+\usepackage{amsmath}
+\usepackage[british]{babel}
+\usepackage{xcolor}
+\usepackage{CJKutf8}
+% \usepackage{graphicx}
+\usepackage{subcaption}
+
+%% Rights management information.  This information is sent to you
+%% when you complete the rights form.  These commands have SAMPLE
+%% values in them; it is your responsibility as an author to replace
+%% the commands and values with those provided to you when you
+%% complete the rights form.
+% \setcopyright{}
+% \copyrightyear{}
+% \acmYear{}
+% \acmDOI{}
+
+%% These commands are for a PROCEEDINGS abstract or paper.
+% \acmConference[Woodstock '18]{Woodstock '18: ACM Symposium on Neural
+%   Gaze Detection}{June 03--05, 2018}{Woodstock, NY}
+% \acmBooktitle{Woodstock '18: ACM Symposium on Neural Gaze Detection,
+%   June 03--05, 2018, Woodstock, NY}
+% \acmPrice{15.00}
+% \acmISBN{978-1-4503-9999-9/18/06}
+
+
+%%
+%% Submission ID.
+%% Use this when submitting an article to a sponsored event. You'll
+%% receive a unique submission ID from the organizers
+%% of the event, and this ID should be used as the parameter to this command.
+%%\acmSubmissionID{123-A56-BU3}
+
+%%
+%% The majority of ACM publications use numbered citations and
+%% references.  The command \citestyle{authoryear} switches to the
+%% "author year" style.
+%%
+%% If you are preparing content for an event
+%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
+%% citations and references.
+%% Uncommenting
+%% the next command will enable that style.
+%%\citestyle{acmauthoryear}
+
+%%
+%% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%%
+%% The "title" command has an optional parameter,
+%% allowing the author to define a "short title" to be used in page headers.
+\title{Report on internship at 510 of the Netherlands Red Cross}
+
+%%
+%% The "author" command and its associated commands are used to define
+%% the authors and their affiliations.
+%% Of note is the shared affiliation of the first two authors, and the
+%% "authornote" and "authornotemark" commands
+%% used to denote shared contribution to the research.
+\author{You Hu}
+\email{adolphus.hu@student.vu.nl}
+\email{HYou@redcross.nl}
+\affiliation{%
+  \institution{VU Amsterdam \\
+  510 of the Netherlands Red Cross}
+%   \city{Amsterdam}
+}
+
+
+
+%%
+%% By default, the full list of authors will be used in the page
+%% headers. Often, this list is too long, and will overlap
+%% other information printed in the page headers. This command allows
+%% the author to define a more concise list
+%% of authors' names for this purpose.
+\renewcommand{\shortauthors}{You Hu}
+
+%%
+%% The abstract is a short summary of the work to be presented in the
+%% article.
+\begin{abstract}
+
+Due to the federal structure of the Red Cross Movement - 191 National Societies, loosely connected through the International Federation of the Red Cross (IFRC) - it is difficult to get a unified, detailed picture of all the activities carried out around the world in any given moment. One possible solution is to use social media activity of National Societies and local branches of the Red Cross to infer where/when/what they are active on, which avoids the complications of developing and running an official reporting system. The Netherlands Red Cross has been piloting such an approach in the project "Local Branch Mapping", together with the IFRC. As a part of the project, two sub-tasks were finished during this internship: geolocation correction and social media analysis. The geolocation correction task aims at improving the accuracy of the geolocation of the social media accounts on the map, while the social media analysis task aims at extracting information from their daily posts. Both tasks were successfully completed. 
+\end{abstract}
+
+
+%%
+%% Keywords. The author(s) should pick words that accurately describe
+%% the work being presented. Separate the keywords with commas.
+
+
+%%
+%% This command processes the author and affiliation and title
+%% information and builds the first part of the formatted document.
+\maketitle
+\section{Introduction}
+The International Federation of Red Cross and Red Crescent Societies (IFRC) plans to establish a platform to get to know what local branches of each Red cross society are doing. However, due to the decentralized structure, it is not possible to let every local branch report their activities. Therefore, to achieve that goal, IFRC decided to collect social media (Facebook and Twitter) posts instead and extract their activities. 
+
+Since the local branches are in different geographical locations and, by definition, operate locally, it is logical to display them on a map. One of our goals is to create a map and visualize the topics that are being discussed by the local branches. To visualize the feeds of local branches social media of red cross all over the world, we need to get the real location of those social media. However, the locations shown on their home pages sometimes maybe not exact and accurate. It might be completely missing or incomplete, or there could be mismatches and typos. Therefore, we need to correct them by introducing other information sources. In Section \ref{sec:Geolocation correction}, the details of how to correct geolocation by introducing other sources will be discussed. After the geolocation of local branches has been corrected, they can be displayed on a dashboard.
+
+The second goal is to analyze the content of social media, to infer which activities and topics are being discussed. A popular and simple solution for social media analysis is based on analyzing hashtags, but is not suitable to our cases: hashtags are language- and culture-specific, making a cross-country analysis very difficult. Here, we propose an approach based on topic modeling which logically meets our requirements for integrating multi-languages sources. The use case for this approach we chose is measuring how active each national red cross society is working on the goals for the future. This approach can also be utilized for other similar tasks. In Section \ref{sec:Social media analysis}, we will talk about each stage of the pipeline.
+
+\section{Geolocation correction}\label{sec:Geolocation correction}
+In this section, we will describe the whole pipeline for geolocation correction. And we will first take four pilot countries(the Netherlands, Guatemala, Lebanon, and Malawi)  for experimenting. In the following subsections, each subsection will cover one of the phases including problem definition, method, result, and evaluation. There are five phases: Collecting web pages, Identify target pages, Extracting addresses, Addresses matching, and Correction strategies.
+
+Note that, the main point that affects when we are choosing different approaches is the requirement for generalization. There are near 200 national societies in the global. Therefore, there will be 200 initial web sites with different structures, technologies, and terms, which is what we called heterogeneity. On the other hand, multiple languages are used on their web pages and there is no uniformed language(like English) version of each site. According to those points, we would try to choose the most general, simple, non-country specified approaches.
+
+\subsection{Collecting web pages}
+When considering introducing other sources, there are two kinds of information can be utilized, one is by searching on Google map and another one is by collecting official addresses from their websites.
+
+The google map approach has been implemented by our colleague Anna Pechina. The core idea of this approach is to search the keywords of the Red Cross through Google Map API in different countries with different languages. The results of this approach will be used in the following phases, even though there are many inherent problems such as fake "red cross", multiple local branches on one building and so on. 
+
+Our approach will focus on utilizing the information on their web sites of the initial societies. The root addresses of each initial society are provided by IFRC on their website. We reckon that the information on the web sites will be more accurate and not ambiguous than Google map source as it is authenticated and there are no invalid candidates. We first manually checked the pages that contain the local branches' information on the web sites, and then consider how to reach those pages automatically by a fixed method. 
+
+\subsubsection{Problems of heterogeneity}
+There are 191 national societies in the world. This means there are 191 different structures, technologies and terms, which is what we called heterogeneity. The heterogeneity appears on multiple dimensions.
+
+First, we name the pages to contain the information we expect as target pages. The target pages are placed in different places of the whole web sites and the terms they used to describe those pages are different(\textit{rational/local branches}, \textit{hulp-in-nederland}, \textit{(About us) structure} and so on). Also apparently they use different languages(some have multiple versions for different languages). Besides, even though they all put the information on web pages, the technologies they used for display are different from each other including Flash, plain text and dynamic map generated by JavaScript code. Therefore, we need to find a way to cover all these aspects.
+
+\subsubsection{Methods}
+To get the target pages, there are two approaches which are described below and shown on Fig.\ref{fig:target_page}:
+\begin{itemize}
+    \item write down the paths to those pages by manually check as shown on Fig.\ref{fig:target_path};
+    \item collects all the pages and filter the target page by rules or model as shown in Fig. \ref{fig:target_score};
+\end{itemize}
+Considering we have near 200 initial sites and there probably will be more in the future, the first approach is not general enough. Therefore, we used the second approach. Besides, to get the web page sources generated by scripts, we used web driver to load whole pages and save all sources. Therefore, all HTML files and external data sources will be collected.
+\begin{figure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{img/target_identity_path.png}
+        \caption{Find target page by path}
+        \label{fig:target_path}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{img/target_identity_score.png}
+        \caption{Find target page by score}
+        \label{fig:target_score}
+    \end{subfigure}
+    \caption{Two approaches for target page identifying}\label{fig:target_page}
+\end{figure}
+
+We utilized the Scrapy framework for data collection and embedded Chrome web-driver to the download middle-ware. In the default setting, the download middle-ware would fetch the HTML file of given URLs. We modified this phase and replaced it with the web-driver query. After the whole page is processed properly, the page sources containing the data from external or API will be stored in local storage. Here, we use BFS policy and set the max depth as 3 as we find that in most cases those target pages can be found within 3 times of click.
+
+\subsection{Identify target pages}
+
+When we choose to use models or rules to find/identify the target pages and distinguish them from other pages, it turns to the problem about how to set up the scoring function.
+
+The way we identify target pages is to calculate the "density" of location/address. We tried many ways:
+\begin{itemize}
+    \item Named entity recognition: "The Netherlands is a good place" => [("the Netherlands","LOC")] =>1
+    \item Tokenlization+(Part of Speech tagging for filtering) + dictionary based matching(fuzzy match or elasticsearch score): "The Netherlands is a good place" => [("Netherlands", "Noun"), ("place","Noun")] => [{"name": "Netherlands", "score":17}, {"name": "the Netherlands", "score":15}]
+    \item Counting how many location contained in the page by traversing dictionary: "The Netherlands is a good place" => 1
+\end{itemize}
+
+In the end, we chose the last one. On the one hand, both first two methods are language specified, on the other hand, there will be too much complexity introduced to the systems. The names of places are provided by GEONet Names Server (GNS).
+
+Therefore we give every single page a score of how many names of places are covered. The pages with the highest scores can be considered as the target pages. The result shows that in four pilot countries, we successfully found the target pages of the Netherlands case and Guatemala case. In Malawi's case, they announce on their website that they don't have the addresses of their local branches. And for Lebanon, they just list all of the names of local branches. Without addresses, the target pages are not able to be found, on the other hand, it is not useful for us if they don`t publish the addresses on the websites. 
+
+\subsection{Extracting addresses}
+After detecting target pages, we picked the HTML files of target pages for NL and GT. We then parsed the HTML files by nodes as in the most case, the addresses and names of local branches will be under separate tags individually. By traversing all nodes, information is extracted by nodes.
+
+To reduce false-positive samples, we set up rules to validate possible true positive addresses.
+
+Considering a typical address: \textit{Vincent van Goghstraat 4 Zevenaar, Gelderland 6901 DK}, we can use rules below:
+\begin{itemize}
+    \item By regular expression: 
+        \begin{itemize}
+            \item keep the sentences contain at least one character and one comma => $r"^(?=.*[A-Za-z])(?=.*,).*\$"$
+            \item  keep the sentences contain at least one character, one comma and one number => $r"^(?=.*[A-Za-z])(?=.*\d)(?=.*,).*\$"$
+        \end{itemize}
+    \item By attribute:
+        \begin{itemize}
+            \item remove sentences length exceeding 100
+        \end{itemize}
+\end{itemize}
+
+
+The regular expressions can only be applied to Latin languages. 
+On the one hand, for other languages, the range of the Unicode number needs to be determined case by case.
+On the other hand, comma probably will not be used in some languages in addresses for example:\begin{CJK*}{UTF8}{gbsn}
+\textcolor{red}{北京市}\textcolor{blue}{东城区}\textcolor{green}{北新桥}三条8号
+\end{CJK*}
+
+
+For which regular expression rule we should choose, we first tested two rules on the Guatemala case as there are only 21 addresses on that page.
+If we take number into count, we will get about 22 candidates and by manual check, it covers 19 out of 21 addresses we hope to identify. The problem comes from some addresses without numbers in it like \textit{Aldea San Antonio, Serchil, San Marcos}.
+If we relax the restriction, we will get 26 candidates for the GT case and it covers 202 out of 205 addresses for the NL case.
+Therefore we choose the regular expression that only considers comma because for the next phase we will put them all to Google map query, it can be corrected or filtered by Google map service.
+
+
+\subsection{Addresses matching}
+
+Now we have all possible addresses, but it only shows that there is a local branch, but we don't know which one it is.
+
+Since our goal is to correct addresses from social media, we need to link the addresses to those social media.
+
+The idea is that: besides the addresses, we also look for names of local branches from the same page and match them to assign a meaning to each address. What we did is to assign an address to each possible name of local branches, as "bad names" will be ignored when we merge them to social media.
+
+Therefore, we kept all sentences/phrases and automatically checked whether there are locations/place names in it from the website https://www.geonames.org/ (more accurate and complete than NGA data set and support fuzzy query). We filtered out all the sentences not containing the names of location(including candidate addresses).
+
+Our first version of matching criteria is only based on the distance: calculate the distances of all pairs of the name of location and address, and for each name, matched with the closest address. To evaluate this method, we manually checked the accuracy of the matching on the Guatemala case. We matched 15 out of 21 names correctly.
+
+\subsubsection{Problem}
+By analyzing the result, there is one possible issue that would harm accuracy. In some cases, the geolocation of one address is closer to the other administrative area instead of the administrative area it belongs to. Because the geolocation of the administrative area is in the center of the area, while the local branch could be located near the boundary of this area where is more close to the neighbor area.
+
+To reduce the problem and make the solution applicable to other cases, we introduced weight to make the names and addresses in the same administrative area "closer". This weight is associated with the similarity in the semantics of names and addresses. The more similar they are, the more the distance is scaled down.
+
+\subsubsection{Semantic matching}
+
+Before we calculate the weight, we need to remove the common part of the name as we only compare them based on the string. For example, in the Guatemala case, the word Delegación is placed in front of the local branches' names, and in the Netherlands case, the names are like Afdeling XXX which are useless. Therefore, we used the TF-IDF model to extract the main "topic" of each name to reduce the effect of common phrases.
+
+The weight consists of two parts:
+\begin{itemize}
+    \item Fuzzy match factor: how similar two strings are
+    \item Duplication factor: how many times the name of the local branch is mentioned on address
+\end{itemize}
+
+Therefore, we replace geo distance by semantic distance and it is defined as below:
+\begin{equation}
+    semantic\_distance = real\_distance*DF*FMF
+\end{equation}
+
+Where $DF$ is duplication factor and $FMF$ is fuzzy match factor, they are defined as below:
+\begin{equation}
+    DF= 1/exp(address.count(name))
+\end{equation}
+\begin{equation}
+    FMF= 1/(1+fuzzy\_match\_score (address,name))
+\end{equation}
+
+Where: $fuzzy\_match\_score \in [0,100]$
+
+After scaling down the distance by semantics, the accuracy increased to 18/21, and we found 2 of failed cases are "bad" names whose semantics meaning is context-dependent(Sede Central and Delegación Guatemala).
+
+Therefore, our dataset from web scraping is complete with geolocation which is collected when we measured the distances, even though there are some false positive samples(not the name of a local branch) and mismatches.
+
+\subsection{Correction strategies}
+
+Plus Google map source and original geolocation from social media, we have three different sources about the geolocation of local branches. The idea is to merge them according to the semantic meaning of names from different sources(named as social media, web scraping and google maps). Therefore, we match social media account with Google map entities and entities from web scraping by the semantic distance of their names(fuzzy match score). And in this phase, the "bad names“ will be filtered out as they will not match to any social media account.
+
+Since we have geolocation from three sources and none of them are not able to completely be trusted, we need to make a decision on which one we should choose as the geolocation of the social media.
+
+The strategy we chose is voting and minority out/majority occupy as it is shown in Fig.\ref{fig:Voting_strategy}. The strategy is reasonable in two aspects: 
+\begin{itemize}
+    \item if three of them are close to each other: any two of them are correct enough
+    \item if there is one source far away from others: it is considered as not reliable
+\end{itemize}
+
+\begin{figure}
+    %\centering
+    \includegraphics[width=0.45\textwidth]{img/voting_stratagy.png}
+    \caption{Voting strategy}
+    \label{fig:Voting_strategy}
+\end{figure}
+
+In this phase we considered semantic meaning as well and decreased the distance of pairs by the fuzzy match score of there addresses(on social media they have one line addresses). Therefore, we can first removed the most unreliable one. Then considering how to make decision on the rest.
+
+Since we assume the rest two are reliable, then we choose one of them as the final geolocation based on the priority order:GMaps>Social media> Web scraping. This means we choose the geolocation with higher priority as the final one.
+
+In the end, for each local branch social media (Facebook and Twitter), we assign a most reliable geolocation and address to it.
+
+% \subsection{Performance evaluation}
+% To evaluate the performance of our pipeline, we compared the geolocations which have been corrected and the real geolocations of social media accounts. Normally, we are not able to find the geolocation of all the local branches. However, due to the requirement for displaying all the local branches, the Netherlands Red Cross pins all of them to a generated map. By checking their API, we got the data used for placing signs on the map.
+% The results, shows that over 90\% of local branches are assigned a accurate enough geolocation whose distance to their real geolocation is under 500 meters.
+
+\subsection{Results and discussion for geolocation correction}
+Overall, this approach is consists of multiple phases and a lot of technologies are used. The whole pipeline is very long and because of it, the inaccuracy will propagate and increase through the chain. Therefore we tried to keep all methods simple and easy to evaluate. However, because in most cases we don't have the ground true geolocation of each of the local branches, we are not able to evaluate the last phase and then it is not possible to evaluate the whole pipeline. But fortunately, because the Netherlands Red Cross uses a map to display the local branches, we collected the true dataset of their location (it is used for generating the map) and used that data to evaluate our model. Note that in our pipeline, we did not collect this information. The results show that we archived over 90\% confidence to
+ensure the distance between corrected geolocation and true geolocation is under 500 meters. This result shows that by our methods, the geolocations of social media can be guaranteed at a high level.
+
+As to the national societies that don't provide information about their local branches, we can also use the pipeline for them by only introducing the Google Maps source. Besides, there is still a large room for improvement in each component of the pipeline. We believe these methods can be more accurate and common in use for more countries.
+
+\section{Social media analysis}\label{sec:Social media analysis}
+In our previous work, we have established a dashboard for four pilot countries(Netherlands, Malawi, Lebanon, and Guatemala), and an example with Guatemala is shown in Fig.\ref{fig:dashboard}.
+\begin{figure*}
+    \begin{subfigure}[b]{\textwidth}
+        \includegraphics[width=\textwidth]{img/active_account.jpg}
+        \caption{Active accounts}
+        \label{fig:active_account}
+    \end{subfigure}
+    \begin{subfigure}[b]{\textwidth}
+        \includegraphics[width=\textwidth]{img/top_hashtag.jpg}
+        \caption{Top hashtags}
+        \label{fig:top_hashtag}
+    \end{subfigure}
+    \caption{Dashboard of local branches map(Guatemala)}\label{fig:dashboard}
+\end{figure*}
+
+In Fig.\ref{fig:active_account}, the most active social media accounts(on three different platform) are listed and in the left side the information about local branches can be shown by clicking the bubbles. And in the Fig.\ref{fig:top_hashtag}, there is a heat map showing the active area and a stacked diagram showing how hot topics(hashtag) shifting by the time. Basically, this dashboard has already provided a way for getting insight of what local branches are doing. However, they are still few problems about this approach:
+\begin{itemize}
+    \item the hashtags are pre-defined by the organizations, we are not able to automatically find the common things by hashtags among countries 
+    \item the hashtags can not cover the details on what they are doing, and in many few of them are just name of organizations
+    \item it can not handle the multi-language problem
+\end{itemize}
+In Fig.\ref{fig:active_account}, the most active social media accounts(on three different platforms) are listed and on the left side the information about local branches can be shown by clicking the bubbles. And in Fig.\ref{fig:top_hashtag}, there is a heat map showing the active area and a stacked diagram showing how hot topics(hashtag) shifting by the time. Basically, this dashboard has already provided a way for getting insight into what local branches are doing. However, they are still a few problems with this approach:
+\begin{itemize}
+    \item the hashtags are pre-defined by the organizations, we are not able to automatically find the common things by hashtags among countries 
+    \item the hashtags can not cover the details on what they are doing, and in many few of them are just the name of organizations
+    \item it can not handle the multi-language problem
+\end{itemize}
+To deal with those problems, we proceeded to go down to the content of posts themselves. The idea is to extract topics that local branches are talking about and to use words to represent the topics. And then connect them by the overlapped words. The multi-languages problem can be solved by translation(only translate the keywords of topics, much cheaper than translate the whole texts).
+
+In this section, we take a special use case into consideration. The IFRC has published guidance for future 10 years' work aims to guide each national red cross society to work on more urgent topics. That guidance is called strategy 2030 which can be found in their web site \textit{https://future-rcrc.com/}. There are a few top topics that red cross societies around the world should focus on. The goal is to measure how active each national red cross is working on them, by observing their social media posts. 
+
+\subsubsection{Inherit problem of normal measurements}
+In most cases, we can simply calculate the term frequency of each topic in posts. But there are a few problems:
+\begin{itemize}
+    \item the meaning of goals is abundant, for instance, the topic "crisis" could be related to contents such as "war", "flood" and so on. We need to enrich the meaning of goals and make it computable.
+    \item the post quantity in each country is imbalanced, for example, in the Netherlands there are 200 local branches and over 100 social media accounts posted more than 20K of posts while there are only 260s FB posts in Malawi. We should set up a fair measuring function.
+    \item the things that local branches are talking but not in given topics are important as well.
+\end{itemize}
+
+Therefore, our approach is to expand the meaning of given topics, extract topics from social media posts and match them. The use case can be formalized as Fig.\ref{fig:use}.
+\begin{figure*}
+    %\centering
+    \includegraphics[width=0.90\textwidth]{img/use_case.jpg}
+    \caption{Example of measuring red cross societies(Malawi)}
+    \label{fig:use}
+\end{figure*}
+
+In this use case, we take social media posts of the Malawi red cross as an example. Once this method applied to the Malawi case, we can use it to measure other red cross societies as well. On the other hand, it can be used for making a comparison between different red cross societies.
+
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.30\textwidth]{img/use_case.jpg}
+%     \caption{Caption}
+%     \label{fig:my_label}
+% \end{figure}
+In section \ref{sec:Meaning enrichment}, we will talk about meaning enrichment of given topics to transform topics into the form that topics are represented by key words. In section \ref{sec:Topic modeling}, the topic models are talked. In section \ref{sec:Scoring and Matching} we will talk about how to setup matching and scoring criteria. And in section \ref{sec:visualization}, we will show the way we make the visualization.
+
+\subsection{Meaning enrichment}\label{sec:Meaning enrichment}
+
+In \textit{strategy 2030}, there are five main topics: Climate Change; Crisis and Disasters; Health; Migration and Identity; Values, Power and Inclusion. Each of them is the topic that IFRC considers urgent for our future work.
+
+However, the names of topics are too thin and there are richly meaning behind the names. Therefore we expanded the meaning of those topics and tried to make a form of using a few keywords to represent each topic. Of course, if we only consider the comparison between different red cross societies, we can skip this phase. Here we introduced three kinds of information to enrich its meaning. We extracted information from the document they published on the website and concluded them as description, strategy and extra.
+
+The way we transfer the text of description, strategy and extra, is to perform TF-IDF on each kind and to extract 5 keywords with top scores. 
+Therefore, keywords can help to distinguish them from each other. At the same time, we stored the TF-IDF score of each word to represent the importance of the word. Besides, the reason we didn't mix three kinds of material is that we assigned different weights to words from different materials during the scoring phase. The result of meaning enrichment is shown as the left top of Fig.\ref{fig:use}.
+
+\subsection{Topic modeling}\label{sec:Topic modeling}
+In this phase, we explored many existed solutions and models. Our case can be concluded as topic modeling on social media pots/short text. After a literature study, we found that in the topic modeling field the Latent Dirichlet Allocation(LDA) model and its variants are most common in use. 
+
+In \cite{Farzindar2015}, the researchers listed multiple technologies for online event detection. Even though the topic in this paper is close to what we were doing, the models and technologies mentioned in that paper do not fit our requirements. In \cite{Wang2012},\cite{Lau2012} and \cite{Sasaki2014}, all of them choose to use modified LDA model for online trends monitoring. However, those advanced models are for online requirement while the timeliness is not necessary in our case. But they inspired us to use LDA for topic modeling.
+
+During the project, we made experiments on using LDA for our case. However, the results show that the LDA model met many problems:
+\begin{itemize}
+    \item due to the imbalance of the size of posts(Facebook has no limit for length), the long texts will take advantage of the score
+    \item the parameter tuning is hard for LDA, the main factor is the number of topics, another option is to set the prior of each word, which is not realistic for us
+\end{itemize}
+
+These two problems are related to many aspects. When considering measuring the performance of the model, one solution is to display the documents with the highest scores. However, because long texts have advantages, those top score documents are all long text and they are meaningless. For performance measurement, the python library Gensim provides an implementation of \textit{Topic Coherence Pipeline}\cite{roderexploring} together with the implementation of the LDA model. But, when we tuned the LDA model by changing the number of topics, the scores changed a little and other parameters(like decay value) did not affect.
+
+Therefore, we looked at other models that fit the short text. In \cite{RangarajanSridhar2015} and \cite{Padmakumar2017}, they all talked about how to deal with a short text. However, we are not able to get the implementation of those methods and we couldn't implement them by ourselves.
+
+In the end, we chose to use the Gibbs Sampling algorithm for the Dirichlet Multinomial Mixture(GSDMM) model. This model was invented in the paper \cite{wang2014dirichlet} and implemented by an open-source contributor. The implementation we used is from https://github.com/rwalk/gsdmm.
+
+This model follows the idea of LDA, but it goes with another way. The original paper starts with an analogy:
+
+In a film study class, the teacher asks students to form groups by themselves according to their interest in movies. Everyone is required to write down what movies they are interested in. Apparently, It can not be done at once, therefore, the clustering is performed by students moving to new groups iteratively according to the following rules:
+\begin{itemize}
+    \item students will (preferably) choose groups with more people
+    \item students will (preferably) choose groups to have the most similar interest in movies
+\end{itemize}
+
+Note that, this "choose" is not fixed, it only represents that students have more chance or probability for choosing those groups with more students or sharing more interest.
+
+For each iteration, each student scores each group (including empty group), and roll a dice to decide which group to go, where the probability of each group is according to the scores.
+
+After long iterations, the clustering will converge (to some extent). Here, for our case, each social media post can be viewed as a student and each non-stop word can be viewed as the name of a movie.
+
+The benefit of GSDMM is shown as below:
+\begin{itemize}
+    \item it can handle short text nicely
+    \item the number of groups can be determined automatically as long as setting an upper bound
+    \item the parameter tuning is simple and easy to understand
+    \item the scores for documents to each group are not affected by the size of the document (for LDA longer documents can get a higher score) as the score here is the probability to its group which is normalized
+\end{itemize}
+
+There are two important parameters we should consider:
+\begin{itemize}
+    \item Parameter Alpha (for rule one): 
+the higher the alpha is the higher chance that students (doc/post) will choose the groups with fewer students (doc/post); in extreme case with alpha=0, the doc will never choose groups without any member
+    \item Parameter Beta (for rule two) : 
+the lower the beta is the higher chance that students (doc/post) will choose the groups to share  similar interest (here is the number of overlapped words)
+\end{itemize}
+By manually checking(as the previous topic coherence model is tightly bounded with Gensim's models), the results of topic extraction by GSDMM were much better than that of LDA. All the keywords are covered by the documents with the highest scores and long text won't take advantage. 
+
+\subsection{Scoring and Matching}\label{sec:Scoring and Matching}
+
+To make it clear, the topics that \textit{strategy 2030} provides are called "given topic", and the topics that generated by topic models are called extracted topics.
+
+In the previous stages, all the keywords are in the form of its stem. Therefore, in this phase, we firstly inverted all stems back to its normal words with most occurring in the documents.
+
+Then, considering that the words in given topics are not completely the same, we used fuzzy-wuzzy to scoring the similarity between words. If the fuzzy-wuzzy score between a word from a given topic and a word from the extracted topic is higher than 90 (90\% of similarity), we assume they match each other. Note that, this matching should not be directly applied to Non-English languages. For the Netherlands case, those extracted words should be translated to English first, then matched to given topics.
+
+For each pair of a given topic and extracted topic, the sum of the occurrence of the word in extracted topic multiply TF-IDF score of the matched word in the given topic is considered as the score of these two topics.
+
+In Tab.\ref{tab:1},it is one simple result of scoring and matching. The index indicates the id of each extracted topics. And the following five columns are the score of it in each given topic. NoDoc means the number of the document in this group.
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+index & climate change & crisis and disasters & health & migration and identity & values, power and inclusion & NoDoc \\ \hline
+0     & 0              & 270                  & 0      & 45.3                   & 0                           & 165   \\ \hline
+1     & 0              & 0                    & 0      & 0                      & 0                           & 1     \\ \hline
+2     & 0              & 0                    & 0      & 0                      & 0                           & 1     \\ \hline
+3     & 0              & 0                    & 0      & 0                      & 0                           & 9     \\ \hline
+4     & 2.4            & 0                    & 0      & 0                      & 0                           & 2     \\ \hline
+5     & 0              & 0                    & 0      & 0                      & 0                           & 7     \\ \hline
+6     & 0              & 0                    & 0      & 0                      & 0                           & 3     \\ \hline
+7     & 0              & 0                    & 0      & 0                      & 0                           & 1     \\ \hline
+8     & 0              & 0                    & 0      & 0                      & 0                           & 1     \\ \hline
+9     & 0              & 0                    & 0.5    & 1                      & 0                           & 28    \\ \hline
+10    & 0              & 2.4                  & 0      & 0                      & 0                           & 12    \\ \hline
+11    & 0              & 0                    & 0      & 0                      & 0                           & 3     \\ \hline
+12    & 0              & 0                    & 0      & 0                      & 0                           & 17    \\ \hline
+\end{tabular}
+\caption{The score of each extracted topics on given topics}
+\label{tab:1}
+\end{table*}
+
+In this table, the score between given topic \textit{I} with the keyword set $D$ and extracted topic \textit{J} with the keyword set $E$ can be formalized as below:
+
+\begin{equation}
+score_{I,J}=\sum_{d\in D}\sum_{e\in E}match(d,e)* TF_{e}* TF\_IDF Score_{d}* W_{d}
+\end{equation}
+Where:
+\begin{equation}
+    match(d,e)=\left\{
+    \begin{array}{rcl}
+1       &      & {Fuzzy Match Score(d,e)      >90      }\\
+0     &      & {otherwise}
+\end{array} 
+    \right.\label{eq:1}
+\end{equation}
+
+
+and $TF_{e}$ is the term frequency of word $e$ in the group which topic \textit{J} belongs to. $TF\_IDF Score_{d}$ can be viewed as the uniqueness or importance of the word $d$ in its category. For $W_{d}$ in our implementation is defined as below and can be changed to meet more fairness:
+
+\begin{equation}
+    W_{d}=\left\{
+    \begin{array}{rcl}
+1.0       &      & {d \;  from \;  description      }\\
+0.5     &      & {d \;  from \;   strategy}\\
+0.3     &      & {d \;  from \;  extra}
+\end{array} 
+    \right.\label{eq:2}
+\end{equation}
+
+Note that this result is based on model given parameters: alpha=0, beta=0.1. If we set alpha=0.01 and beta=0.01, there will be more groups of atopic and the imbalance between groups in quantity will be much larger (which will cause more groups with only one doc there). Therefore, we do recommend to adjust the parameter setting to a proper one.
+
+\subsection{Visualization}\label{sec:visualization}
+
+Since we have assigned scores on each given topics to each extracted groups, We can make more quantitative analysis based on it. But the numbers in table are only numbers, to make it more clear and easy to hands on the overview situation, we implemented a dynamic and interactive visualization.
+
+The goals to visualization is as following:
+\begin{itemize}
+    \item To visualize the quantity of post in each extracted groups
+    \item To visualize the distribution of given topics among extracted topics
+    \item The mixture of given topics in one extracted topic should be displayed
+\end{itemize}
+
+Besides,the solution should be scalable and general and should be light weight as well
+Therefore, we decide to use HTML with D3 framework for visualization. One example on Malawi case is shown in Fig.\ref{fig:vis}.
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{img/malawi_screen_shot.png}
+    \caption{Visualization on Malawi social media posts }
+    \label{fig:vis}
+\end{figure*}
+We use concentric circles to represent each extracted topics, the area is proportional to the number of posts on this topic. And each color represents a given topic(and one color to indicate no given topic mentioned in this group). The probation of each color in the circles is based on their scores. The higher the score compares to others' given topic has, the larger the area its color will occupy.
+
+When the mouse is hovering over the circles, there will be a box shown at the left top and display the keywords of this group. It will change when the mouse is hovering over different circles and disappear when the mouse is not on any circle.
+
+The visualization is dynamic and interactive because you can drag the circles and they will act based on force simulation. This solves the problem of circle placement and scalability.
+
+\subsection{conclusion and discussion for social media analysis}
+
+We provide an approach to quantify the clusters of social media activity (from Red Cross accounts, in this case) on given topics. And in the meantime, each social media cluster can make comparisons with other clusters by applying this automatic approach. If this approach is used, the fairness can be achieved by changing the threshold of matching in Equation \ref{eq:1} and the definition of $W_{d}$ in Equation \ref{eq:2} according to the real situation.
+
+In the case explored, the GSDMM model had better performance than the original LDA model as it is more suitable for short texts. However, the cost is high computation. When applying this method to a larger dataset, the implementation should be rewritten. One idea is to use multi-thread technology to analyze multiple documents in parallel. The implementation we used only utilizes pure python code for functionality. We tried to use Numpy to rewrite the part for calculating the probability. However, we failed to achieve acceleration and the model was not able to converge.
+
+Besides, there is still a large room for improvement in visualization. In our implementation, we are not able to compare social media from different countries at the same time in one figure. A more advanced visualization solution should be applied to enable users to get more insights into the connections. 
+
+\section{Conclusion and self-reflection}
+The whole project worked well and reached the expectation set at the beginning. As it is mentioned in this report, there are multiple alternatives in each phase. In fact, during the project several tools and technologies were explored, many more than those implemented in the final solution. It makes me realize that data science works differently in real production: it starts with only a goal and some ideas, and we first need to explore as much literature/case as possible and try the most reasonable ones. What we learned from the university helps us to find and implement the best choice. Overall, during the internship, I learned a lot, not only the advanced models and technologies but also how to work on well-defined problems without fixed solutions. Besides, the skills and knowledge I learned from the university have also been improved.
+
+From the research side, through this project, many scientific conclusions are proved in practice. For instance, the features of GSDMM which the author claimed that good for short text showed in our implementation. However, the reason why GSDMM is not popular in use maybe because of the heavy computation cost Which stems from the inherit of the algorithm. And the short come of LDA motivated researchers to work on its variants.
+\bibliography{sample-base.bib}
+\bibliographystyle{ACM-Reference-Format}
+\end{document}
+\endinput
+%%
+%% End of file `sample-sigchi.tex'.
