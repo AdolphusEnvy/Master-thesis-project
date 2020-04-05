@@ -62,3 +62,18 @@ Efficient Parallel Data Processing in the Cloud
 AND SERVICES (increase resource utilization)
 * Resource allocation
   * 
+## Resource Provision for Batch and Interactive Workloads in Data Centers
+
+highlight:
+* schedule batch and interactive jobs
+* SLA penalty algorithm
+
+similarity: 
+* private cloud
+* fixed, limited mount of resources
+* schedule two kinds of jobs
+
+difference:
+* provider side solution
+* No remote resources/ with remote resources
+
