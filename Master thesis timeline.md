@@ -226,3 +226,14 @@ Participant: You Hu, Adam Belloum
 	* plan: a draft before next Monday(23th of March)
 * Plan: too rough
 	* need a plan for every week and few milestones 
+
+## 25th of March
+Participant: You Hu, Adam Belloum
+
+Today we talked about the project proposal, and literature study.
+Here are few points:
+
+* The terminology: system or framework, auto-scaling or auto-provisioning
+* Plan could be Coarse-grained like 2-3 weeks per block
+* For the paper writing, build up skeleton at first and fill in along with the progress
+* We compared the demand of common auto-scaling policy and our solution. We should find  more materials from our side.

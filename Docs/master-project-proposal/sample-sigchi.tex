@@ -116,7 +116,7 @@
 %% The "title" command has an optional parameter,
 %% allowing the author to define a "short title" to be used in page headers.
 \title{Master thesis proposal \\
-       A container based self-adjusted auto-provisioning framework 
+       A container based self-adjusted auto-provisioning system 
         at resource level}
 
 %%
@@ -204,7 +204,7 @@ Moreover, the following topics can be considered together:
 
 \section{Related works}
 The common solution for managing resources is utilizing cloud management platforms like OpenStack or OpenNebula. 
-Tania et al. \cite{Lorido-Botran2014} listed multiple methods for auto-scaling upon VM based cloud. However, in our case, the application runs in clusters instead of the cloud environment.
+Tania et al. \cite{Lorido-Botran2014} listed multiple methods for auto-scaling on VM based cloud. However, in our case, the application runs in clusters instead of the cloud environment.
 On the one hand, the VM is very heavy while our task is fixed. On the other hand, the middlewares need to be placed on nodes in advanced like Spark daemon, this leads to the same problem as Spark's.
 Of course, the strategies of resource management in this report and other papers\cite{Kang2013}\cite{Mao2011} can be applied in our project. 
 
@@ -245,34 +245,40 @@ For fault tolerance, we can randomly force kill nodes to test this feature.
 \begin{itemize}
   \item Phrase 1 - literature study ：March 30th- April 27th
   \begin{itemize}
-    \item Week1: literature study on resources management algorithm 
-    \item Week2: literature study on container-based auto-scaling systems
-    \item Week3: literature study on cross fields
+    \item Week1-3: literature study on resources management algorithm and container-based auto-scaling systems
     \item Week4: summarizing and reporting
   \end{itemize}
   \item Phrase2 - implement prototype : April 27th - May 1st
   \begin{itemize}
-    \item Week1-2: implement a prototype with simple scaling mechanism in one cluster
-    \item Week3： add fault tolerance feature
+    \item Week1-3: implement a prototype with simple scaling mechanism in one cluster
     \item Week4-5: design a benchmarking framework for different scaling mechanism 
   \end{itemize}
   \item Phrase3 - add\&test features : May 1st - May 29th
   \begin{itemize}
-    \item Week1-2: test different(2-3) mechanisms
-    \item Week3: add cross region features
+    \item Week1-3: test different(2-3) mechanisms and add more features
     \item Week4: enhance testing system for cross region requirement
   \end{itemize}
   \item Phrase4 - final evaluation : May 29th - June 26th
   \begin{itemize}
     \item Week1-2: evaluate the performance and try to compare to existed versions
-    \item Week3-4: debuging and optimizing
+    \item Week3-4: debugging and optimizing
   \end{itemize}
-  \item Phrase5 - organize thesis paper : June 29th - July 24th
+  \item Phrase5 - organize thesis paper: June 29th - July 24th
   \begin{itemize}
+    \item In previous stages: build up skeleton and fill in content at any time
     \item Week1-2: make the draft
     \item Week3-4: review and improve
   \end{itemize}
 \end{itemize}
+\section{Supervision}
+This project is initialed by the Netherlands eScience Center. The supervision is provided by:
+\begin{itemize}
+  \item Dr. Jason Maassen\footnote{e-mail:J.Maassen@esciencecenter.nl}, Technical lead efficient computing at Netherlands eScience Center
+  \item Prof. Adam Belloum\footnote{e-mail:A.S.Z.Belloum@uva.nl}, Full Professor at UvA and Technical lead optimized data handling
+\end{itemize}
+There will a regular weekly meeting with Prof.Belloum, and continuously reporting to Dr. Maassen about the progress.
+
+This proposal has been agreed by You Hu, Jason Maassen and Adam Belloum. For convenience and due to the COIVD-19 situation, there is no signature in this version. If needed, please contact to You Hu for making signed version.
 \newpage  
 \bibliography{sample-base.bib}
 \bibliographystyle{ACM-Reference-Format}
