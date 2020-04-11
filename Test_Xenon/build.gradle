@@ -5,13 +5,20 @@ plugins {
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
-
+sourceCompatibility = 11
+compileJava.options.fork = true
+compileJava.options.forkOptions.executable = /usr/lib/jvm/java-11-openjdk-11.0.3.7-0.el7_6.x86_64/bin/
 repositories {
     mavenCentral()
     jcenter()
 }
-
+sourceSets {
+    main {
+        java {
+            srcDirs 'src'
+        }
+    }
+}
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'nl.esciencecenter.xenon', name: 'xenon', version: '3.1.0'

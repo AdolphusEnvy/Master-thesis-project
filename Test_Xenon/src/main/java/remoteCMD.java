@@ -10,8 +10,8 @@ public class remoteCMD {
         // https://hub.docker.com/r/xenonmiddleware/slurm/), accessible to user 'xenon' via
         // port 10022 on localhost, using password 'javagat'
         String location = "localhost:10022";
-        String username = "yhu310";
-        char[] password = "i52nztPF".toCharArray();
+        String username = "xenon";
+        char[] password = "javagat".toCharArray();
         PasswordCredential credential = new PasswordCredential(username, password);
 
         // create the SLURM scheduler representation
