@@ -237,3 +237,12 @@ Here are few points:
 * Plan could be Coarse-grained like 2-3 weeks per block
 * For the paper writing, build up skeleton at first and fill in along with the progress
 * We compared the demand of common auto-scaling policy and our solution. We should find  more materials from our side.
+
+## 8th of April
+Participant: You Hu, Adam Belloum
+
+Today, We firstly discussed one paper with similar assumption of the case: limited amount of resources; batch and auto-scaling jobs
+The summary of the paper can be checked by [Resource Provision for Batch and Interactive Workloads in Data Centers](Literature/reviews.md)
+
+Todo: talk to Jason and prepare slides and concrete questions;
+state the problem to solve(to each research questions)
