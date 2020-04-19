@@ -246,3 +246,16 @@ The summary of the paper can be checked by [Resource Provision for Batch and Int
 
 Todo: talk to Jason and prepare slides and concrete questions;
 state the problem to solve(to each research questions)
+
+## 15th of April
+Participant: You Hu, Adam Belloum, Jason Maassen
+
+Online meeting for three of us. The main topic is reporting progress to Jason and few questions about Ibis and Xenon.
+
+[The sides](Docs/meeting%204.15.pptx) is archived in Docs folder. It is consists of :
+* Recap of background and our special role in cloud industry
+* Questions statement in detail: the outline for literature study
+* current implementation: Ibis+JNI+contianer; Xenon on DAS5
+* current related work literature: batch and interactive jobs provision based on SLA; overview on resource management on cloud.
+* few remoarks from Jason: Ibis is meant to support communication for system nodes join and leave; Xenon provides simple iterface for manage jobs.
+* Future work: systematicly literature study; combline Ibis and Xenon experiments.
