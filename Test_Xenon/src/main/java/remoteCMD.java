@@ -9,7 +9,7 @@ public class remoteCMD {
         // Assume the remote system is actually just a Docker container (e.g.
         // https://hub.docker.com/r/xenonmiddleware/slurm/), accessible to user 'xenon' via
         // port 10022 on localhost, using password 'javagat'
-        String location = "ssh://node033:22";
+        String location = "ssh://fs0.das5.cs.vu.nl:22";
         String username = "yhu310";
         char[] password = "i52nztPF".toCharArray();
         PasswordCredential credential = new PasswordCredential(username, password);
@@ -18,9 +18,9 @@ public class remoteCMD {
         Scheduler scheduler = Scheduler.create("slurm", location, credential);
 
         JobDescription description = new JobDescription();
-        description.setExecutable("/usr/bin/wc");
-        description.setArguments("-l", "/etc/passwd");
-        description.setStdout("wc.stdout.txt");
+        description.setExecutable("sleep");
+        description.setArguments("30");
+        description.setStdout("sleep.stdout.txt");
 
         // submit the job
         String jobId = scheduler.submitBatchJob(description);

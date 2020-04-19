@@ -7,7 +7,9 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 11
 compileJava.options.fork = true
-：compileJava.options.forkOptions.executable = /usr/lib/jvm/java-11-openjdk-11.0.3.7-0.el7_6.x86_64/bin/
+
+compileJava.options.forkOptions.executable ="/usr/lib/jvm/java-11-openjdk-11.0.3.7-0.el7_6.x86_64/bin/javac"
+
 repositories {
     mavenCentral()
     jcenter()
@@ -25,4 +27,14 @@ dependencies {
     compile group: 'nl.esciencecenter.xenon.adaptors', name: 'xenon-adaptors-cloud', version: '3.0.2'
 //    compile group: 'nl.esciencecenter.xenon.adaptors', name: 'xenon-adaptors-grid', version: '3.0.0'
 //    compile group: 'nl.esciencecenter.xenon.adaptors', name: 'xenon-adaptors-hadoop', version: '3.0.0'
+}
+jar {
+    manifestContentCharset 'utf-8'
+    metadataCharset 'utf-8'
+    manifest {
+        attributes "Main-Class": "remoteCMD"
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
