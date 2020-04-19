@@ -3,7 +3,7 @@
 #run java, add both local working dir (for log4j.properties) and lib dir to
 #classpath
 cd /Master-thesis-project/Ibis-application
-java -noverify -classpath ".:lib/*:/Master-thesis-project/Ibis-application/build/classes/java/main/:" -Djava.library.path="/lib:" "$@"
+java -noverify -classpath ".:lib/*:/Master-thesis-project/Ibis-application/build/classes/java/main/:" -Djava.library.path="/lib:" -Dibis.pool.name=1    "$@" Driver
 	#"-Dibis.server.address=ibis-server" \
 
 #java -noverify -classpath ".:lib/*:/tmp/Ia/build/classes/java/main:" -Djava.library.path="/lib:"  Driver

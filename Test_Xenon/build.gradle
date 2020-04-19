@@ -7,7 +7,7 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 11
 compileJava.options.fork = true
-compileJava.options.forkOptions.executable = /usr/lib/jvm/java-11-openjdk-11.0.3.7-0.el7_6.x86_64/bin/
+：compileJava.options.forkOptions.executable = /usr/lib/jvm/java-11-openjdk-11.0.3.7-0.el7_6.x86_64/bin/
 repositories {
     mavenCentral()
     jcenter()

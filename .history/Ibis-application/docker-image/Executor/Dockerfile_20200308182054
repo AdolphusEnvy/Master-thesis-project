@@ -1,7 +1,0 @@
-FROM ubuntu:18.04
-MAINTAINER adolphusenvy
-
-USER root
-ENV DISPLAY :0
-
-RUN apt install openjdk-8-jdk

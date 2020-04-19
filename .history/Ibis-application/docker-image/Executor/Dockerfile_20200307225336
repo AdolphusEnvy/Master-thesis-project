@@ -1,5 +1,0 @@
-FROM fdiblen/spark-master-dirac:latest
-MAINTAINER adolphusenvy
-
-USER root
-ENV DISPLAY :0

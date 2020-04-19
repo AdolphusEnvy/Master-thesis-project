@@ -26,4 +26,4 @@ RUN git clone https://github.com/AdolphusEnvy/Master-thesis-project.git && \
 
 
 
-# CMD  ["./ibis-run"]
+ENTRYPOINT [ "./ibis-run" ]  
