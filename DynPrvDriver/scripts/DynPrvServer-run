@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# This script is a convenience script to start the ipl registry server from the
+# IPL installation, specified in the $IPL_HOME environment variable.
+export IPL_ADDRESS="$(hostname -I)"
+# Check IPL_HOME.
+if [ -z "$SERVER_HOME" ];  then
+    echo "please set IPL_HOME to the location of your Ibis installation" 1>&2
+    exit 1
+fi
+
+exec singularity instance start "$SERVER_HOME"/DynPrvServer.simg server

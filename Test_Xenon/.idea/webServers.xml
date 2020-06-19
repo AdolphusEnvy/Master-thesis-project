@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="92da49a4-119a-4e09-adbd-32106818366d" name="VUDAS5">
+        <fileTransfer rootFolder="/home/yhu310/Master-thesis-project/Test_Xenon" accessType="SFTP" host="fs0.das5.cs.vu.nl" port="22" sshConfigId="e7391d2f-0cb6-47a4-ae23-96c7e319aa27" sshConfig="yhu310@fs0.das5.cs.vu.nl:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="8550fba0-07ec-4cfe-aae9-576423a5c307" name="DELFTDAS5">
+        <fileTransfer rootFolder="/home/yhu310/TestXenon" accessType="SFTP" host="fs3.das5.tudelft.nl" port="22" sshConfigId="871450a4-0f1f-4d67-bbd8-8c8418011074" sshConfig="yhu310@fs3.das5.tudelft.nl:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="9f8f0da0-b2d5-4bb4-8fec-7ed6be8dc2bf" name="LUDAS5">
+        <fileTransfer rootFolder="/home/yhu310/TestXenon" accessType="SFTP" host="fs1.das5.liacs.nl" port="22" sshConfigId="c4c6de7b-064b-4cf6-87d7-28e6c3b40d1c" sshConfig="yhu310@fs1.das5.liacs.nl:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
