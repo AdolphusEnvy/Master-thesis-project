@@ -5,6 +5,7 @@ import nl.esciencecenter.xenon.schedulers.JobDescription;
 import nl.esciencecenter.xenon.schedulers.JobStatus;
 import nl.esciencecenter.xenon.schedulers.QueueStatus;
 import nl.esciencecenter.xenon.schedulers.Scheduler;
+import okhttp3.OkHttpClient;
 
 import java.io.*;
 import java.util.*;
@@ -27,14 +28,16 @@ public class remoteCMD {
         O,
         T
     }
+    private OkHttpClient client;
 
     remoteCMD(Integer MinNode, String PartitionName) {
         minNode = MinNode;
         partitionName = PartitionName;
+        client=new OkHttpClient();
     }
 
     remoteCMD() {
-
+        client=new OkHttpClient();
     }
 
     private Map<NodeCates, Integer> parseStatus(String value) {
@@ -95,10 +98,11 @@ public class remoteCMD {
         List<Map<String, String>> scalingList;
         if (!anyPending()) {
             Map<String, String> SameJob = new HashMap<>();
-            SameJob.put("exec","sleep");
-            SameJob.put("args","36000");
+            SameJob.put("exec",System.getenv("DYNPRVDRIVER_HOME")+"/scripts/ipl-run");
+//            SameJob.put("args","36000");
             SameJob.put("arg:p", partitionName);
             SameJob.put("arg:t", "UNLIMITED");
+            SameJob.put("arg:J","Calibration");
             scalingList = Collections.nCopies(nodesInfo.get(NodeCates.I), SameJob);
             scalingUp(scalingList, scheduler);
 //            BufferedWriter writer = new BufferedWriter(new FileWriter("log",true));
@@ -122,10 +126,11 @@ public class remoteCMD {
                     if (maxTime.compareTo(miniTime) == 1)// Long enough
                     {
                         Map<String, String> SameJob = new HashMap<>();
-                        SameJob.put("exec","sleep");
-                        SameJob.put("args","36000");
+                        SameJob.put("exec",System.getenv("DYNPRVDRIVER_HOME")+"/scripts/ipl-run");
+                        //SameJob.put("args","36000");
                         SameJob.put("arg:p", partitionName);
                         SameJob.put("arg:t", maxTime.Minus(new Time("2")).toString());
+                        SameJob.put("arg:J","Calibration");
                         scalingList = Collections.nCopies(nodesInfo.get(NodeCates.I), SameJob);
                         scalingUp(scalingList, scheduler);
                     }
@@ -152,6 +157,10 @@ public class remoteCMD {
         // filter jobs possibly to run
         List<Map<String,String>> pendingJobs=queueStatus.stream().filter(x -> x.get("NODELIST(REASON)").contains("Priority")).filter(x-> parseTime(x).compareTo(MaxTime) < 0).collect(Collectors.toList());
         int idleNodesNum=nodesInfo.get(NodeCates.I);
+        if(reservedNumber<minNode)
+        {
+            return -idleNodesNum;
+        }
         if((Integer.parseInt(PendingJobResource.get("NODES"))-idleNodesNum)<=(reservedNumber-minNode))
         {
             // make a way for job waiting for resource
@@ -261,30 +270,26 @@ public class remoteCMD {
         return new Time(JobStatus.get("TIME_LIMIT")).Minus(new Time(JobStatus.get("TIME")));
     }
 
-    private List<Map<String, String>> scalupAdoption(int number, Scheduler scheduler) {
-        List<Map<String, String>> scalingList;
-        if (!anyPending()) {
-            Map<String, String> SameJob = new HashMap<>();
-            SameJob.put("arg:p", partitionName);
-            SameJob.put("arg:t", "UNLIMITED");
-            scalingList = Collections.nCopies(number, SameJob);
-            return scalingList;
-        } else {
-            return null;
-        }
-    }
+
 
     public void run(Scheduler scheduler) {
         while (true) {
             try {
                 updateStatus(partitionName, scheduler);
+                updateMiniNode();
                 scaling(scheduler);
             } catch (XenonException | IOException e) {
                 e.printStackTrace();
             }
         }
     }
-
+    public void updateMiniNode() {
+        int tmpNode=Integer.parseInt(ServiceUtil.getJobStatus(System.getenv("IPL_ADDRESS"),client));
+        if(tmpNode>0)
+        {
+            minNode=tmpNode;
+        }
+    }
     public static void main(String[] args) throws Exception {
 
         // Assume the remote system is actually just a Docker container (e.g.

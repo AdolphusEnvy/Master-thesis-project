@@ -16,6 +16,10 @@ public class Time implements Comparable<Time>
     Integer minute=0;
     Integer second=0;
     Boolean unlimited=false;
+
+
+
+    Integer totalSecond=0;
     Time()
     {
 
@@ -29,9 +33,26 @@ public class Time implements Comparable<Time>
         }
         else
         {
-            parse(timeString);
+            try
+            {
+                parse(timeString);
+            }
+            catch (Exception e)
+            {
+                System.out.println(timeString);
+                throw e;
+            }
+
         }
 
+    }
+    Time(Integer Second)
+    {
+        totalSecond=Second;
+        second=Second%60;
+        minute= Second / 60 %60;
+        hour=Second /3600 % 24;
+        day =Second / (3600*24);
     }
     void parse(String string)
     {
@@ -73,7 +94,7 @@ public class Time implements Comparable<Time>
                 second=Integer.parseInt(tokens[2]);
             }
         }
-
+        totalSecond=day * 24 * 3600 + hour * 3600 +minute * 60 + second;
     }
 
     @Override
@@ -112,6 +133,10 @@ public class Time implements Comparable<Time>
         }
         return -1;
     }
+    public Boolean isUnlimit()
+    {
+        return unlimited;
+    }
     public Integer getDay() {
         return day;
     }
@@ -123,9 +148,31 @@ public class Time implements Comparable<Time>
     public Integer getMinute() {
         return minute;
     }
+    public void setDay(Integer day) {
+        this.day = day;
+        totalSecond=day * 24 * 3600 + hour * 3600 +minute * 60 + second;
+    }
 
+    public void setHour(Integer hour) {
+        this.hour = hour;
+        totalSecond=day * 24 * 3600 + hour * 3600 +minute * 60 + second;
+    }
+
+    public void setMinute(Integer minute) {
+        this.minute = minute;
+        totalSecond=day * 24 * 3600 + hour * 3600 +minute * 60 + second;
+    }
+
+    public void setSecond(Integer second) {
+        this.second = second;
+        totalSecond=day * 24 * 3600 + hour * 3600 +minute * 60 + second;
+    }
     public Integer getSecond() {
         return second;
+    }
+    public Integer toInteger()
+    {
+        return totalSecond;
     }
 
     public Time Minus(Time o)
@@ -144,7 +191,7 @@ public class Time implements Comparable<Time>
             minute-=1;
         }
         minute-=o.minute;
-        if(second<0)
+        if(minute<0)
         {
             minute+=60;
             hour-=1;

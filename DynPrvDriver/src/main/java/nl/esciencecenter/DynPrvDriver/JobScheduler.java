@@ -4,9 +4,11 @@ import com.github.kevinsawicki.http.HttpRequest;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class JobScheduler implements Runnable {
 
@@ -44,6 +46,7 @@ public class JobScheduler implements Runnable {
                         {
                             jobMap.put(tmpJob.getJobID(),tmpJob);
                             System.out.println("LOADING JOB:"+tmpJob);
+                            logSubmission(tmpJob);
                         }
 
                     }
@@ -60,7 +63,12 @@ public class JobScheduler implements Runnable {
         }
 
     }
-
+    private void logSubmission(Job jb) throws IOException {
+        BufferedWriter out=new BufferedWriter(new FileWriter(System.getenv("HOME")+"/log/CaliJobSubmit.log",true));
+        out.write(String.join("\t","JobID="+jb.getJobID(),"Action="+System.currentTimeMillis(),"STATE=SUBMISSION"));
+        out.newLine();
+        out.close();
+    }
     public static void main(String args[]) throws InterruptedException {
 
         Map<String, List<Map<String, String>>> Map_job_detail = Collections.synchronizedMap(new HashMap<String, List<Map<String, String>>>());

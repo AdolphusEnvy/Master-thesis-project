@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2020.1.22)  1 APR 2020 13:05
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2020.1.22)  2 JUL 2020 20:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1968,6 +1968,15 @@ LaTeX Font Info:    Font shape `TU/LinLibertine(0)/m/n' will be
 Requested font "[LinLibertine_R.otf]/OT:script=latn;language=DFLT;+tnum;+lnum;mapping=tex-text;" at 6.2pt
  -> d:/Applications/texlive/2019/texmf-dist/fonts/opentype/public/libertine/LinLibertine_R.otf
 
+Package natbib Warning: Citation `Spreeuw2019' on page 1 undefined on input line 163.
+
+
+Package natbib Warning: Citation `Start2020' on page 1 undefined on input line 164.
+
+
+Package natbib Warning: Citation `Kazemi2011' on page 1 undefined on input line 164.
+
+
 Overfull \hbox (2.3001pt too wide) in paragraph at lines 168--170
 \TU/LinLibertine(0)/m/n/10 MPI, and Spark, will lead to a waste of computation resources
  []
@@ -2013,6 +2022,18 @@ Overfull \hbox (16.3859pt too wide) in paragraph at lines 200--201
  []
 
 
+Package natbib Warning: Citation `Lorido-Botran2014' on page 2 undefined on input line 207.
+
+
+Package natbib Warning: Citation `Kang2013' on page 2 undefined on input line 209.
+
+
+Package natbib Warning: Citation `Mao2011' on page 2 undefined on input line 209.
+
+
+Package natbib Warning: Citation `van2002ibis' on page 2 undefined on input line 214.
+
+
 Overfull \hbox (4.47923pt too wide) in paragraph at lines 218--220
 \TU/LinLibertine(0)/m/n/10 ecutable package of software that includes everything needed
  []
@@ -2043,15 +2064,10 @@ Overfull \hbox (9.10506pt too wide) in paragraph at lines 258--259
 []\TU/LinLibertine(0)/m/n/10 Week1-3: test different(2-3) mechanisms and add more
  []
 
-(./sample-sigchi.bbl
-LaTeX Font Info:    Font shape `TU/LinLibertine(0)/m/it' will be
-(Font)              scaled to size 8.0pt on input line 60.
-Requested font "[LinLibertine_RI.otf]/OT:script=latn;language=DFLT;+tnum;+lnum;mapping=tex-text;" at 8.0pt
- -> d:/Applications/texlive/2019/texmf-dist/fonts/opentype/public/libertine/LinLibertine_RI.otf
-LaTeX Info: Redefining \tempurl on input line 99.
-LaTeX Info: Redefining \tempurl on input line 115.
-LaTeX Info: Redefining \tempurl on input line 131.
-)
+No file sample-sigchi.bbl.
+
+Package natbib Warning: There were undefined citations.
+
 
 Class acmart Warning: Some images may lack descriptions.
 
@@ -2065,14 +2081,16 @@ Make it at least 18.58403pt.
 We now make it that large for the rest of the document.
 This may cause the page layout to be inconsistent, however.
 
-[3.3]
+[3.3
+
+]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 286.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 286.
  (./sample-sigchi.aux)
 Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 286.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 286.
 Package rerunfilecheck Info: File `sample-sigchi.out' has not changed.
-(rerunfilecheck)             Checksum: 7F3AA5DF43D8D3996B09CD3CD67E37B6;1807.
+(rerunfilecheck)             Checksum: 4B4F0DFD716C9D7F2D242DAB0965F7B8;1712.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -2083,11 +2101,11 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 44399 strings out of 492472
- 830574 string characters out of 6127188
+ 44350 strings out of 492472
+ 829719 string characters out of 6127188
  1096049 words of memory out of 5000000
- 48224 multiletter control sequences out of 15000+600000
- 554576 words of font info for 125 fonts, out of 8000000 for 9000
+ 48178 multiletter control sequences out of 15000+600000
+ 554568 words of font info for 124 fonts, out of 8000000 for 9000
  1509 hyphenation exceptions out of 8191
  67i,11n,105p,800b,2146s stack positions out of 5000i,500n,10000p,200000b,80000s
 
