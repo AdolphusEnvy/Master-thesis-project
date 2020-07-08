@@ -1,0 +1,19 @@
+NodeNum=4	Type=Normal	TimeLimit=1:57:57	RealTime=7077	SubmitTimeStamp=3405
+NodeNum=2	Type=Normal	TimeLimit=0:58:50	RealTime=3530	SubmitTimeStamp=6744
+NodeNum=5	Type=Calibration	TimeLimit=3:28:31	RealTime=12511	SubmitTimeStamp=13125	Parameter={"location":"/home/yhu310/Calibration" ,"user":"yhu310" ,"parameter":"-d FILE_DIR -s 3c196.sky.txt -c 3c196.sky.txt.cluster -n 4 -t 10 -p sm.ms.solutions -e 4 -g 2 -l 10 -m 7 -x 30 -F 1 -j 5  -k -1 -B 1 -W 0" ,"executable":"/opt/sagecal/bin/sagecal","Job":"Sagecal"}
+NodeNum=7	Type=Normal	TimeLimit=3:17:42	RealTime=11862	SubmitTimeStamp=21556
+NodeNum=5	Type=Calibration	TimeLimit=4:53:49	RealTime=17629	SubmitTimeStamp=27934	Parameter={"location":"/home/yhu310/Calibration" ,"user":"yhu310" ,"parameter":"-d FILE_DIR -s 3c196.sky.txt -c 3c196.sky.txt.cluster -n 4 -t 10 -p sm.ms.solutions -e 4 -g 2 -l 10 -m 7 -x 30 -F 1 -j 5  -k -1 -B 1 -W 0" ,"executable":"/opt/sagecal/bin/sagecal","Job":"Sagecal"}
+NodeNum=3	Type=Normal	TimeLimit=3:22:25	RealTime=12145	SubmitTimeStamp=3995500
+NodeNum=4	Type=Normal	TimeLimit=3:20:2	RealTime=12002	SubmitTimeStamp=6235156
+NodeNum=6	Type=Normal	TimeLimit=UNLIMITED	RealTime=5017	SubmitTimeStamp=11996676
+NodeNum=4	Type=Normal	TimeLimit=UNLIMITED	RealTime=10373	SubmitTimeStamp=12551230
+NodeNum=5	Type=Calibration	TimeLimit=4:56:10	RealTime=17770	SubmitTimeStamp=14016994	Parameter={"location":"/home/yhu310/Calibration" ,"user":"yhu310" ,"parameter":"-d FILE_DIR -s 3c196.sky.txt -c 3c196.sky.txt.cluster -n 4 -t 10 -p sm.ms.solutions -e 4 -g 2 -l 10 -m 7 -x 30 -F 1 -j 5  -k -1 -B 1 -W 0" ,"executable":"/opt/sagecal/bin/sagecal","Job":"Sagecal"}
+NodeNum=7	Type=Normal	TimeLimit=2:28:50	RealTime=8930	SubmitTimeStamp=18259084
+NodeNum=9	Type=Normal	TimeLimit=2:19:19	RealTime=8359	SubmitTimeStamp=24192376
+NodeNum=9	Type=Normal	TimeLimit=2:39:51	RealTime=9591	SubmitTimeStamp=25775085
+NodeNum=9	Type=Normal	TimeLimit=2:37:27	RealTime=9447	SubmitTimeStamp=36696690
+NodeNum=5	Type=Normal	TimeLimit=2:37:39	RealTime=9459	SubmitTimeStamp=36697980
+NodeNum=5	Type=Calibration	TimeLimit=3:30:45	RealTime=12645	SubmitTimeStamp=36767426	Parameter={"location":"/home/yhu310/Calibration" ,"user":"yhu310" ,"parameter":"-d FILE_DIR -s 3c196.sky.txt -c 3c196.sky.txt.cluster -n 4 -t 10 -p sm.ms.solutions -e 4 -g 2 -l 10 -m 7 -x 30 -F 1 -j 5  -k -1 -B 1 -W 0" ,"executable":"/opt/sagecal/bin/sagecal","Job":"Sagecal"}
+NodeNum=5	Type=Normal	TimeLimit=3:22:26	RealTime=12146	SubmitTimeStamp=36771775
+NodeNum=8	Type=Normal	TimeLimit=3:11:24	RealTime=11484	SubmitTimeStamp=36773060
+NodeNum=5	Type=Normal	TimeLimit=2:43:18	RealTime=9798	SubmitTimeStamp=37318439

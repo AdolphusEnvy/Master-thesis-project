@@ -64,12 +64,12 @@ public class JobScheduler implements Runnable {
 
     }
     private void logSubmission(Job jb) throws IOException {
-        BufferedWriter out=new BufferedWriter(new FileWriter(System.getenv("HOME")+"/log/CaliJobSubmit.log",true));
+        BufferedWriter out=new BufferedWriter(new FileWriter(System.getenv("JOB_LOG_DYNPRVDRIVER"),true));
         out.write(String.join("\t","JobID="+jb.getJobID(),"Action="+System.currentTimeMillis(),"STATE=SUBMISSION"));
         out.newLine();
         out.close();
     }
-    public static void main(String args[]) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
 
         Map<String, List<Map<String, String>>> Map_job_detail = Collections.synchronizedMap(new HashMap<String, List<Map<String, String>>>());
         Map<Integer,Job> jobMap = new TreeMap<>();

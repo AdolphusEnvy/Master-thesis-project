@@ -1,0 +1,2 @@
+#!/bin/sh
+sbatch --nodes=$1 -t -$2 sleepme 30000

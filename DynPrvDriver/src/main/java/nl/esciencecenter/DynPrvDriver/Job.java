@@ -24,7 +24,7 @@ public class Job implements  Comparable<Job>,Serializable {
         jobType=JobType;
         executable=Executable;
         if (init) {
-            LoadTasks(2);
+            LoadTasks(5);
         }
 
     }

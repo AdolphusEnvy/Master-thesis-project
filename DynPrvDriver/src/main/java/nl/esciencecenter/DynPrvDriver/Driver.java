@@ -50,7 +50,7 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
     private void server(Ibis myIbis) throws Exception {
         client=new OkHttpClient();
         // Init resource manager
-        db=DBMaker.fileDB(System.getProperty("DYNPRVDRIVER_HOME")+"/cache.db").transactionEnable().closeOnJvmShutdown().make();
+        db=DBMaker.fileDB(System.getenv("DYNPRVDRIVER_HOME")+"/cache.db").transactionEnable().closeOnJvmShutdown().make();
         //Atomic.Var<Map<IbisIdentifier, Task>> runningJobMap=db.atomicVar("runningJobMap",Map.SERIALIZER)
         runningJobMap= db.treeMap("runningJobMap",Serializer.INTEGER, Serializer.JAVA).createOrOpen();
         runningNodes= db.treeMap("runningNodes",Serializer.JAVA, Serializer.JAVA).createOrOpen();
@@ -137,9 +137,9 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
                 out = SAGECAL(f,task);
                 System.out.println(out[0]);
                 System.out.println(out[1]);
-                writerOut.append(out[0]);
+                writerOut.write(out[0]);
                 writerOut.newLine();
-                writerErr.append(out[1]);
+                writerErr.write(out[1]);
                 writerErr.newLine();
             }
             System.out.println("establish new connect");
@@ -179,7 +179,7 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
     public String[] SAGECAL(File f,Task t) throws IOException, InterruptedException {
         String s = null;
         System.out.println("handling File " + f.getAbsolutePath());
-        File containerImage=new File(System.getProperty("DYNPRVDRIVER_HOME")+"/AppContainers/Sagecal/SagecalContainer.simg");
+        File containerImage=new File(System.getenv("DYNPRVDRIVER_HOME")+"/AppContainers/Sagecal/SagecalContainer.simg");
         ProcessBuilder pb = RunContainer.run(containerImage,t.getExecutable(),t.getParameters(),f);
         Process p = pb.start();
         int exitCode=p.waitFor();
@@ -192,6 +192,11 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
 
 
         String[] out = new String[]{stdInput.lines().collect(Collectors.joining()), stdError.lines().collect(Collectors.joining())};
+        BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(f.getAbsolutePath()+"/result"));
+        bufferedWriter.write(out[0]);
+        bufferedWriter.newLine();
+        bufferedWriter.write(out[1]);
+        bufferedWriter.close();
         return out;
     }
 
@@ -223,6 +228,8 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
             } catch (IOException e) {
                 System.out.println("-------------------Got IO Exception");
                 e.printStackTrace();
+                myibis.registry().assumeDead(myibis.identifier());
+                myibis.end();
                 // throw new masterFailException();
             } catch (masterFailException e) {
                 System.out.println("-------------------Got Master Fail Exception");
@@ -231,6 +238,11 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
                         "MASTER FAILS, RESTART\n" +
                         "------------------------------------------------------------------\n");
 
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+                myibis.registry().assumeDead(myibis.identifier());
+                myibis.end();
             }
         }
 
@@ -240,7 +252,7 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
         myibis.end();
     }
 
-    public static void main(String args[]) throws ParseException {
+    public static void main(String[] args) throws ParseException {
 
         try {
             Driver d = new Driver();
@@ -291,10 +303,14 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
             if (m.isEmptyRequest() == false) {
                 System.out.println("Job:" + m.getJobID() + " Task:" + m.getTaskID() + " Finished with code:" + m.getStatusCode());
                 synchronized (runningJobMap) {
-                    runningJobMap.get(m.getJobID()).finishOneTask();
-                    if (runningJobMap.get(m.getJobID()).isFinished()) {
-                        Job finishedJob=runningJobMap.remove(m.getJobID());
-                        logFinishJob(finishedJob);
+                    Job tmpjb=runningJobMap.get(m.getJobID());
+                    tmpjb.finishOneTask();
+                    if (tmpjb.isFinished()) {
+                        runningJobMap.remove(m.getJobID());
+                        logFinishJob(tmpjb);
+                    }else
+                    {
+                        runningJobMap.put(m.getJobID(),tmpjb);
                     }
                     db.commit();
                 }
@@ -379,14 +395,14 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
     }
 
     private void logFinishJob(Job jb) throws IOException {
-        BufferedWriter out=new BufferedWriter(new FileWriter(System.getenv("HOME")+"/log/CaliJobSubmit.log",true));
+        BufferedWriter out=new BufferedWriter(new FileWriter(System.getenv("JOB_LOG_DYNPRVDRIVER"),true));
         out.write(String.join("\t","JobID="+jb.getJobID(),"Action="+System.currentTimeMillis(),"STATE=FINISHING"));
         out.newLine();
         out.close();
     }
     public void uploadRecommendMiniNode(OkHttpClient client)
     {
-        Integer taskNum=runningJobMap.values().stream().map(Job::leftTasks).collect(Collectors.summingInt(Integer::intValue));
+        int taskNum= runningJobMap.values().stream().map(Job::leftTasks).mapToInt(Integer::intValue).sum();
         ServiceUtil.postJobStatus(System.getenv("IPL_ADDRESS"),client,taskNum>10?taskNum/10:taskNum>0?1:0);
     }
     @Override
@@ -411,6 +427,7 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
                     if(t!=null)
                     {
                         Job tmp=runningJobMap.get(t.getJobID());
+                        assert tmp != null;
                         tmp.loadRedo(t);
                         runningJobMap.put(t.getJobID(),tmp);
                         System.out.println("------REDO-----\n" +
@@ -485,8 +502,8 @@ class ControlMessage implements Serializable {
     }
 }
 class DebugSignalHandler implements SignalHandler {
-    private Registry registry;
-    private IbisIdentifier identifier;
+    private final Registry registry;
+    private final IbisIdentifier identifier;
     DebugSignalHandler(Registry R,IbisIdentifier Identifier)
     {
         registry=R;

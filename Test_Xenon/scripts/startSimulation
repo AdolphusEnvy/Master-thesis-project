@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# This script is a convenience script to automatically set the correct
+# classpath for the IPL given the location of a IPL installation,
+# specified in the $IPL_HOME environment variable.
+
+# export LD_PRELOAD=/usr/lib64/libsdp.so
+# export LIBSDP_CONFIG_FILE=$HOME/libsdp.conf
+
+# Check setting of IPL_HOME
+if [ -z "$XENON_HOME" ];  then
+    echo "please set XENON_HOME to the location of your Ibis installation" 1>&2
+    exit 1
+fi
+source $XENON_HOME/scripts/setting.conf
+java -classpath ".:$XENON_HOME/lib/*:CLASSPATH"  -Dlog4j.configuration=file:log4j.properties Simulation

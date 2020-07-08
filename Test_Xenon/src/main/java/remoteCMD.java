@@ -180,7 +180,7 @@ public class remoteCMD {
         for(Map<String,String> job:pendingJobs)
         {
 
-            if(parseTime(job).compareTo(MaxTime) == -1)
+            if(parseTime(job).compareTo(MaxTime) < 0)
             {
                 if(Integer.parseInt(job.get("NODES"))<=idleNodesNum)
                 {
