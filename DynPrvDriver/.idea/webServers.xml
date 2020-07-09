@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="d2ed65a3-50f9-4ac4-bf06-281c02633476" name="DAS5-LU">
+        <fileTransfer rootFolder="/home/yhu310/DynPrvDriver" accessType="SFTP" host="fs1.das5.liacs.nl" port="22" sshConfigId="db370a0d-f70d-445b-aa22-a4cccf23cf13" sshConfig="yhu310@fs1.das5.liacs.nl:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="c4bc546e-cfc4-463a-991d-997c505a031f" name="DAS5-DELFT">
+        <fileTransfer rootFolder="/home/yhu310/DynPrvDriver" accessType="SFTP" host="fs3.das5.tudelft.nl" port="22" sshConfigId="871450a4-0f1f-4d67-bbd8-8c8418011074" sshConfig="yhu310@fs3.das5.tudelft.nl:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="2adf89be-26a9-49fd-a974-472fe3c42444" name="DAS5-VU">
+        <fileTransfer rootFolder="/home/yhu310/DynPrvDriver" accessType="SFTP" host="fs0.das5.cs.vu.nl" port="22" sshConfigId="e7391d2f-0cb6-47a4-ae23-96c7e319aa27" sshConfig="yhu310@fs0.das5.cs.vu.nl:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

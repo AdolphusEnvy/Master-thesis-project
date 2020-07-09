@@ -1,0 +1,10 @@
+2020-06-04 10:11:41,559 INFO supervisord started with pid 15
+2020-06-04 10:11:42,562 INFO spawned: 'flask' with pid 18
+2020-06-04 10:11:42,564 INFO spawned: 'ipl' with pid 19
+2020-06-04 10:11:44,170 INFO success: flask entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-06-04 10:11:44,170 INFO success: ipl entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-07-07 15:30:38,995 INFO supervisord started with pid 15
+2020-07-07 15:30:39,998 INFO spawned: 'flask' with pid 18
+2020-07-07 15:30:39,999 INFO spawned: 'ipl' with pid 19
+2020-07-07 15:30:41,001 INFO success: flask entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-07-07 15:30:41,002 INFO success: ipl entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

@@ -1,0 +1,2 @@
+#!/bin/sh
+./scripts/ipl-run > out.$PRUN_CPU_RANK 2>err.$PRUN_CPU_RANK
