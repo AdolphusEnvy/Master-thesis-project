@@ -1,0 +1,1 @@
+exec java -classpath ".:lib/*" -Xmx256M ibis.ipl.server.Server --events < /dev/null >  $HOME/ipl-server.out 2>&1

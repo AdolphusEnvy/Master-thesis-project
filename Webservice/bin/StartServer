@@ -1,0 +1,2 @@
+singularity instance start ~/dynprvserver_0.2.1.sif server
+singularity exec instance://server supervisord -c /etc/supervisor.conf &

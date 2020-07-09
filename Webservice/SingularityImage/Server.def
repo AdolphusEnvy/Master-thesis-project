@@ -1,0 +1,35 @@
+BootStrap:docker
+From:ubuntu:18.04
+
+%post
+    apt-get update && \
+    apt-get -y install software-properties-common && \
+    add-apt-repository -y ppa:webupd8team/java && \
+    echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+    echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
+    apt-get update && \
+    apt-get -y install openjdk-11-jdk iputils-ping net-tools python3
+    apt-get -y install python3-pip
+    pip3 install flask flask_restful
+    apt-get -y install supervisor less sudo
+    mkdir -p -m=777 /opt/server
+    mkdir -p -m=777 /var/tmp/log/supervisor
+    mkdir -p -m=777 /etc/supervisor/conf.d
+    mkdir -p -m=777 /opt/server/lib
+    touch /var/tmp/log/supervisor/flask.log && chmod 777 /var/tmp/log/supervisor/flask.log
+    touch /var/tmp/log/supervisor/ipl.log && chmod 777 /var/tmp/log/supervisor/ipl.log
+
+%files
+    SingularityImage/lib/* /opt/server/lib/
+    SingularityImage/ipl-server /opt/server/
+    SingularityImage/supervisor.conf /etc/supervisor.conf
+    app.py /opt/server/
+
+%runscript
+    supervisord -c /etc/supervisor.conf
+%startscript
+    supervisord -c /etc/supervisor.conf
+
+%labels
+    Author yhu310@vu
+    Version 0.3.0

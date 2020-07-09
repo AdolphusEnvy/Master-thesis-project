@@ -1,0 +1,49 @@
+2020-06-28 15:31:21,550 INFO supervisord started with pid 15
+2020-06-28 15:31:22,562 INFO spawned: 'flask' with pid 18
+2020-06-28 15:31:22,569 INFO spawned: 'ipl' with pid 19
+2020-06-28 15:31:23,952 INFO success: flask entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-06-28 15:31:23,952 INFO success: ipl entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-06-28 16:48:01,742 WARN received SIGINT indicating exit request
+2020-06-28 16:48:01,745 INFO waiting for flask, ipl to die
+2020-06-28 16:48:02,091 INFO stopped: ipl (exit status 143)
+2020-06-28 16:48:02,094 INFO stopped: flask (terminated by SIGTERM)
+2020-06-28 16:48:17,664 INFO supervisord started with pid 16
+2020-06-28 16:48:18,668 INFO spawned: 'flask' with pid 19
+2020-06-28 16:48:18,672 INFO spawned: 'ipl' with pid 20
+2020-06-28 16:48:19,874 INFO success: flask entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-06-28 16:48:19,874 INFO success: ipl entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-06-28 18:35:43,995 INFO supervisord started with pid 28804
+2020-06-28 18:35:44,998 INFO spawned: 'flask' with pid 28807
+2020-06-28 18:35:44,999 INFO spawned: 'ipl' with pid 28808
+2020-06-28 18:35:46,208 INFO success: flask entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-06-28 18:35:46,208 INFO success: ipl entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-06-28 18:35:46,702 INFO exited: flask (exit status 1; not expected)
+2020-06-28 18:35:47,704 INFO spawned: 'flask' with pid 28826
+2020-06-28 18:35:47,853 INFO exited: flask (exit status 1; not expected)
+2020-06-28 18:35:48,855 INFO spawned: 'flask' with pid 28829
+2020-06-28 18:35:49,015 INFO exited: flask (exit status 1; not expected)
+2020-06-28 18:35:49,166 INFO exited: ipl (exit status 1; not expected)
+2020-06-28 18:35:50,168 INFO spawned: 'ipl' with pid 28836
+2020-06-28 18:35:50,395 INFO exited: ipl (exit status 1; not expected)
+2020-06-28 18:35:51,397 INFO spawned: 'flask' with pid 28858
+2020-06-28 18:35:51,398 INFO spawned: 'ipl' with pid 28859
+2020-06-28 18:35:51,561 INFO exited: flask (exit status 1; not expected)
+2020-06-28 18:35:51,637 INFO exited: ipl (exit status 1; not expected)
+2020-06-28 18:35:53,641 INFO spawned: 'ipl' with pid 28882
+2020-06-28 18:35:53,869 INFO exited: ipl (exit status 1; not expected)
+2020-06-28 18:35:54,871 INFO spawned: 'flask' with pid 28904
+2020-06-28 18:35:55,017 INFO exited: flask (exit status 1; not expected)
+2020-06-28 18:35:56,019 INFO gave up: flask entered FATAL state, too many start retries too quickly
+2020-06-28 18:35:57,021 INFO spawned: 'ipl' with pid 28906
+2020-06-28 18:35:57,264 INFO exited: ipl (exit status 1; not expected)
+2020-06-28 18:35:58,266 INFO gave up: ipl entered FATAL state, too many start retries too quickly
+2020-06-28 18:36:34,409 WARN received SIGINT indicating exit request
+2020-06-29 16:23:02,372 INFO supervisord started with pid 15
+2020-06-29 16:23:03,384 INFO spawned: 'flask' with pid 18
+2020-06-29 16:23:03,385 INFO spawned: 'ipl' with pid 19
+2020-06-29 16:23:04,601 INFO success: flask entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-06-29 16:23:04,602 INFO success: ipl entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-06-30 13:55:36,200 WARN received SIGINT indicating exit request
+2020-06-30 13:55:36,203 INFO waiting for flask, ipl to die
+2020-06-30 13:55:36,584 INFO stopped: ipl (exit status 143)
+2020-06-30 13:55:36,588 INFO stopped: flask (terminated by SIGTERM)
