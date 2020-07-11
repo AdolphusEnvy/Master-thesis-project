@@ -9,12 +9,11 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
-import nl.esciencecenter.xenon.credentials.PasswordCredential;
 import org.mapdb.*;
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
-public class Driver implements MessageUpcall,RegistryEventHandler {
+public class Driver implements MessageUpcall, RegistryEventHandler {
     PortType one2one = new PortType(PortType.COMMUNICATION_RELIABLE, PortType.SERIALIZATION_OBJECT, PortType.CONNECTION_ONE_TO_ONE, PortType.RECEIVE_EXPLICIT, PortType.COMMUNICATION_FIFO, PortType.RECEIVE_TIMEOUT);
     PortType one2one_UPCALL = new PortType(PortType.COMMUNICATION_RELIABLE, PortType.SERIALIZATION_OBJECT, PortType.CONNECTION_ONE_TO_ONE, PortType.RECEIVE_AUTO_UPCALLS, PortType.COMMUNICATION_FIFO, PortType.RECEIVE_TIMEOUT);
 
@@ -34,33 +33,35 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
     SendPort masterSendPort;
     ReceivePort controlPort;
     private BlockingQueue<IbisIdentifier> idleWorkerQueue = new LinkedBlockingQueue<>();
-    private BTreeMap<IbisIdentifier, Task> runningNodes ;
+    private BTreeMap<IbisIdentifier, Task> runningNodes;
     private BlockingQueue<Task> workerTaskQueue = new LinkedBlockingQueue<>();
-    private boolean masterCrashed =false;
+    private boolean masterCrashed = false;
     private boolean firstTime = true;
     private DB db;
     private OkHttpClient client;
+
     Driver() throws IbisCreationFailedException {
         Properties properties = new Properties();
         myibis = IbisFactory.createIbis(ibisCapabilities, properties, true, this, new PortType[]{one2one, one2one_UPCALL, one2many, one2many_UPCALL, many2one, many2one_UPCALL});
         System.out.println("Ibis created: " + myibis.identifier());
-        masterCrashed =false;
+        masterCrashed = false;
 
     }
+
+
     private void server(Ibis myIbis) throws Exception {
-        client=new OkHttpClient();
+        startSideExecutor();
+        client = new OkHttpClient();
         // Init resource manager
-        db=DBMaker.fileDB(System.getenv("DYNPRVDRIVER_HOME")+"/cache.db").transactionEnable().closeOnJvmShutdown().make();
+        db = DBMaker.fileDB(System.getenv("DYNPRVDRIVER_HOME") + "/cache.db").transactionEnable().closeOnJvmShutdown().make();
         //Atomic.Var<Map<IbisIdentifier, Task>> runningJobMap=db.atomicVar("runningJobMap",Map.SERIALIZER)
-        runningJobMap= db.treeMap("runningJobMap",Serializer.INTEGER, Serializer.JAVA).createOrOpen();
-        runningNodes= db.treeMap("runningNodes",Serializer.JAVA, Serializer.JAVA).createOrOpen();
-        if(runningNodes.size()>0)
-        {
-            for(Task t:runningNodes.values())
-            {
-                Job tmpJob=runningJobMap.get(t.getJobID());
+        runningJobMap = db.treeMap("runningJobMap", Serializer.INTEGER, Serializer.JAVA).createOrOpen();
+        runningNodes = db.treeMap("runningNodes", Serializer.JAVA, Serializer.JAVA).createOrOpen();
+        if (runningNodes.size() > 0) {
+            for (Task t : runningNodes.values()) {
+                Job tmpJob = runningJobMap.get(t.getJobID());
                 tmpJob.loadRedo(t);
-                runningJobMap.put(t.getJobID(),tmpJob);
+                runningJobMap.put(t.getJobID(), tmpJob);
             }
         }
         db.commit();
@@ -76,15 +77,17 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
         // taskQueue.offer(testJob);
 
         masterSendPort = myIbis.createSendPort(one2one_UPCALL, "masterSendPort");
-        controlPort = myIbis.createReceivePort(one2one_UPCALL, "controlPort", this);
+        controlPort = myIbis.createReceivePort(many2one_UPCALL, "controlPort", this);
         controlPort.enableConnections();
         controlPort.enableMessageUpcalls();
         while (!finished) {
-            synchronized (runningJobMap)
-            {
-                for(int i:runningJobMap.keySet())
+            synchronized (runningJobMap) {
+                for (int i : runningJobMap.keySet()) {
+                    System.out.println("Job " + i + "Has " + runningJobMap.get(i).leftTasks() + " Tasks to do!");
+                }
+                for(Map.Entry<IbisIdentifier,Task> entry:runningNodes.entrySet())
                 {
-                    System.out.println("Job "+i+"Has "+runningJobMap.get(i).leftTasks()+" Tasks to do!");
+                    System.out.println("Node:"+entry.getKey()+" working on task "+entry.getValue().getTaskID());
                 }
                 db.commit();
             }
@@ -100,7 +103,7 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
     private void client(Ibis myIbis, IbisIdentifier server) throws Exception {
 
         // Create a send port for sending requests and connect.
-        SendPort controlSendPort = myIbis.createSendPort(one2one_UPCALL, "controlSendPort");
+        SendPort controlSendPort = myIbis.createSendPort(many2one_UPCALL, "controlSendPort");
         controlSendPort.connect(server, "controlPort");
 
 
@@ -115,11 +118,10 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
         while (true) {
 
             Task task = workerTaskQueue.poll(1, TimeUnit.SECONDS);
-            System.out.println("Start a task:" + task);
+            System.out.println(myIbis.identifier()+" Start a task:" + task);
             if (task == null) {
                 Thread.sleep(1000);
-                if(masterCrashed == true)
-                {
+                if (masterCrashed == true) {
                     System.err.println("SERVER FAILED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     throw new masterFailException();
                 }
@@ -134,7 +136,7 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
             for (File f : task.getFileArray()) {
                 System.out.println(f.getAbsoluteFile());
                 System.out.println(f.getAbsolutePath());
-                out = SAGECAL(f,task);
+                out = SAGECAL(f, task);
                 System.out.println(out[0]);
                 System.out.println(out[1]);
                 writerOut.write(out[0]);
@@ -143,13 +145,11 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
                 writerErr.newLine();
             }
             System.out.println("establish new connect");
-            if(masterCrashed == true)
-            {
+            if (masterCrashed == true) {
                 System.err.println("SERVER FAILED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 throw new masterFailException();
             }
-            try
-            {
+            try {
                 w = controlSendPort.newMessage();
 
                 System.out.println("New message");
@@ -159,8 +159,7 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
                 w.writeObject(feedBack);
                 w.finish();
                 System.out.println("write finished");
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 myIbis.registry().assumeDead(server);
                 writerOut.close();
                 writerErr.close();
@@ -176,14 +175,14 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
 
     }
 
-    public String[] SAGECAL(File f,Task t) throws IOException, InterruptedException {
+    public String[] SAGECAL(File f, Task t) throws IOException, InterruptedException {
         String s = null;
         System.out.println("handling File " + f.getAbsolutePath());
-        File containerImage=new File(System.getenv("DYNPRVDRIVER_HOME")+"/AppContainers/Sagecal/SagecalContainer.simg");
-        ProcessBuilder pb = RunContainer.run(containerImage,t.getExecutable(),t.getParameters(),f);
+        File containerImage = new File(System.getenv("DYNPRVDRIVER_HOME") + "/AppContainers/Sagecal/SagecalContainer.simg");
+        ProcessBuilder pb = RunContainer.run(containerImage, t.getExecutable(), t.getParameters(), f);
         Process p = pb.start();
-        int exitCode=p.waitFor();
-        System.out.println("EXIT CODE:"+exitCode);
+        int exitCode = p.waitFor();
+        System.out.println("EXIT CODE:" + exitCode);
         BufferedReader stdInput = new BufferedReader(new
                 InputStreamReader(p.getInputStream()));
 
@@ -192,7 +191,7 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
 
 
         String[] out = new String[]{stdInput.lines().collect(Collectors.joining()), stdError.lines().collect(Collectors.joining())};
-        BufferedWriter bufferedWriter=new BufferedWriter(new FileWriter(f.getAbsolutePath()+"/result"));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(f.getAbsolutePath() + "/result"));
         bufferedWriter.write(out[0]);
         bufferedWriter.newLine();
         bufferedWriter.write(out[1]);
@@ -210,10 +209,9 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
         r.enableEvents();
         // Elect a server
         masterId = r.elect("Server");
-        DebugSignalHandler.listenTo("TERM",r,myibis.identifier());
+        DebugSignalHandler.listenTo("TERM", r, myibis.identifier(),myibis);
         // If I am the server, run server, else run client.
-        while (finished==false)
-        {
+        while (finished == false) {
             try {
                 if (masterId.equals(myibis.identifier())) {
                     server(myibis);
@@ -223,33 +221,32 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
 
                 }
             } catch (InterruptedException e) {
-                myibis.registry().assumeDead(myibis.identifier());
+                // myibis.registry().assumeDead(myibis.identifier());
                 myibis.end();
             } catch (IOException e) {
                 System.out.println("-------------------Got IO Exception");
                 e.printStackTrace();
-                myibis.registry().assumeDead(myibis.identifier());
+                // myibis.registry().assumeDead(myibis.identifier());
                 myibis.end();
                 // throw new masterFailException();
             } catch (masterFailException e) {
                 System.out.println("-------------------Got Master Fail Exception");
-                masterId=r.elect("Server");
+                masterId = r.elect("Server");
                 System.out.println("----------------------------------------------------------------\n" +
                         "MASTER FAILS, RESTART\n" +
                         "------------------------------------------------------------------\n");
 
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
-                myibis.registry().assumeDead(myibis.identifier());
-                myibis.end();
+                // myibis.registry().assumeDead(myibis.identifier());
+
+                break;
             }
         }
 
 
-
         // End ibis.
-        myibis.end();
+         myibis.end();
     }
 
     public static void main(String[] args) throws ParseException {
@@ -277,16 +274,14 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
             readMessage.finish();
             synchronized (idleWorkerQueue) {
                 synchronized (runningNodes) {
-                    Task runningTask=runningNodes.remove(readMessage.origin().ibisIdentifier());
-                    if(m.isEmptyRequest())
-                    {
+                    Task runningTask = runningNodes.remove(readMessage.origin().ibisIdentifier());
+                    if (m.isEmptyRequest()) {
 
-                        if(runningTask!=null)
-                        {
-                            Job tmp=runningJobMap.get(runningTask.getJobID());
+                        if (runningTask != null) {
+                            Job tmp = runningJobMap.get(runningTask.getJobID());
                             assert tmp != null;
                             tmp.loadRedo(runningTask);
-                            runningJobMap.put(runningTask.getJobID(),tmp);
+                            runningJobMap.put(runningTask.getJobID(), tmp);
                             // runningJobMap.get(runningTask.getJobID()).loadRedo(runningTask);
 
                             db.commit();
@@ -303,14 +298,13 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
             if (m.isEmptyRequest() == false) {
                 System.out.println("Job:" + m.getJobID() + " Task:" + m.getTaskID() + " Finished with code:" + m.getStatusCode());
                 synchronized (runningJobMap) {
-                    Job tmpjb=runningJobMap.get(m.getJobID());
+                    Job tmpjb = runningJobMap.get(m.getJobID());
                     tmpjb.finishOneTask();
                     if (tmpjb.isFinished()) {
                         runningJobMap.remove(m.getJobID());
                         logFinishJob(tmpjb);
-                    }else
-                    {
-                        runningJobMap.put(m.getJobID(),tmpjb);
+                    } else {
+                        runningJobMap.put(m.getJobID(), tmpjb);
                     }
                     db.commit();
                 }
@@ -340,7 +334,7 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
                             Job taskJob = runningJobMap.get(jobId);
                             Task tmp = taskJob.PopTask();
                             //System.out.println(runningJobMap.get(jobId));
-                            runningJobMap.put(jobId,taskJob);
+                            runningJobMap.put(jobId, taskJob);
                             //System.out.println(taskJob);
 
                             // runningNodesMap.put(srcId, new AbstractMap.SimpleEntry<>(taskJob, tmp));
@@ -371,8 +365,8 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
                                     w.writeObject(tmp);
                                     w.finish();
                                     runningNodes.put(srcId, tmp);
-                                    System.out.println("------------------------------\nDELIVER TASK TO " + srcId+
-                                            "\n with "+taskJob.leftTasks()+" task left\n---------------------------");
+                                    System.out.println("------------------------------\nDELIVER TASK "+tmp.getTaskID()+" TO " + srcId +
+                                            "\n with " + taskJob.leftTasks() + " task left\n---------------------------");
                                     break; //connection and passing message success
                                 } catch (Exception e) {
 
@@ -382,7 +376,7 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
                             }
                             if (srcId == null) {
                                 taskJob.loadRedo(tmp);
-                                runningJobMap.put(jobId,taskJob);
+                                runningJobMap.put(jobId, taskJob);
                             }
                         }
                     }
@@ -395,15 +389,49 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
     }
 
     private void logFinishJob(Job jb) throws IOException {
-        BufferedWriter out=new BufferedWriter(new FileWriter(System.getenv("JOB_LOG_DYNPRVDRIVER"),true));
-        out.write(String.join("\t","JobID="+jb.getJobID(),"Action="+System.currentTimeMillis(),"STATE=FINISHING"));
+        BufferedWriter out = new BufferedWriter(new FileWriter(System.getenv("JOB_LOG_DYNPRVDRIVER"), true));
+        out.write(String.join("\t", "JobID=" + jb.getJobID(), "Action=" + System.currentTimeMillis(), "STATE=FINISHING"));
         out.newLine();
         out.close();
     }
-    public void uploadRecommendMiniNode(OkHttpClient client)
-    {
-        int taskNum= runningJobMap.values().stream().map(Job::leftTasks).mapToInt(Integer::intValue).sum();
-        ServiceUtil.postJobStatus(System.getenv("IPL_ADDRESS"),client,taskNum>10?taskNum/10:taskNum>0?1:0);
+
+    public void uploadRecommendMiniNode(OkHttpClient client) {
+        int taskNum = runningJobMap.values().stream().map(Job::leftTasks).mapToInt(Integer::intValue).sum();
+        ServiceUtil.postJobStatus(System.getenv("IPL_ADDRESS"), client, taskNum > 10 ? taskNum / 10 : taskNum > 0 ? 1 : 0);
+    }
+
+    public void startSideExecutor() throws IOException {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.directory(new File(System.getProperty("user.dir")));
+        processBuilder.environment().put("MASTER_NODE","True");
+        processBuilder.command("./scripts/ipl-run");
+        Process p=processBuilder.start();
+        Thread thread=new Thread(()->{
+            try {
+
+
+                BufferedReader stdInput = new BufferedReader(new
+                        InputStreamReader(p.getInputStream()));
+
+                BufferedReader stdError = new BufferedReader(new
+                        InputStreamReader(p.getErrorStream()));
+
+                while (p.isAlive())
+                {
+                    System.out.println(stdInput.lines().collect(Collectors.joining("\n")));
+                    System.out.println(stdError.lines().collect(Collectors.joining("\n")));
+                    Thread.sleep(1000);
+                }
+                int exitCode=p.waitFor();
+                //String[] out = new String[]{stdInput.lines().collect(Collectors.joining("\n")), stdError.lines().collect(Collectors.joining("\n"))};
+                System.out.println("Exit code:"+exitCode);
+                System.out.println(stdInput.lines().collect(Collectors.joining("\n")));
+                System.out.println(stdError.lines().collect(Collectors.joining("\n")));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        thread.start();
     }
     @Override
     public void joined(IbisIdentifier joinedIbis) {
@@ -412,24 +440,17 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
 
     @Override
     public void left(IbisIdentifier leftIbis) {
-        System.out.println("left: " + leftIbis);
-    }
-
-    @Override
-    public void died(IbisIdentifier corpse) {
-
-        System.out.println("-----------------------\ndied: " + corpse+"\n-----------------");
-        if(masterId.equals(myibis.identifier()))
-        {
+        //System.out.println("left: " + leftIbis);
+        System.out.println("-----------------------\nleft: " + leftIbis + "\n-----------------");
+        if (masterId.equals(myibis.identifier())) {
             synchronized (runningNodes) {
                 synchronized (runningJobMap) {
-                    Task t = runningNodes.remove(corpse);
-                    if(t!=null)
-                    {
-                        Job tmp=runningJobMap.get(t.getJobID());
+                    Task t = runningNodes.remove(leftIbis);
+                    if (t != null) {
+                        Job tmp = runningJobMap.get(t.getJobID());
                         assert tmp != null;
                         tmp.loadRedo(t);
-                        runningJobMap.put(t.getJobID(),tmp);
+                        runningJobMap.put(t.getJobID(), tmp);
                         System.out.println("------REDO-----\n" +
                                 "----TASK:" + t.getTaskID());
                     }
@@ -438,12 +459,38 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
                 }
                 db.commit();
             }
-        }
-        else if(corpse.equals(masterId))
-        {
-            System.out.println("Master:"+corpse+" creshed!!!!!!");
+        } else if (leftIbis.equals(masterId)) {
+            System.out.println("Master:" + leftIbis + " creshed!!!!!!");
             masterCrashed = true;
-            firstTime=false;
+            firstTime = false;
+        }
+    }
+
+    @Override
+    public void died(IbisIdentifier corpse) {
+
+        System.out.println("-----------------------\ndied: " + corpse + "\n-----------------");
+        if (masterId.equals(myibis.identifier())) {
+            synchronized (runningNodes) {
+                synchronized (runningJobMap) {
+                    Task t = runningNodes.remove(corpse);
+                    if (t != null) {
+                        Job tmp = runningJobMap.get(t.getJobID());
+                        assert tmp != null;
+                        tmp.loadRedo(t);
+                        runningJobMap.put(t.getJobID(), tmp);
+                        System.out.println("------REDO-----\n" +
+                                "----TASK:" + t.getTaskID());
+                    }
+
+
+                }
+                db.commit();
+            }
+        } else if (corpse.equals(masterId)) {
+            System.out.println("Master:" + corpse + " creshed!!!!!!");
+            masterCrashed = true;
+            firstTime = false;
         }
     }
 
@@ -468,6 +515,7 @@ public class Driver implements MessageUpcall,RegistryEventHandler {
     }
 
 }
+
 class ControlMessage implements Serializable {
     private final boolean emptyRequest;
     private int jobID;
@@ -501,24 +549,29 @@ class ControlMessage implements Serializable {
         return statusCode;
     }
 }
+
 class DebugSignalHandler implements SignalHandler {
     private final Registry registry;
     private final IbisIdentifier identifier;
-    DebugSignalHandler(Registry R,IbisIdentifier Identifier)
-    {
-        registry=R;
-        identifier=Identifier;
+    private final Ibis ibis;
+
+    DebugSignalHandler(Registry R, IbisIdentifier Identifier, Ibis ibis) {
+        registry = R;
+        identifier = Identifier;
+        this.ibis = ibis;
     }
-    public static void listenTo(String name,Registry registry,IbisIdentifier identifier) {
+
+    public static void listenTo(String name, Registry registry, IbisIdentifier identifier,Ibis ibis) {
         Signal signal = new Signal(name);
-        Signal.handle(signal, new DebugSignalHandler(registry,identifier));
+        Signal.handle(signal, new DebugSignalHandler(registry, identifier, ibis));
     }
 
     public void handle(Signal signal) {
         System.out.println("Signal: " + signal);
         if (signal.toString().trim().equals("SIGTERM")) {
             try {
-                registry.assumeDead(identifier);
+                //registry.assumeDead(identifier);
+                ibis.end();
             } catch (IOException e) {
                 e.printStackTrace();
             }
