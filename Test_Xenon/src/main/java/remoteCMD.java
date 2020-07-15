@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class remoteCMD {
+    private static final boolean debugging=System.getenv("DEBUGGING").equals("True");
     private static Time miniTime = new Time("30");
     private Queue<Map<String, String>> queueStatus = new ArrayDeque<Map<String, String>>();
     private Map<String, String> partitionInfo = new TreeMap<>();
@@ -85,7 +86,7 @@ public class remoteCMD {
 
 
         }
-        //reservedNumber=(int)queueStatus.stream().filter(x->x.get("NAME").equals("xenon")&&x.get("STATE").equals("RUNNING")).count();
+        reservedNumber=(int)queueStatus.stream().filter(x->x.get("NAME").equals("Calibration")&&x.get("STATE").equals("RUNNING")).count();
 
 
     }
@@ -98,18 +99,19 @@ public class remoteCMD {
         List<Map<String, String>> scalingList;
         if (!anyPending()) {
             Map<String, String> SameJob = new HashMap<>();
-            SameJob.put("exec",System.getenv("DYNPRVDRIVER_HOME")+"/scripts/ipl-run");
-//            SameJob.put("args","36000");
+            if(debugging)
+            {
+                SameJob.put("exec","sleep");
+                SameJob.put("args","72000");
+            }else {
+                SameJob.put("exec",System.getenv("DYNPRVDRIVER_HOME")+"/scripts/ipl-run");
+            }
+
             SameJob.put("arg:p", partitionName);
             SameJob.put("arg:t", "UNLIMITED");
             SameJob.put("arg:J","Calibration");
             scalingList = Collections.nCopies(nodesInfo.get(NodeCates.I), SameJob);
             scalingUp(scalingList, scheduler);
-//            BufferedWriter writer = new BufferedWriter(new FileWriter("log",true));
-//            writer.write("Scaling up:"+nodesInfo.get(NodeCates.I));
-//            writer.write("\n");
-//
-//            writer.close();
         } else  {
 
              List<Map<String, String>> pl=queueStatus.stream().filter(x -> x.get("NODELIST(REASON)").contains("Resources")).collect(Collectors.toList());
@@ -120,21 +122,27 @@ public class remoteCMD {
                 int numberCancel = makeWayBackfill(maxTime, pendingJobResource);
                 if (numberCancel > 0) //make a way
                 {
+                    System.err.println("scaling down "+numberCancel);
                     scalingDown(numberCancel, scheduler);
                 } else if (numberCancel < 0) // take them
                 {
-                    if (maxTime.compareTo(miniTime) == 1)// Long enough
+                    if (maxTime.compareTo(miniTime) > 0)// Long enough
                     {
                         Map<String, String> SameJob = new HashMap<>();
-                        SameJob.put("exec",System.getenv("DYNPRVDRIVER_HOME")+"/scripts/ipl-run");
-                        //SameJob.put("args","36000");
+                        if(debugging)
+                        {
+                            SameJob.put("exec","sleep");
+                            SameJob.put("args","72000");
+                        }else {
+                            SameJob.put("exec",System.getenv("DYNPRVDRIVER_HOME")+"/scripts/ipl-run");
+                        }
                         SameJob.put("arg:p", partitionName);
                         SameJob.put("arg:t", maxTime.Minus(new Time("2")).toString());
                         SameJob.put("arg:J","Calibration");
                         scalingList = Collections.nCopies(nodesInfo.get(NodeCates.I), SameJob);
                         scalingUp(scalingList, scheduler);
                     }
-                }// else if numberCencel==0 when other pending jobs can be filled in
+                }// else if numberCancel==0 when other pending jobs can be filled in
             }
 
         }
@@ -153,26 +161,29 @@ public class remoteCMD {
         return MaxTime;
     }
 
-    private int makeWayBackfill(Time MaxTime, Map<String, String> PendingJobResource) {
+    private int makeWayBackfill(Time MaxTime, Map<String, String> PendingJobResource) throws IOException {
         // filter jobs possibly to run
         List<Map<String,String>> pendingJobs=queueStatus.stream().filter(x -> x.get("NODELIST(REASON)").contains("Priority")).filter(x-> parseTime(x).compareTo(MaxTime) < 0).collect(Collectors.toList());
         int idleNodesNum=nodesInfo.get(NodeCates.I);
         if(reservedNumber<minNode)
         {
+            logNotChange("Reserve "+reservedNumber+" node, which smaller than miniNode"+minNode+", ask for "+idleNodesNum+"idle nodes");
             return -idleNodesNum;
         }
         if((Integer.parseInt(PendingJobResource.get("NODES"))-idleNodesNum)<=(reservedNumber-minNode))
         {
             // make a way for job waiting for resource
+            logNotChange("Make a way for job waiting for "+PendingJobResource.get("NODES")+" nodes, give out "+(Integer.parseInt(PendingJobResource.get("NODES"))-idleNodesNum));
             return (Integer.parseInt(PendingJobResource.get("NODES"))-idleNodesNum);
         }
         if(pendingJobs.size()>0)
         {
             Optional<Time> MostCloseJob=queueStatus.stream().filter(x->x.get("STATE").equals("RUNNING")).map(this::parseTime).min(Time::compareTo);
-            if(MostCloseJob.isPresent()&&MostCloseJob.get().compareTo(miniTime)==-1)
+            if(MostCloseJob.isPresent()&& MostCloseJob.get().compareTo(miniTime) < 0)
             {
                 // if there are running jobs will finish soon
                 // Then do not change
+                logNotChange("Running jobs will finish in:"+MostCloseJob.get());
                 return 0;
             }
         }
@@ -180,7 +191,7 @@ public class remoteCMD {
         for(Map<String,String> job:pendingJobs)
         {
 
-            if(parseTime(job).compareTo(MaxTime) < 0)
+            if(new Time(job.get("TIME_LIMIT")).compareTo(MaxTime) < 0)
             {
                 if(Integer.parseInt(job.get("NODES"))<=idleNodesNum)
                 {
@@ -192,6 +203,7 @@ public class remoteCMD {
                     System.out.println("Parsed Time:"+parseTime(job));
                     System.out.println("IDEL NODES:"+idleNodesNum);
                     System.out.println("\n\n\n\n*************");
+                    logNotChange("There is a pending job will be filled in soon");
                     return 0;
                 }
                 if((Integer.parseInt(job.get("NODES"))-idleNodesNum)<=(reservedNumber-minNode))
@@ -204,6 +216,7 @@ public class remoteCMD {
                     System.out.println("Parsed Time:"+parseTime(job));
                     System.out.println("IDEL NODES:"+idleNodesNum);
                     System.out.println("\n\n\n\n*************");
+                    logNotChange("make a way for pending job that can be back filled,requries "+(Integer.parseInt(job.get("NODES"))-idleNodesNum));
                     return (Integer.parseInt(job.get("NODES"))-idleNodesNum);
 
                 }
@@ -213,6 +226,7 @@ public class remoteCMD {
         }
         // no job can be filled in
         // Xenon take it
+        logNotChange("No job can be filled in Xenon take it, with node numbers"+idleNodesNum);
         return -idleNodesNum;
     }
 
@@ -245,7 +259,6 @@ public class remoteCMD {
                 TimeOut+=5000;
                 break;
             }
-            reservedNumber+=1;
             TimeOut=15000;
 
             // myJobQ.offer(jobId);
@@ -254,15 +267,22 @@ public class remoteCMD {
     }
 
     private void scalingDown(int number, Scheduler scheduler) throws XenonException {
+        List<Map<String,String>> runningList = queueStatus.stream()
+                .filter(x -> x.get("STATE").equals("RUNNING")).collect(Collectors.toList());
+        for(Map<String,String> job:runningList)
+        {
+            System.err.print(String.join(";","JobId="+job.get("JOBID"),"JobName"+job.get("NAME"),"Node="+job.get("NODES")));
+            System.err.print("\n");
+        }
         List<String> cancelList = queueStatus.stream()
-                .filter(x -> x.get("STATE").equals("RUNNING") & x.get("NAME").equals("xenon"))
-                .sorted(Comparator.comparing(a -> parseTime(a)))
+                .filter(x -> x.get("STATE").equals("RUNNING") & x.get("NAME").equals("Calibration"))
+                .sorted(Comparator.comparing(this::parseTime))
                 .limit(number).map(x->x.get("JOBID")).collect(Collectors.toList());
         for (String jobID : cancelList) {
             scheduler.cancelJob(jobID);
             //scheduler.cancelJob()
+            System.err.println("Cancel job"+jobID);
 
-            reservedNumber-=1;
         }
     }
 
@@ -276,7 +296,10 @@ public class remoteCMD {
         while (true) {
             try {
                 updateStatus(partitionName, scheduler);
-                updateMiniNode();
+                if(!debugging)
+                {
+                    updateMiniNode();
+                }
                 scaling(scheduler);
             } catch (XenonException | IOException e) {
                 e.printStackTrace();
@@ -290,14 +313,20 @@ public class remoteCMD {
             minNode=tmpNode;
         }
     }
+    public void logNotChange(String reason) throws IOException {
+        BufferedWriter out=new BufferedWriter(new FileWriter(System.getenv("DEBUGGING_FILE"),true));
+        out.write(String.join("\t","Time="+System.currentTimeMillis(),"Idle="+nodesInfo.get(NodeCates.I),"Reason="+reason));
+        out.newLine();
+        out.close();
+    }
     public static void main(String[] args) throws Exception {
 
         // Assume the remote system is actually just a Docker container (e.g.
         // https://hub.docker.com/r/xenonmiddleware/slurm/), accessible to user 'xenon' via
         // port 10022 on localhost, using password 'javagat'
-        String location = "ssh://fs1.das5.liacs.nl";
-        String username = "yhu310";
-        String password = "i52nztPF";
+        String location = System.getenv("XENON_LOCATION");
+        String username = System.getenv("XENON_USERNAME");
+        String password = System.getenv("XENON_PWD");
         // PasswordCredential c=new PasswordCredential(username,password);
         PasswordCredential credential = new PasswordCredential(username, password);
         // create the SLURM scheduler representation

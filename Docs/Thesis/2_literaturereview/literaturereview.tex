@@ -1,0 +1,69 @@
+% this file is called up by thesis.tex
+% content in this file will be fed into the main document
+
+\chapter{Literature Review} % top level followed by section, subsection
+
+
+% ----------------------- paths to graphics ------------------------
+
+% change according to folder and file names
+\ifpdf
+    \graphicspath{{2_literaturereview/figures/PNG/}{2_literaturereview/figures/PDF/}{2_literaturereview/figures/}}
+\else
+    \graphicspath{{2_literaturereview/figures/EPS/}{2_literaturereview/figures/}}
+\fi
+
+
+% ----------------------- contents from here ------------------------
+% 
+In this chapter, the previous related works will be explored. It is divided into two main topics: how resource utilization in cloud/cluster is improved, and how to build an auto-scaling distributed application. 
+The outline of the first topic follows the development along with the new technologies introduced.
+For the second topic, many kinds of existing solutions will be listed and the benefit and drawback of them will be discussed. 
+
+%-----------------------------overview-----------------------------------
+
+
+
+\section{Resource utilization optimization on Cloud/Cluster environment}
+In this section, the definition of resource in the cloud field will be elaborated first, and together with the other important metrics that stakeholders concern.
+Then following the path of development in this topic, a few kinds of approaches, and their typical examples will be explored.
+Note that, these approaches became popular one by one, but it doesn't mean the later ones are the replacement of previous ones.
+The introduction of new technologies has led to the emergence of new methods and expanded the boundaries of the field.
+\subsection{Definition of resource and QoS}
+In the cloud environment, there are many kinds of resources and a set of aspects around the cloud economy.
+Both Jennings \cite{Jennings2015} and Manvi \cite{Manvi2014} starts with the definition of resources.
+
+Jennings et al. categorize the resources into compute, networking, storage, and power. 
+Manvi et al. summarizes that there are physical resources(CPU, memory, storage, network elements and sensors ) and logical resources(OS, energy, Network throughput/bandwidth, Load balancing mechanisms and so on).
+There are overlap between two of them especially in the physical part, while Manvi adds API, OS, load balancing to logical resource concept.
+However, it is understandable that API , OS and some protocols and mechanisms  can be viewed as some sort of asset of cloud owner, but they are more acceptable to be considered as part of Quality of Service(QoS) which requires resources to fulfill.
+Therefore, in this paper, we mainly focus on the utilization of physical resources like CPU, memory, storage; and consider the trade-off between utilization rate and QoS.
+
+QoS (Quality of Service) metrics are import to both cloud provider and consumer, they are good for optimizing resource utilization efficiency
+Bardsiri and Hashemi listed detailed metrics from four kinds of features:performance, economic, security and general. \cite{Bardsiri2014}
+Their coverage is comprehensive. There are plenty of features and corresponding metrics that cloud users would put concern.
+
+Given the background of researching utilization under limited resources, there are few metrics we consider important. 
+For performance features, the CPU load rate and packet loss frequency are what users may concern while the cloud provides needs to make a compromise for utilization of resources.
+In the economic aspect, the price per resource unit is the key point that cloud  providers and users wrestle on. However, from the technical view, the time for VM booting/deleting/suspending/provison attract more attantion.
+Besides, the availability and reliability are very important as well. The response time is the key metric for auto-scaling mechanism.
+Cloud providers need to pay effort on fault tolerance to make sure the safety of the cloud.
+
+In the following sections, we will explore how cloud providers face resource management issues and the metrics shown above play important roles in  those researches.
+
+\subsection{Scheduling strategies on batch queuing systems }
+The batch scheduling has long history in the entire computer science field, from the very beginning of mainframe age and still part of the fundamental configuration of current researches and systems.
+The queuing system schedules jobs according to their priorities as the resource waste of FIFO is obvious. Therefore, A good deal of optimization are applied on the priorities related concepts.
+Preemption, backfill and heuristics are traditional routes for scheduling. Besides, with the growth of computation ability, the machine learning/deep learning approaches which are based on historical data become the front of researches in this field.
+
+
+
+\subsection{Virtual machine founded cloud era}
+
+\subsection{Container and orchestra}
+
+\section{Distributed systems and auto-scaled algorithms}
+
+% ---------------------------------------------------------------------------
+% ----------------------- end of thesis sub-document ------------------------
+% ---------------------------------------------------------------------------

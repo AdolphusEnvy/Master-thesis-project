@@ -1,0 +1,614 @@
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2020.1.22)  14 JUL 2020 18:48
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**thesis
+(./thesis.tex
+LaTeX2e <2019-10-01> patch level 3
+(./Latex/Classes/PhDthesisPSnPDF.cls
+Document Class: Latex/Classes/PhDthesisPSnPDF 2007/09/06 v2 PhD thesis class
+(d:/Applications/texlive/2019/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2019/10/25 v1.4k Standard LaTeX document class
+(d:/Applications/texlive/2019/texmf-dist/tex/latex/base/bk11.clo
+File: bk11.clo 2019/10/25 v1.4k Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@chapter=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks14
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (d:/Applications/texlive/2019/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2019/11/01 v1.3d Standard LaTeX Graphics (DPC,SPQR)
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: xetex.def on input line 105.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/graphics-def/xetex.def
+File: xetex.def 2017/06/24 v5.0h Graphics/color driver for xetex
+)) (./caption.sty
+Package: caption 2004/05/16 v3.0b Customising captions (AS)
+\captionmargin=\dimen103
+\captionwidth=\dimen104
+\captionindent=\dimen105
+\captionparindent=\dimen106
+\captionhangindent=\dimen107
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks15
+)) (./fancyhdr.sty
+\fancy@headwidth=\skip43
+\f@ncyO@elh=\skip44
+\f@ncyO@erh=\skip45
+\f@ncyO@olh=\skip46
+\f@ncyO@orh=\skip47
+\f@ncyO@elf=\skip48
+\f@ncyO@erf=\skip49
+\f@ncyO@olf=\skip50
+\f@ncyO@orf=\skip51
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/amsfonts/eucal.sty
+Package: eucal 2009/06/22 v3.00 Euler Script fonts
+LaTeX Font Info:    Overwriting math alphabet `\EuScript' in version `bold'
+(Font)                  U/eus/m/n --> U/eus/b/n on input line 33.
+) (d:/Applications/texlive/2019/texmf-dist/tex/generic/babel/babel.sty
+Package: babel 2020/01/15 3.38 The Babel package
+ (d:/Applications/texlive/2019/texmf-dist/tex/generic/babel/switch.def
+File: switch.def 2020/01/15 3.38 Babel switching mechanism
+) (d:/Applications/texlive/2019/texmf-dist/tex/generic/babel-english/english.ldf
+Language: english 2017/06/06 v3.3r English support from the babel system
+ (d:/Applications/texlive/2019/texmf-dist/tex/generic/babel/babel.def
+File: babel.def 2020/01/15 3.38 Babel common definitions
+\babel@savecnt=\count89
+\U@D=\dimen108
+ (d:/Applications/texlive/2019/texmf-dist/tex/generic/babel/xebabel.def (d:/Applications/texlive/2019/texmf-dist/tex/generic/babel/txtbabel.def))
+\bbl@readstream=\read1
+\bbl@dirlevel=\count90
+)
+Package babel Info: \l@canadian = using hyphenrules for english
+(babel)             (\language0) on input line 102.
+Package babel Info: \l@australian = using hyphenrules for ukenglish
+(babel)             (\language21) on input line 105.
+Package babel Info: \l@newzealand = using hyphenrules for ukenglish
+(babel)             (\language21) on input line 108.
+)) (d:/Applications/texlive/2019/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: xetex.def on input line 147.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+)) (./footmisc.sty
+Package: footmisc 2005/03/17 v5.3d a miscellany of footnote facilities
+\FN@temptoken=\toks16
+\footnotemargin=\dimen109
+\c@pp@next@reset=\count91
+\c@@fnserial=\count92
+Package footmisc Info: Declaring symbol style bringhurst on input line 817.
+Package footmisc Info: Declaring symbol style chicago on input line 818.
+Package footmisc Info: Declaring symbol style wiley on input line 819.
+Package footmisc Info: Declaring symbol style lamport-robust on input line 823.
+Package footmisc Info: Declaring symbol style lamport* on input line 831.
+Package footmisc Info: Declaring symbol style lamport*-robust on input line 840.
+) (./natbib.sty
+Package: natbib 1998/07/14 6.8c (PWD)
+\bibhang=\skip52
+\bibsep=\skip53
+LaTeX Info: Redefining \cite on input line 467.
+\c@NAT@ctr=\count93
+
+
+Package natbib Warning: If you use both babel and natbib
+(natbib)                then load babel AFTER natbib.
+
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/tools/multicol.sty
+Package: multicol 2019/03/01 v1.8w multicolumn formatting (FMi)
+\c@tracingmulticols=\count94
+\mult@box=\box27
+\multicol@leftmargin=\dimen110
+\c@unbalance=\count95
+\c@collectmore=\count96
+\doublecol@number=\count97
+\multicoltolerance=\count98
+\multicolpretolerance=\count99
+\full@width=\dimen111
+\page@free=\dimen112
+\premulticols=\dimen113
+\postmulticols=\dimen114
+\multicolsep=\skip54
+\multicolbaselineskip=\skip55
+\partial@page=\box28
+\last@line=\box29
+\maxbalancingoverflow=\dimen115
+\mult@rightbox=\box30
+\mult@grightbox=\box31
+\mult@gfirstbox=\box32
+\mult@firstbox=\box33
+\@tempa=\box34
+\@tempa=\box35
+\@tempa=\box36
+\@tempa=\box37
+\@tempa=\box38
+\@tempa=\box39
+\@tempa=\box40
+\@tempa=\box41
+\@tempa=\box42
+\@tempa=\box43
+\@tempa=\box44
+\@tempa=\box45
+\@tempa=\box46
+\@tempa=\box47
+\@tempa=\box48
+\@tempa=\box49
+\@tempa=\box50
+\c@minrows=\count100
+\c@columnbadness=\count101
+\c@finalcolumnbadness=\count102
+\last@try=\dimen116
+\multicolovershoot=\dimen117
+\multicolundershoot=\dimen118
+\mult@nat@firstbox=\box51
+\colbreak@box=\box52
+\mc@col@check@num=\count103
+) (./tocbibind.sty
+Package: tocbibind 2003/02/04 v1.5f extra ToC listings
+
+
+Package tocbibind Note: The document has chapter divisions.
+
+
+Package tocbibind Note: Using chapter style headings, unless overridden.
+
+) (./nomencl.sty
+Package: nomencl 2005/09/22 v4.2 Nomenclature package (LN)
+\nomlabelwidth=\dimen119
+\nom@tempdim=\dimen120
+\nomitemsep=\skip56
+)
+\@nomenclaturefile=\write3
+\openout3 = `thesis.nlo'.
+
+
+Writing nomenclature file thesis.nlo
+(d:/Applications/texlive/2019/texmf-dist/tex/generic/iftex/ifpdf.sty
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+ (d:/Applications/texlive/2019/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2019/11/07 v1.0c TeX engine tests
+)) (d:/Applications/texlive/2019/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2019/11/10 v7.00c Hypertext links for LaTeX
+ (d:/Applications/texlive/2019/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO)
+ (d:/Applications/texlive/2019/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode not found.
+) (d:/Applications/texlive/2019/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+) (d:/Applications/texlive/2019/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (d:/Applications/texlive/2019/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2019/12/15 v1.9 Color options for hyperref/bookmark (HO)
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/hycolor/xcolor-patch.sty
+Package: xcolor-patch 2019/12/15 xcolor patch
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/oberdiek/hopatch.sty
+Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
+))) (d:/Applications/texlive/2019/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
+)
+\@linkdim=\dimen121
+\Hy@linkcounter=\count104
+\Hy@pagecounter=\count105
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2019/11/10 v7.00c Hyperref: PDFDocEncoding definition (HO)
+) (d:/Applications/texlive/2019/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+) (d:/Applications/texlive/2019/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count106
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/latexconfig/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
+)
+Package hyperref Info: Option `bookmarks' set `true' on input line 4409.
+Package hyperref Info: Option `bookmarksopen' set `true' on input line 4409.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 4409.
+Package hyperref Info: Option `breaklinks' set `true' on input line 4409.
+Package hyperref Info: Option `linktocpage' set `true' on input line 4409.
+Package hyperref Info: Option `colorlinks' set `true' on input line 4409.
+Package hyperref Info: Option `hyperindex' set `true' on input line 4409.
+Package hyperref Info: Option `hyperfigures' set `true' on input line 4409.
+Package hyperref Info: Hyper figures ON on input line 4533.
+Package hyperref Info: Link nesting OFF on input line 4540.
+Package hyperref Info: Hyper index ON on input line 4543.
+Package hyperref Info: Plain pages OFF on input line 4550.
+Package hyperref Info: Backreferencing ON on input line 4553.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4788.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/hyperref/backref.sty
+Package: backref 2016/05/21 v1.39 Bibliographical back referencing
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/atveryend/atveryend.sty
+Package: atveryend 2019-12-11 v1.11 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+) (d:/Applications/texlive/2019/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+ (d:/Applications/texlive/2019/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 286.
+))
+\c@Hy@tempcnt=\count107
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip10
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 5147.
+\XeTeXLinkMargin=\dimen122
+ (d:/Applications/texlive/2019/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+)
+\Fld@menulength=\count108
+\Field@Width=\dimen123
+\Fld@charsize=\dimen124
+Package hyperref Info: Hyper figures ON on input line 6416.
+Package hyperref Info: Link nesting OFF on input line 6423.
+Package hyperref Info: Hyper index ON on input line 6426.
+Package hyperref Info: backreferencing ON on input line 6431.
+Package hyperref Info: Link coloring ON on input line 6436.
+Package hyperref Info: Link coloring with OCG OFF on input line 6443.
+Package hyperref Info: PDF/A mode OFF on input line 6448.
+LaTeX Info: Redefining \ref on input line 6488.
+LaTeX Info: Redefining \pageref on input line 6492.
+ (d:/Applications/texlive/2019/texmf-dist/tex/generic/atbegshi/atbegshi.sty
+Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
+)
+\Hy@abspage=\count109
+\c@Item=\count110
+\c@Hfootnote=\count111
+)
+Package hyperref Info: Driver (autodetected): hxetex.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/hyperref/hxetex.def
+File: hxetex.def 2019/11/10 v7.00c Hyperref driver for XeTeX
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2019/11/10 v7.00c Hyperref: PDF Unicode definition (HO)
+) (d:/Applications/texlive/2019/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+)
+\pdfm@box=\box53
+\c@Hy@AnnotLevel=\count112
+\HyField@AnnotCount=\count113
+\Fld@listcount=\count114
+\c@bookmark@seq@number=\count115
+\Hy@SectionHShift=\skip57
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/graphics/epsfig.sty
+Package: epsfig 2017/06/25 v1.7b (e)psfig emulation (SPQR)
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+\Gin@req@height=\dimen125
+\Gin@req@width=\dimen126
+)
+\epsfxsize=\dimen127
+\epsfysize=\dimen128
+))
+\@input{Latex/Macros/MacroFile1.aux}
+\openout2 = `Latex/Macros/MacroFile1.aux'.
+
+(./Latex/Macros/MacroFile1.tex) (d:/Applications/texlive/2019/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2018/08/11 v2.0j Standard LaTeX package
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/base/t1enc.def
+File: t1enc.def 2018/08/11 v2.0j Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
+)
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 105.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/lm/t1lmr.fd
+File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)) (d:/Applications/texlive/2019/texmf-dist/tex/latex/tools/array.sty
+Package: array 2019/08/31 v2.4l Tabular extension package (FMi)
+\col@sep=\dimen129
+\ar@mcellbox=\box54
+\extrarowheight=\dimen130
+\NC@list=\toks17
+\extratabsurround=\skip58
+\backup@length=\skip59
+\ar@cellbox=\box55
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2019/12/17 v0.5p Insert pages of external PDF documents (AM)
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count116
+\calc@Bcount=\count117
+\calc@Adimen=\dimen131
+\calc@Bdimen=\dimen132
+\calc@Askip=\skip60
+\calc@Bskip=\skip61
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count118
+\calc@Cskip=\skip62
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2018/04/12 v2.0h eso-pic (RN)
+)
+\AM@pagewidth=\dimen133
+\AM@pageheight=\dimen134
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/pdfpages/ppxetex.def
+File: ppxetex.def 2019/12/17 v0.5p Pdfpages driver for XeTeX (AM)
+)
+\AM@pagebox=\box56
+\AM@global@opts=\toks18
+\AM@toc@title=\toks19
+\c@AM@survey=\count119
+\AM@templatesizebox=\box57
+)
+
+LaTeX Warning: Unused global option(s):
+    [dvips].
+
+(./thesis.aux (./0_frontmatter/abstract.aux) (./0_frontmatter/dedication.aux) (./0_frontmatter/acknowledgement.aux) (./1_introduction/introduction.aux) (./2_literaturereview/literaturereview.aux) (./3_methods/methods.aux) (./4_analysis&results/analysis&results.aux) (./5_discussions/discussions.aux) (./6_conclusion/conclusion.aux))
+\openout1 = `thesis.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 43.
+LaTeX Font Info:    ... okay on input line 43.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/ragged2e/ragged2e.sty
+Package: ragged2e 2019/07/28 v2.2 ragged2e Package (MS)
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/ms/everysel.sty
+Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
+ ABD: EverySelectfont initializing macros
+LaTeX Info: Redefining \selectfont on input line 126.
+)
+\CenteringLeftskip=\skip63
+\RaggedLeftLeftskip=\skip64
+\RaggedRightLeftskip=\skip65
+\CenteringRightskip=\skip66
+\RaggedLeftRightskip=\skip67
+\RaggedRightRightskip=\skip68
+\CenteringParfillskip=\skip69
+\RaggedLeftParfillskip=\skip70
+\RaggedRightParfillskip=\skip71
+\JustifyingParfillskip=\skip72
+\CenteringParindent=\skip73
+\RaggedLeftParindent=\skip74
+\RaggedRightParindent=\skip75
+\JustifyingParindent=\skip76
+)
+Package caption Info: float package v1.2 (or newer) detected on input line 43.
+Package caption Info: listings package v1.2 (or newer) detected on input line 43.
+Package caption Info: longtable package v3.15 (or newer) detected on input line 43.
+Package caption Info: rotating package v2.0 (or newer) detected on input line 43.
+Package caption Info: sidecap package v1.4d (or newer) detected on input line 43.
+Package caption Info: supertabular package detected on input line 43.
+Package backref Info: ** backref set up for natbib ** on input line 43.
+\AtBeginShipoutBox=\box58
+Package hyperref Info: Link coloring ON on input line 43.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (d:/Applications/texlive/2019/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count120
+)
+LaTeX Info: Redefining \ref on input line 43.
+LaTeX Info: Redefining \pageref on input line 43.
+LaTeX Info: Redefining \nameref on input line 43.
+ (./thesis.out) (./thesis.out)
+\@outlinefile=\write4
+\openout4 = `thesis.out'.
+
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: dvipdfm (xetex) on input line 98.
+)
+File: 0_frontmatter/figures/vu-griffioen.pdf Graphic file (type pdf)
+<use 0_frontmatter/figures/vu-griffioen.pdf>
+File: 0_frontmatter/figures/uva_logo.jpg Graphic file (type bmp)
+<0_frontmatter/figures/uva_logo.jpg>
+LaTeX Font Info:    Trying to load font information for U+msa on input line 70.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 70.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) (d:/Applications/texlive/2019/texmf-dist/tex/generic/stringenc/se-ascii-print.def
+File: se-ascii-print.def 2019/11/29 v1.12 stringenc: Printable ASCII characters
+) [1
+
+
+
+\FN@pp@footnotehinttrue 
+
+] [2]
+\openout2 = `0_frontmatter/abstract.aux'.
+
+ (./0_frontmatter/abstract.tex [3
+
+]) [4
+\FN@pp@footnotehinttrue 
+
+
+]
+\openout2 = `0_frontmatter/dedication.aux'.
+
+ (./0_frontmatter/dedication.tex)
+\openout2 = `0_frontmatter/acknowledgement.aux'.
+
+ (./0_frontmatter/acknowledgement.tex) (./thesis.toc [1
+
+
+\FN@pp@footnotehinttrue 
+
+
+\FN@pp@footnotehinttrue 
+
+
+])
+\tf@toc=\write5
+\openout5 = `thesis.toc'.
+
+ [2] (./thesis.lof)
+\tf@lof=\write6
+\openout6 = `thesis.lof'.
+
+ [3
+
+] [4
+
+] (./thesis.lot)
+\tf@lot=\write7
+\openout7 = `thesis.lot'.
+
+ [5] [6
+
+]
+\openout2 = `1_introduction/introduction.aux'.
+
+ (./1_introduction/introduction.tex
+ 1.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 31.
+(d:/Applications/texlive/2019/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [1
+
+
+]
+File: 1_introduction/figures/spark_NP.jpg Graphic file (type bmp)
+<1_introduction/figures/spark_NP.jpg>
+File: 1_introduction/figures/MPI_batch.jpg Graphic file (type bmp)
+<1_introduction/figures/MPI_batch.jpg>
+LaTeX Font Info:    Trying to load font information for OMS+lmr on input line 90.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
+File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 90.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 90.
+ [2]) [3]
+\openout2 = `2_literaturereview/literaturereview.aux'.
+
+ (./2_literaturereview/literaturereview.tex [4
+
+
+
+]
+ 2.
+[5]) [6] [7]
+\openout2 = `3_methods/methods.aux'.
+
+ (./3_methods/methods.tex [8
+
+
+
+]
+ 3.
+) [9]
+\openout2 = `4_analysis&results/analysis&results.aux'.
+
+ (./4_analysis&results/analysis&results.tex [10
+
+
+
+]
+ 4.
+) [11]
+\openout2 = `5_discussions/discussions.aux'.
+
+ (./5_discussions/discussions.tex [12
+
+
+
+]
+ 5.
+) [13]
+\openout2 = `6_conclusion/conclusion.aux'.
+
+ (./6_conclusion/conclusion.tex [14
+
+
+
+]
+ 6.
+) [15] (./thesis.bbl (./thesis.brf)
+\tf@brf=\write8
+\openout8 = `thesis.brf'.
+
+ [16
+
+
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 286.
+ [17]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 286.
+ (./thesis.aux (./0_frontmatter/abstract.aux) (./0_frontmatter/dedication.aux) (./0_frontmatter/acknowledgement.aux) (./1_introduction/introduction.aux) (./2_literaturereview/literaturereview.aux) (./3_methods/methods.aux) (./4_analysis&results/analysis&results.aux) (./5_discussions/discussions.aux) (./6_conclusion/conclusion.aux))
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 286.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 286.
+Package rerunfilecheck Info: File `thesis.out' has not changed.
+(rerunfilecheck)             Checksum: 75164D106ACBCB42831A03A42C0D6176;1892.
+Package rerunfilecheck Info: File `thesis.brf' has not changed.
+(rerunfilecheck)             Checksum: C4A1DD82E72AE5AA67A9AC761A39BAA7;300.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 286.
+ ) 
+Here is how much of TeX's memory you used:
+ 12009 strings out of 492472
+ 175383 string characters out of 6127188
+ 262377 words of memory out of 5000000
+ 16177 multiletter control sequences out of 15000+600000
+ 66092 words of font info for 73 fonts, out of 8000000 for 9000
+ 1348 hyphenation exceptions out of 8191
+ 54i,11n,49p,305b,491s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on thesis.pdf (27 pages).

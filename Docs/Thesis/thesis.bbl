@@ -1,0 +1,41 @@
+\begin{thebibliography}{1}
+
+\bibitem{Spreeuw2019}
+{\sc Hanno Spreeuw, Souley Madougou, Ronald~Van Haren, Berend Weel, Adam
+  Belloum, and Jason Maassen}.
+\newblock {\bf {Unlocking the LOFAR LTA}}.
+\newblock pages 467--470, 2019.
+
+\bibitem{Start2020}
+{\bf {PROviding Computing solutions for ExaScale ChallengeS}}.
+\newblock (777533):1--163, 2020.
+
+\bibitem{Kazemi2011}
+{\sc S.~Kazemi, S.~Yatawatta, S.~Zaroubi, P.~Lampropoulos, A.~G. de~Bruyn,
+  L.~V.E. Koopmans, and J.~Noordam}.
+\newblock {\bf {Radio interferometric calibration using the SAGE algorithm}}.
+\newblock {\em Monthly Notices of the Royal Astronomical Society}, {\bf
+  414}(2):1656--1666, 2011.
+
+\bibitem{Jennings2015}
+{\sc Brendan Jennings and Rolf Stadler}.
+\newblock {\bf {Resource Management in Clouds: Survey and Research
+  Challenges}}.
+\newblock {\em Journal of Network and Systems Management}, {\bf
+  23}(3):567--619, 2015.
+
+\bibitem{Manvi2014}
+{\sc Sunilkumar~S. Manvi and Gopal {Krishna Shyam}}.
+\newblock \href{http://dx.doi.org/10.1016/j.jnca.2013.10.004}{{\bf {Resource
+  management for Infrastructure as a Service (IaaS) in cloud computing: A
+  survey}}}.
+\newblock {\em Journal of Network and Computer Applications}, {\bf
+  41}(1):424--440, 2014.
+
+\bibitem{Bardsiri2014}
+{\sc Amid~Khatibi Bardsiri and Seyyed~Mohsen Hashemi}.
+\newblock {\bf {QoS Metrics for Cloud Computing Services Evaluation}}.
+\newblock {\em International Journal of Intelligent Systems and Applications},
+  {\bf 6}(12):27--33, 2014.
+
+\end{thebibliography}

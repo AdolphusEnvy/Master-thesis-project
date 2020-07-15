@@ -13,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Simulation {
-
+    private static final boolean debugging=System.getenv("DEBUGGING").equals("True");
     private Queue<SimuJob> simulationQueue=new LinkedList<>();
     private String partitionName;
     private long checkpoint;
@@ -85,15 +85,21 @@ public class Simulation {
                     /*
                     TODO: submit to web service
                      */
-                    String log=submitCalibrationJob(scheduler,sj);
-                    System.out.println("\n---submit calibration job---\n"+log);
+                    if(debugging)
+                    {
+                        System.out.println("\n---submit calibration job:Debug---\n");
+                    }else {
+                        String log=submitCalibrationJob(scheduler,sj);
+                        System.out.println("\n---submit calibration job:Real submit---\n"+log);
+                    }
+
 
                 }
                 else
                 {
                     String jobID=submitOneJob(scheduler,sj);
                 }
-
+            Thread.sleep(500);
             }
             sj = simulationQueue.peek();
         }

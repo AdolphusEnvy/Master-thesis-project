@@ -1,0 +1,130 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{6}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{??}{Sta}{2020}]%
+        {Start2020}
+ \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{{PROviding Computing solutions for ExaScale
+  ChallengeS}}.
+\newblock  \bibinfo{number}{777533} (\bibinfo{year}{2020}),
+  \bibinfo{pages}{1--163}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Bardsiri and Hashemi}{Bardsiri and
+  Hashemi}{2014}]%
+        {Bardsiri2014}
+\bibfield{author}{\bibinfo{person}{Amid~Khatibi Bardsiri} {and}
+  \bibinfo{person}{Seyyed~Mohsen Hashemi}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{{QoS Metrics for Cloud Computing Services
+  Evaluation}}.
+\newblock \bibinfo{journal}{\emph{International Journal of Intelligent Systems
+  and Applications}} \bibinfo{volume}{6}, \bibinfo{number}{12}
+  (\bibinfo{year}{2014}), \bibinfo{pages}{27--33}.
+\newblock
+\showISSN{2074904X}
+\urldef\tempurl%
+\url{https://doi.org/10.5815/ijisa.2014.12.04}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Becerra, Carrera, and Ayguad{\'e}}{Becerra
+  et~al\mbox{.}}{2009}]%
+        {becerra2009batch}
+\bibfield{author}{\bibinfo{person}{Yolanda Becerra}, \bibinfo{person}{David
+  Carrera}, {and} \bibinfo{person}{Eduard Ayguad{\'e}}.}
+  \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Batch job profiling and adaptive profile
+  enforcement for virtualized environments}. In \bibinfo{booktitle}{\emph{2009
+  17th Euromicro International Conference on Parallel, Distributed and
+  Network-based Processing}}. IEEE, \bibinfo{pages}{414--418}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Jennings and Stadler}{Jennings and
+  Stadler}{2015}]%
+        {Jennings2015}
+\bibfield{author}{\bibinfo{person}{Brendan Jennings} {and}
+  \bibinfo{person}{Rolf Stadler}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{{Resource Management in Clouds: Survey and Research
+  Challenges}}.
+\newblock \bibinfo{journal}{\emph{Journal of Network and Systems Management}}
+  \bibinfo{volume}{23}, \bibinfo{number}{3} (\bibinfo{year}{2015}),
+  \bibinfo{pages}{567--619}.
+\newblock
+\showISSN{10647570}
+\urldef\tempurl%
+\url{https://doi.org/10.1007/s10922-014-9307-7}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Manvi and {Krishna Shyam}}{Manvi and {Krishna
+  Shyam}}{2014}]%
+        {Manvi2014}
+\bibfield{author}{\bibinfo{person}{Sunilkumar~S. Manvi} {and}
+  \bibinfo{person}{Gopal {Krishna Shyam}}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{{Resource management for Infrastructure as a
+  Service (IaaS) in cloud computing: A survey}}.
+\newblock \bibinfo{journal}{\emph{Journal of Network and Computer
+  Applications}} \bibinfo{volume}{41}, \bibinfo{number}{1}
+  (\bibinfo{year}{2014}), \bibinfo{pages}{424--440}.
+\newblock
+\showISSN{10958592}
+\urldef\tempurl%
+\url{https://doi.org/10.1016/j.jnca.2013.10.004}
+\showDOI{\tempurl}
+
+
+\bibitem[\protect\citeauthoryear{Spreeuw, Madougou, Haren, Weel, Belloum, and
+  Maassen}{Spreeuw et~al\mbox{.}}{2019}]%
+        {Spreeuw2019}
+\bibfield{author}{\bibinfo{person}{Hanno Spreeuw}, \bibinfo{person}{Souley
+  Madougou}, \bibinfo{person}{Ronald~Van Haren}, \bibinfo{person}{Berend Weel},
+  \bibinfo{person}{Adam Belloum}, {and} \bibinfo{person}{Jason Maassen}.}
+  \bibinfo{year}{2019}\natexlab{}.
+\newblock \showarticletitle{{Unlocking the LOFAR LTA}}.
+\newblock  (\bibinfo{year}{2019}), \bibinfo{pages}{467--470}.
+\newblock
+\showISBNx{9781728124513}
+\urldef\tempurl%
+\url{https://doi.org/10.1109/eScience.2019.00061}
+\showDOI{\tempurl}
+
+
+\end{thebibliography}

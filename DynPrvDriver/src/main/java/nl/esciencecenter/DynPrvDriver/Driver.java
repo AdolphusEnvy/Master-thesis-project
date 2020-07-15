@@ -85,9 +85,8 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
                 for (int i : runningJobMap.keySet()) {
                     System.out.println("Job " + i + "Has " + runningJobMap.get(i).leftTasks() + " Tasks to do!");
                 }
-                for(Map.Entry<IbisIdentifier,Task> entry:runningNodes.entrySet())
-                {
-                    System.out.println("Node:"+entry.getKey()+" working on task "+entry.getValue().getTaskID());
+                for (Map.Entry<IbisIdentifier, Task> entry : runningNodes.entrySet()) {
+                    System.out.println("Node:" + entry.getKey() + " working on task " + entry.getValue().getTaskID());
                 }
                 db.commit();
             }
@@ -118,7 +117,7 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
         while (true) {
 
             Task task = workerTaskQueue.poll(1, TimeUnit.SECONDS);
-            System.out.println(myIbis.identifier()+" Start a task:" + task);
+            System.out.println(myIbis.identifier() + " Start a task:" + task);
             if (task == null) {
                 Thread.sleep(1000);
                 if (masterCrashed == true) {
@@ -209,7 +208,7 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
         r.enableEvents();
         // Elect a server
         masterId = r.elect("Server");
-        DebugSignalHandler.listenTo("TERM", r, myibis.identifier(),myibis);
+        DebugSignalHandler.listenTo("TERM", r, myibis.identifier(), myibis);
         // If I am the server, run server, else run client.
         while (finished == false) {
             try {
@@ -217,8 +216,6 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
                     server(myibis);
                 } else {
                     client(myibis, masterId);
-
-
                 }
             } catch (InterruptedException e) {
                 // myibis.registry().assumeDead(myibis.identifier());
@@ -246,7 +243,7 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
 
 
         // End ibis.
-         myibis.end();
+        myibis.end();
     }
 
     public static void main(String[] args) throws ParseException {
@@ -365,7 +362,7 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
                                     w.writeObject(tmp);
                                     w.finish();
                                     runningNodes.put(srcId, tmp);
-                                    System.out.println("------------------------------\nDELIVER TASK "+tmp.getTaskID()+" TO " + srcId +
+                                    System.out.println("------------------------------\nDELIVER TASK " + tmp.getTaskID() + " TO " + srcId +
                                             "\n with " + taskJob.leftTasks() + " task left\n---------------------------");
                                     break; //connection and passing message success
                                 } catch (Exception e) {
@@ -403,10 +400,10 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
     public void startSideExecutor() throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder();
         processBuilder.directory(new File(System.getProperty("user.dir")));
-        processBuilder.environment().put("MASTER_NODE","True");
+        processBuilder.environment().put("MASTER_NODE", "True");
         processBuilder.command("./scripts/ipl-run");
-        Process p=processBuilder.start();
-        Thread thread=new Thread(()->{
+        Process p = processBuilder.start();
+        Thread thread = new Thread(() -> {
             try {
 
 
@@ -416,15 +413,14 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
                 BufferedReader stdError = new BufferedReader(new
                         InputStreamReader(p.getErrorStream()));
 
-                while (p.isAlive())
-                {
+                while (p.isAlive()) {
                     System.out.println(stdInput.lines().collect(Collectors.joining("\n")));
                     System.out.println(stdError.lines().collect(Collectors.joining("\n")));
                     Thread.sleep(1000);
                 }
-                int exitCode=p.waitFor();
+                int exitCode = p.waitFor();
                 //String[] out = new String[]{stdInput.lines().collect(Collectors.joining("\n")), stdError.lines().collect(Collectors.joining("\n"))};
-                System.out.println("Exit code:"+exitCode);
+                System.out.println("Exit code:" + exitCode);
                 System.out.println(stdInput.lines().collect(Collectors.joining("\n")));
                 System.out.println(stdError.lines().collect(Collectors.joining("\n")));
             } catch (InterruptedException e) {
@@ -433,6 +429,7 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
         });
         thread.start();
     }
+
     @Override
     public void joined(IbisIdentifier joinedIbis) {
         System.out.println("joined: " + joinedIbis);
@@ -561,7 +558,7 @@ class DebugSignalHandler implements SignalHandler {
         this.ibis = ibis;
     }
 
-    public static void listenTo(String name, Registry registry, IbisIdentifier identifier,Ibis ibis) {
+    public static void listenTo(String name, Registry registry, IbisIdentifier identifier, Ibis ibis) {
         Signal signal = new Signal(name);
         Signal.handle(signal, new DebugSignalHandler(registry, identifier, ibis));
     }
