@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{Spreeuw2019}
 {\sc Hanno Spreeuw, Souley Madougou, Ronald~Van Haren, Berend Weel, Adam
@@ -17,25 +17,114 @@
 \newblock {\em Monthly Notices of the Royal Astronomical Society}, {\bf
   414}(2):1656--1666, 2011.
 
-\bibitem{Jennings2015}
-{\sc Brendan Jennings and Rolf Stadler}.
-\newblock {\bf {Resource Management in Clouds: Survey and Research
-  Challenges}}.
-\newblock {\em Journal of Network and Systems Management}, {\bf
-  23}(3):567--619, 2015.
+\bibitem{sajjapongse2013preemption}
+{\sc Kittisak Sajjapongse, Xiang Wang, and Michela Becchi}.
+\newblock {\bf A preemption-based runtime to efficiently schedule multi-process
+  applications on heterogeneous clusters with gpus}.
+\newblock In {\em Proceedings of the 22nd international symposium on
+  High-performance parallel and distributed computing}, pages 179--190, 2013.
 
-\bibitem{Manvi2014}
-{\sc Sunilkumar~S. Manvi and Gopal {Krishna Shyam}}.
-\newblock \href{http://dx.doi.org/10.1016/j.jnca.2013.10.004}{{\bf {Resource
-  management for Infrastructure as a Service (IaaS) in cloud computing: A
-  survey}}}.
-\newblock {\em Journal of Network and Computer Applications}, {\bf
-  41}(1):424--440, 2014.
+\bibitem{6103959}
+{\sc L.~{Cheng}, Q.~{Zhang}, and R.~{Boutaba}}.
+\newblock {\bf Mitigating the negative impact of preemption on heterogeneous
+  MapReduce workloads}.
+\newblock In {\em 2011 7th International Conference on Network and Service
+  Management}, pages 1--9, 2011.
 
-\bibitem{Bardsiri2014}
-{\sc Amid~Khatibi Bardsiri and Seyyed~Mohsen Hashemi}.
-\newblock {\bf {QoS Metrics for Cloud Computing Services Evaluation}}.
-\newblock {\em International Journal of Intelligent Systems and Applications},
-  {\bf 6}(12):27--33, 2014.
+\bibitem{hargrove2006berkeley}
+{\sc Paul~H Hargrove and Jason~C Duell}.
+\newblock {\bf Berkeley lab checkpoint/restart (blcr) for linux clusters}.
+\newblock In {\em Journal of Physics: Conference Series}, ~{\bf 46}, page 494,
+  2006.
+
+\bibitem{5972255}
+{\sc A.~{Suresh} and P.~{Vijayakarthick}}.
+\newblock {\bf Improving scheduling of backfill algorithms using balanced
+  spiral method for cloud metascheduler}.
+\newblock In {\em 2011 International Conference on Recent Trends in Information
+  Technology (ICRTIT)}, pages 624--627, 2011.
+
+\bibitem{nayak2019dynamic}
+{\sc Suvendu~Chandan Nayak, Sasmita Parida, Chitaranjan Tripathy, and
+  Prasant~Kumar Pattnaik}.
+\newblock {\bf Dynamic Backfilling Algorithm to Increase Resource Utilization
+  in Cloud Computing}.
+\newblock {\em International Journal of Information Technology and Web
+  Engineering (IJITWE)}, {\bf 14}(1):1--26, 2019.
+
+\bibitem{4797220}
+{\sc J.~{Wang} and W.~{Guo}}.
+\newblock {\bf The Application of Backfilling in Cluster Systems}.
+\newblock In {\em 2009 WRI International Conference on Communications and
+  Mobile Computing}, ~{\bf 3}, pages 55--59, 2009.
+
+\bibitem{talby1999supporting}
+{\sc David Talby and Dror~G Feitelson}.
+\newblock {\bf Supporting priorities and improving utilization of the IBM SP
+  scheduler using slack-based backfilling}.
+\newblock In {\em Proceedings 13th International Parallel Processing Symposium
+  and 10th Symposium on Parallel and Distributed Processing. IPPS/SPDP 1999},
+  pages 513--517. IEEE, 1999.
+
+\bibitem{lawson2002multiple}
+{\sc Barry~G Lawson and Evgenia Smirni}.
+\newblock {\bf Multiple-queue backfilling scheduling with priorities and
+  reservations for parallel systems}.
+\newblock In {\em Workshop on Job Scheduling Strategies for Parallel
+  Processing}, pages 72--87. Springer, 2002.
+
+\bibitem{hafshejani2013efficient}
+{\sc Zeynab~Moradpour Hafshejani, Seyedeh~Leili Mirtaheri, Ehsan~Mousavi
+  Khaneghah, and Mohsen Sharifi}.
+\newblock {\bf An efficient method for improving backfill job scheduling
+  algorithm in cluster computing systems}.
+\newblock {\em International Journal of Soft Computing and Software Engineering
+  [JSCSE]}, pages 422--429, 2013.
+
+\bibitem{xhafa2010computational}
+{\sc Fatos Xhafa and Ajith Abraham}.
+\newblock {\bf Computational models and heuristic methods for Grid scheduling
+  problems}.
+\newblock {\em Future generation computer systems}, {\bf 26}(4):608--621, 2010.
+
+\bibitem{ritchie2003fast}
+{\sc Graham Ritchie and John Levine}.
+\newblock {\bf A fast, effective local search for scheduling independent jobs
+  in heterogeneous computing environments}.
+\newblock 2003.
+
+\bibitem{abraham2000nature}
+{\sc Ajith Abraham, Rajkumar Buyya, and Baikunth Nath}.
+\newblock {\bf Nature’s heuristics for scheduling jobs on computational
+  grids}.
+\newblock In {\em The 8th IEEE international conference on advanced computing
+  and communications (ADCOM 2000)}, pages 45--52, 2000.
+
+\bibitem{mao2016resource}
+{\sc Hongzi Mao, Mohammad Alizadeh, Ishai Menache, and Srikanth Kandula}.
+\newblock {\bf Resource management with deep reinforcement learning}.
+\newblock In {\em Proceedings of the 15th ACM Workshop on Hot Topics in
+  Networks}, pages 50--56, 2016.
+
+\bibitem{8622393}
+{\sc Z.~{Liu}, H.~{Zhang}, B.~{Rao}, and L.~{Wang}}.
+\newblock {\bf A Reinforcement Learning Based Resource Management Approach for
+  Time-critical Workloads in Distributed Computing Environment}.
+\newblock In {\em 2018 IEEE International Conference on Big Data (Big Data)},
+  pages 252--261, 2018.
+
+\bibitem{7832838}
+{\sc E.~{Gaussier}, D.~{Glesser}, V.~{Reis}, and D.~{Trystram}}.
+\newblock {\bf Improving backfilling by using machine learning to predict
+  running times}.
+\newblock In {\em SC '15: Proceedings of the International Conference for High
+  Performance Computing, Networking, Storage and Analysis}, pages 1--10, 2015.
+
+\bibitem{5492667}
+{\sc H.~E. {Bal}, J.~{Maassen}, R.~V. {van Nieuwpoort}, N.~{Drost}, R.~{Kemp},
+  T.~{van Kessel}, N.~{Palmer}, G.~{Wrzesinska}, T.~{Kielmann}, K.~{van
+  Reeuwijk}, F.~{Seinstra}, C.~{Jacobs}, and K.~{Verstoep}}.
+\newblock {\bf Real-World Distributed Computer with Ibis}.
+\newblock {\em Computer}, {\bf 43}(8):54--62, 2010.
 
 \end{thebibliography}

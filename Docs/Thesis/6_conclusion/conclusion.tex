@@ -7,11 +7,6 @@
 % ----------------------- paths to graphics ------------------------
 
 % change according to folder and file names
-\ifpdf
-    \graphicspath{{7/figures/PNG/}{7/figures/PDF/}{7/figures/}}
-\else
-    \graphicspath{{7/figures/EPS/}{7/figures/}}
-\fi
 
 
 % ----------------------- contents from here ------------------------
@@ -20,8 +15,23 @@
 
 %-----------------------------overview-----------------------------------
 
+In this paper, we proposed a self-adjusted auto-provision system which aims to achieve as high resource utilization as possible via making adaption to the cluster backfill scheduling algorithm. 
+The system tries to take all the idle resources on the one hand, and be friendly to other users on the other hand. 
+In general, with more resources putting in use, the cluster is available to process more jobs for the long term.
 
+We choose the LOFAR image calibration process as our test use case, and the calibration process is implemented in a distributed form. 
+The overall goal is to increase resource utilization and, at the same time, speed up the calibration jobs. 
+After the introduction of the system, the results show that the calibration jobs get accelerated by more resources, and the time which end-users have to wait is shortened. 
+Besides, the resources allocated to other users’ jobs do not change a lot. 
+In general, there is no stakeholder receives bad effect after introducing this system into our test cases.
 
+For future work, the GPU and job array should be supported because they are very common to the current clusters. 
+Since the GPU features are cluster- specified, it also needs to provide an interface to configure this information. 
+The core algorithm has rooms for improvement as well. 
+For instance, to reduce the scheduling time of SLURM, we should enable this system to request resources with a larger size if needed.
+
+The results of experiments and simulations show that the cluster can reach the nominal resource utilization of 99.8\% , and users save waiting time ranging from  5\%(busy workload) to 50\%(idle workload) compared with the baseline(MPI). 
+In general, this system has achieved its objective to increase the resource utilization and accelerate parallel jobs.
 
 % ---------------------------------------------------------------------------
 % ----------------------- end of thesis sub-document ------------------------

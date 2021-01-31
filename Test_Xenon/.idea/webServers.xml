@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="92da49a4-119a-4e09-adbd-32106818366d" name="VUDAS5">
-        <fileTransfer rootFolder="/home/yhu310/Master-thesis-project/Test_Xenon" accessType="SFTP" host="fs0.das5.cs.vu.nl" port="22" sshConfigId="e7391d2f-0cb6-47a4-ae23-96c7e319aa27" sshConfig="yhu310@fs0.das5.cs.vu.nl:22 password">
+        <fileTransfer rootFolder="/home/yhu310/Test_Xenon" accessType="SFTP" host="fs0.das5.cs.vu.nl" port="22" sshConfigId="e7391d2f-0cb6-47a4-ae23-96c7e319aa27" sshConfig="yhu310@fs0.das5.cs.vu.nl:22 password">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

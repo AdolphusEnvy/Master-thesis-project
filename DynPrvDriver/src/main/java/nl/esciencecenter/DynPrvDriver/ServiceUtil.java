@@ -45,6 +45,19 @@ public class ServiceUtil {
         OkHttpClient client=new OkHttpClient();
         String log=postJobStatus(address,client,5);
         System.out.println(log);
-        System.out.println(getJobStatus(address,client));
+        try {
+            String miniNode=getJobStatus(address,client);
+            System.out.println(miniNode.chars().asDoubleStream());
+            StringBuilder sb=new StringBuilder(miniNode);
+            sb.deleteCharAt(sb.length()-1);
+            sb.deleteCharAt(sb.length()-1);
+            sb.deleteCharAt(0);
+            System.out.println(sb.toString());
+            System.out.println(Integer.parseInt(sb.toString()));
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 }

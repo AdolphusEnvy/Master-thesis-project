@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -14,9 +15,9 @@ public class JobScheduler implements Runnable {
 
     String HostAddress;
     Map<String, List<Map<String, String>>> Map_job_detail;
-    Map<Integer,Job>jobMap;
+    Map<Integer, Job> jobMap;
 
-    public JobScheduler(String hostAddress, Map<Integer,Job>JobMap ) throws MalformedURLException {
+    public JobScheduler(String hostAddress, Map<Integer, Job> JobMap) throws MalformedURLException {
         HostAddress = hostAddress;
         jobMap = JobMap;
 
@@ -40,12 +41,15 @@ public class JobScheduler implements Runnable {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject ijobj = jsonArray.getJSONObject(i);
                         System.out.println(ijobj);
-                        Job tmpJob = new Job(ijobj.getString("srcLocation"), ijobj.getString("parameter"), ijobj.getInt("jobId"), ijobj.getString("Job"),ijobj.getString("executable"),true);
-                        //tmpJob.LoadTasks(10);
-                        synchronized (jobMap)
-                        {
-                            jobMap.put(tmpJob.getJobID(),tmpJob);
-                            System.out.println("LOADING JOB:"+tmpJob);
+                        Job tmpJob = new Job(ijobj.getString("srcLocation"), ijobj.getString("parameter"), ijobj.getInt("jobId"), ijobj.getString("Job"), ijobj.getString("executable"), true);
+                        String batchSize = System.getenv("BATCH_SIZE");
+                        if (batchSize.length() > 0) {
+                            tmpJob.LoadTasks(Integer.parseInt(batchSize));
+                        }
+
+                        synchronized (jobMap) {
+                            jobMap.put(tmpJob.getJobID(), tmpJob);
+                            System.out.println("LOADING JOB:" + tmpJob);
                             logSubmission(tmpJob);
                         }
 
@@ -63,16 +67,26 @@ public class JobScheduler implements Runnable {
         }
 
     }
+
     private void logSubmission(Job jb) throws IOException {
-        BufferedWriter out=new BufferedWriter(new FileWriter(System.getenv("JOB_LOG_DYNPRVDRIVER"),true));
-        out.write(String.join("\t","JobID="+jb.getJobID(),"Action="+System.currentTimeMillis(),"STATE=SUBMISSION"));
+        BufferedWriter out = new BufferedWriter(new FileWriter(System.getenv("JOB_LOG_DYNPRVDRIVER"), true));
+        out.write(String.join("\t", "JobID=" + jb.getJobID(), "Action=" + System.currentTimeMillis(), "STATE=SUBMISSION"));
         out.newLine();
         out.close();
+        File jobResultDir = new File(System.getenv("RESULT_DIR") + jb.getJobID());
+
+        boolean code = jobResultDir.mkdir();
+        if (code) {
+            System.out.println("Directory created successfully " + jobResultDir.getAbsolutePath());
+        } else {
+            System.out.println("Sorry couldnt create specified directory+ " + jobResultDir.getAbsolutePath());
+        }
     }
+
     public static void main(String[] args) throws InterruptedException {
 
         Map<String, List<Map<String, String>>> Map_job_detail = Collections.synchronizedMap(new HashMap<String, List<Map<String, String>>>());
-        Map<Integer,Job> jobMap = new TreeMap<>();
+        Map<Integer, Job> jobMap = new TreeMap<>();
         try {
 
             //JobScheduler Scon = new JobScheduler("http://fs0.das5.cs.vu.nl:5000/job", taskQueue);

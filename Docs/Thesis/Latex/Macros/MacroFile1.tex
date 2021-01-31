@@ -66,7 +66,12 @@
   \end{figure}
 }
 
-
+\makeatletter
+\def\namedlabel#1#2{\begingroup
+   \def\@currentlabel{#2}%
+   \label{#1}\endgroup
+}
+\makeatother
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "~/Documents/LaTeX/CUEDThesisPSnPDF/thesis"

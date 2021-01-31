@@ -5,13 +5,18 @@
 %\begin{abstractslong}    %uncommenting this line, gives a different abstract heading
 \begin{abstracts}        %this creates the heading for the abstract page
 
-The resource management is no doubt one of the key problems that all cloud or cluster need to face. 
-Here, the special scenario the LOFAR team is taking: they build computation infrastructure of their own to process the data collected by the tremendous telescopes.
-They are both cloud provider and cloud user. The jobs the cloud is undertaking are long and highly computation consuming.
-The current horizontal distributed solutions, MPI and Spark, have intrinsic drawback on resource utilizing. 
-To increase the resource utilization level, an auto-provisioning distributed computing system is designed. 
-The auto-scaling mechanism enables the applications to dynamically fetch and release resources, and in the same time the resources of the cluster are maximally used.
-The results shows:% TODO: add results and conclusions
+The resource management is no doubt one of the key problems that all clusters have to face. 
+The LOFAR telescopes observe the sky and archive the records. 
+Though there are computation facilities to process the observation data, the quantity of data is far beyond its capability of available computing facilities. 
+Therefore, the data is fetched, and processed through a multiple-step pipeline when it is needed. 
+Each step may take a long time, and consume significant amount of computation power. 
+Currently, we have horizontal implementations in MPI and Spark,  where computation power follows the numbers of involved computing unit.
+However, both of them have intrinsic drawback on resource utilizing. 
+To promote the utilization of the resources, we propose an auto-provisioning distributed computing system. 
+The auto-scaling mechanism enables the applications to dynamically fetch and release resources, and in the same time,  the resources of the cluster are used to the maximum extent. 
+The results show that the nominal resource utilization of a cluster can be improved up to 99.9\%. 
+With idle resources being used, users may take less time to wait. 
+In our busy cluster scenario test case, users take 10\% less time on average to wait for the job to be finished at the submission of the jobs.
 
 
 \end{abstracts}

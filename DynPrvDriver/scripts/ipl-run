@@ -17,6 +17,7 @@ fi
 
 # Run ...
 # Note: this requires Java 6
+source $DYNPRVDRIVER_HOME/scripts/setting.conf
 echo $CLASSPATH
 exec $AFFINITY java \
     -classpath "$CLASSPATH:$DYNPRVDRIVER_HOME/lib/"'*' \

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2020.1.22)  14 JUL 2020 18:48
+This is XeTeX, Version 3.14159265-2.6-0.999991 (TeX Live 2019/W32TeX) (preloaded format=xelatex 2020.1.22)  25 JAN 2021 08:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -370,32 +370,119 @@ File: ppxetex.def 2019/12/17 v0.5p Pdfpages driver for XeTeX (AM)
 \AM@toc@title=\toks19
 \c@AM@survey=\count119
 \AM@templatesizebox=\box57
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/algorithms/algorithm.sty
+Invalid UTF-8 byte or sequence at line 11 replaced by U+FFFD.
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating environment
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count120
+\float@exts=\toks20
+\float@box=\box58
+\@float@everytoks=\toks21
+\@floatcapt=\box59
+)
+\@float@every@algorithm=\toks22
+\c@algorithm=\count121
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count122
+\c@ALG@rem=\count123
+\c@ALG@nested=\count124
+\ALG@tlm=\skip63
+\ALG@thistlm=\skip64
+\c@ALG@Lnr=\count125
+\c@ALG@blocknr=\count126
+\c@ALG@storecount=\count127
+\c@ALG@tmpcounter=\count128
+\ALG@tmplength=\skip65
+)
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2019/11/16 v2.17d AMS math features
+\@mathmargin=\skip66
+
+For additional information on amsmath, use the `?' option.
+(d:/Applications/texlive/2019/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks23
+\ex@=\dimen135
+)) (d:/Applications/texlive/2019/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen136
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count129
+LaTeX Info: Redefining \frac on input line 227.
+\uproot@=\count130
+\leftroot@=\count131
+LaTeX Info: Redefining \overline on input line 389.
+\classnum@=\count132
+\DOTSCASE@=\count133
+LaTeX Info: Redefining \ldots on input line 486.
+LaTeX Info: Redefining \dots on input line 489.
+LaTeX Info: Redefining \cdots on input line 610.
+\Mathstrutbox@=\box60
+\strutbox@=\box61
+\big@size=\dimen137
+LaTeX Font Info:    Redeclaring font encoding OML on input line 733.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 734.
+\macc@depth=\count134
+\c@MaxMatrixCols=\count135
+\dotsspace@=\muskip11
+\c@parentequation=\count136
+\dspbrk@lvl=\count137
+\tag@help=\toks24
+\row@=\count138
+\column@=\count139
+\maxfields@=\count140
+\andhelp@=\toks25
+\eqnshift@=\dimen138
+\alignsep@=\dimen139
+\tagshift@=\dimen140
+\tagwidth@=\dimen141
+\totwidth@=\dimen142
+\lineht@=\dimen143
+\@envbody=\toks26
+\multlinegap=\skip67
+\multlinetaggap=\skip68
+\mathdisplay@stack=\toks27
+LaTeX Info: Redefining \[ on input line 2858.
+LaTeX Info: Redefining \] on input line 2859.
+) (d:/Applications/texlive/2019/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
 )
 
 LaTeX Warning: Unused global option(s):
     [dvips].
 
-(./thesis.aux (./0_frontmatter/abstract.aux) (./0_frontmatter/dedication.aux) (./0_frontmatter/acknowledgement.aux) (./1_introduction/introduction.aux) (./2_literaturereview/literaturereview.aux) (./3_methods/methods.aux) (./4_analysis&results/analysis&results.aux) (./5_discussions/discussions.aux) (./6_conclusion/conclusion.aux))
+(./thesis.aux (./0_frontmatter/abstract.aux) (./0_frontmatter/dedication.aux) (./0_frontmatter/acknowledgement.aux) (./1_introduction/introduction.aux) (./2_literaturereview/literaturereview.aux) (./3_methods/methods.aux) (./4_analysis&results/analysis&results.aux) (./5_discussions/discussions.aux) (./6_conclusion/conclusion.aux) (./9_appendix/appendix.aux))
 \openout1 = `thesis.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 43.
-LaTeX Font Info:    ... okay on input line 43.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 50.
+LaTeX Font Info:    ... okay on input line 50.
  (d:/Applications/texlive/2019/texmf-dist/tex/latex/ragged2e/ragged2e.sty
 Package: ragged2e 2019/07/28 v2.2 ragged2e Package (MS)
  (d:/Applications/texlive/2019/texmf-dist/tex/latex/ms/everysel.sty
@@ -403,30 +490,30 @@ Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
  ABD: EverySelectfont initializing macros
 LaTeX Info: Redefining \selectfont on input line 126.
 )
-\CenteringLeftskip=\skip63
-\RaggedLeftLeftskip=\skip64
-\RaggedRightLeftskip=\skip65
-\CenteringRightskip=\skip66
-\RaggedLeftRightskip=\skip67
-\RaggedRightRightskip=\skip68
-\CenteringParfillskip=\skip69
-\RaggedLeftParfillskip=\skip70
-\RaggedRightParfillskip=\skip71
-\JustifyingParfillskip=\skip72
-\CenteringParindent=\skip73
-\RaggedLeftParindent=\skip74
-\RaggedRightParindent=\skip75
-\JustifyingParindent=\skip76
+\CenteringLeftskip=\skip69
+\RaggedLeftLeftskip=\skip70
+\RaggedRightLeftskip=\skip71
+\CenteringRightskip=\skip72
+\RaggedLeftRightskip=\skip73
+\RaggedRightRightskip=\skip74
+\CenteringParfillskip=\skip75
+\RaggedLeftParfillskip=\skip76
+\RaggedRightParfillskip=\skip77
+\JustifyingParfillskip=\skip78
+\CenteringParindent=\skip79
+\RaggedLeftParindent=\skip80
+\RaggedRightParindent=\skip81
+\JustifyingParindent=\skip82
 )
-Package caption Info: float package v1.2 (or newer) detected on input line 43.
-Package caption Info: listings package v1.2 (or newer) detected on input line 43.
-Package caption Info: longtable package v3.15 (or newer) detected on input line 43.
-Package caption Info: rotating package v2.0 (or newer) detected on input line 43.
-Package caption Info: sidecap package v1.4d (or newer) detected on input line 43.
-Package caption Info: supertabular package detected on input line 43.
-Package backref Info: ** backref set up for natbib ** on input line 43.
-\AtBeginShipoutBox=\box58
-Package hyperref Info: Link coloring ON on input line 43.
+Package caption Info: float package v1.2 (or newer) detected on input line 50.
+Package caption Info: listings package v1.2 (or newer) detected on input line 50.
+Package caption Info: longtable package v3.15 (or newer) detected on input line 50.
+Package caption Info: rotating package v2.0 (or newer) detected on input line 50.
+Package caption Info: sidecap package v1.4d (or newer) detected on input line 50.
+Package caption Info: supertabular package detected on input line 50.
+Package backref Info: ** backref set up for natbib ** on input line 50.
+\AtBeginShipoutBox=\box62
+Package hyperref Info: Link coloring ON on input line 50.
  (d:/Applications/texlive/2019/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
  (d:/Applications/texlive/2019/texmf-dist/tex/latex/refcount/refcount.sty
@@ -434,11 +521,11 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (d:/Applications/texlive/2019/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count120
+\c@section@level=\count141
 )
-LaTeX Info: Redefining \ref on input line 43.
-LaTeX Info: Redefining \pageref on input line 43.
-LaTeX Info: Redefining \nameref on input line 43.
+LaTeX Info: Redefining \ref on input line 50.
+LaTeX Info: Redefining \pageref on input line 50.
+LaTeX Info: Redefining \nameref on input line 50.
  (./thesis.out) (./thesis.out)
 \@outlinefile=\write4
 \openout4 = `thesis.out'.
@@ -454,11 +541,11 @@ File: 0_frontmatter/figures/vu-griffioen.pdf Graphic file (type pdf)
 <use 0_frontmatter/figures/vu-griffioen.pdf>
 File: 0_frontmatter/figures/uva_logo.jpg Graphic file (type bmp)
 <0_frontmatter/figures/uva_logo.jpg>
-LaTeX Font Info:    Trying to load font information for U+msa on input line 70.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 77.
  (d:/Applications/texlive/2019/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 70.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 77.
  (d:/Applications/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) (d:/Applications/texlive/2019/texmf-dist/tex/generic/stringenc/se-ascii-print.def
@@ -484,32 +571,33 @@ File: se-ascii-print.def 2019/11/29 v1.12 stringenc: Printable ASCII characters
  (./0_frontmatter/dedication.tex)
 \openout2 = `0_frontmatter/acknowledgement.aux'.
 
- (./0_frontmatter/acknowledgement.tex) (./thesis.toc [1
+ (./0_frontmatter/acknowledgement.tex
+Missing character: There is no ’ in font ec-lmr10!
+ [1
 
 
+
+]) [2
 \FN@pp@footnotehinttrue 
 
 
-\FN@pp@footnotehinttrue 
-
-
-])
+] (./thesis.toc [3])
 \tf@toc=\write5
 \openout5 = `thesis.toc'.
 
- [2] (./thesis.lof)
+ [4] (./thesis.lof)
 \tf@lof=\write6
 \openout6 = `thesis.lof'.
 
- [3
+ [5
 
-] [4
+] [6
 
 ] (./thesis.lot)
 \tf@lot=\write7
 \openout7 = `thesis.lot'.
 
- [5] [6
+ [7] [8
 
 ]
 \openout2 = `1_introduction/introduction.aux'.
@@ -527,16 +615,6 @@ File: 1_introduction/figures/spark_NP.jpg Graphic file (type bmp)
 <1_introduction/figures/spark_NP.jpg>
 File: 1_introduction/figures/MPI_batch.jpg Graphic file (type bmp)
 <1_introduction/figures/MPI_batch.jpg>
-LaTeX Font Info:    Trying to load font information for OMS+lmr on input line 90.
- (d:/Applications/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
-File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 90.
- (d:/Applications/texlive/2019/texmf-dist/tex/latex/lm/omslmsy.fd
-File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)
-LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 90.
  [2]) [3]
 \openout2 = `2_literaturereview/literaturereview.aux'.
 
@@ -546,69 +624,196 @@ LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <10.95> not available
 
 ]
  2.
-[5]) [6] [7]
+
+Underfull \vbox (badness 1430) has occurred while \output is active []
+
+ [5] [6] [7]
+Missing character: There is no ’ in font ec-lmr10!
+ [8]) [9]
 \openout2 = `3_methods/methods.aux'.
 
- (./3_methods/methods.tex [8
+ (./3_methods/methods.tex [10
 
 
 
 ]
  3.
-) [9]
+File: 3_methods/figures/SimpleLayers.jpg Graphic file (type bmp)
+<3_methods/figures/SimpleLayers.jpg>
+[11] [12]
+Missing character: There is no ’ in font ec-lmr10!
+ [13]
+File: 3_methods/figures/computingModel.png Graphic file (type bmp)
+<3_methods/figures/computingModel.png>
+
+
+LaTeX Warning: Reference ` 3_methods/figures/computingModel.png' on page 14 undefined on input line 77.
+
+[14]
+File: 3_methods/figures/service2jobSche.png Graphic file (type bmp)
+<3_methods/figures/service2jobSche.png>
+ [15] [16] [17]
+File: 3_methods/figures/RedoMechamism.png Graphic file (type bmp)
+<3_methods/figures/RedoMechamism.png>
+Missing character: There is no ’ in font ec-lmr10!
+ [18]
+File: 3_methods/figures/backfilling1.png Graphic file (type bmp)
+<3_methods/figures/backfilling1.png>
+File: 3_methods/figures/backfilling2.png Graphic file (type bmp)
+<3_methods/figures/backfilling2.png>
+ [19]
+Underfull \vbox (badness 1189) has occurred while \output is active []
+
+ [20]
+LaTeX Font Info:    Trying to load font information for OMS+lmr on input line 215.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/lm/omslmr.fd
+File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 215.
+ (d:/Applications/texlive/2019/texmf-dist/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
+)
+LaTeX Font Info:    Font shape `OMS/lmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 215.
+File: 3_methods/figures/backfillingCase2.jpg Graphic file (type bmp)
+<3_methods/figures/backfillingCase2.jpg>
+ [21] [22]
+File: 3_methods/figures/backfillingCase3.jpg Graphic file (type bmp)
+<3_methods/figures/backfillingCase3.jpg>
+Missing character: There is no ’ in font ec-lmr10!
+ [23]
+File: 3_methods/figures/maxTime.png Graphic file (type bmp)
+<3_methods/figures/maxTime.png>
+ [24]) [25]
 \openout2 = `4_analysis&results/analysis&results.aux'.
 
- (./4_analysis&results/analysis&results.tex [10
+ (./4_analysis&results/analysis&results.tex [26
 
 
 
 ]
  4.
-) [11]
+[27]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 62.
+
+File: 4_analysis&results/figures/acc.png Graphic file (type bmp)
+<4_analysis&results/figures/acc.png>
+[28]
+Missing character: There is no ’ in font ec-lmr10!
+Missing character: There is no ’ in font ec-lmr10!
+ [29]
+Missing character: There is no ’ in font ec-lmr10!
+Missing character: There is no ’ in font ec-lmr10!
+ [30]
+File: 4_analysis&results/figures/MPIUtiNonBusy.png Graphic file (type bmp)
+<4_analysis&results/figures/MPIUtiNonBusy.png>
+File: 4_analysis&results/figures/MPIGanttNonBusy.png Graphic file (type bmp)
+<4_analysis&results/figures/MPIGanttNonBusy.png>
+File: 4_analysis&results/figures/ScaleUtiNonBusy.png Graphic file (type bmp)
+<4_analysis&results/figures/ScaleUtiNonBusy.png>
+File: 4_analysis&results/figures/ScaleGanttNonBusy.png Graphic file (type bmp)
+<4_analysis&results/figures/ScaleGanttNonBusy.png>
+ [31] [32]
+File: 4_analysis&results/figures/MPIUtiBusy.png Graphic file (type bmp)
+<4_analysis&results/figures/MPIUtiBusy.png>
+File: 4_analysis&results/figures/MPIGanttBusy.png Graphic file (type bmp)
+<4_analysis&results/figures/MPIGanttBusy.png>
+File: 4_analysis&results/figures/ScaleUtiBusy.png Graphic file (type bmp)
+<4_analysis&results/figures/ScaleUtiBusy.png>
+File: 4_analysis&results/figures/ScaleGanttBusy.png Graphic file (type bmp)
+<4_analysis&results/figures/ScaleGanttBusy.png>
+ [33]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 240.
+
+
+Overfull \hbox (0.58333pt too wide) in paragraph at lines 242--249
+ [][] 
+ []
+
+File: 4_analysis&results/figures/7days.png Graphic file (type bmp)
+<4_analysis&results/figures/7days.png>
+)
+Underfull \vbox (badness 1635) has occurred while \output is active []
+
+ [34] [35] [36]
 \openout2 = `5_discussions/discussions.aux'.
 
- (./5_discussions/discussions.tex [12
-
-
-
-]
+ (./5_discussions/discussions.tex
  5.
-) [13]
+Missing character: There is no ’ in font ec-lmr10!
+[37
+
+
+
+]) [38]
 \openout2 = `6_conclusion/conclusion.aux'.
 
- (./6_conclusion/conclusion.tex [14
+ (./6_conclusion/conclusion.tex
+ 6.
+Missing character: There is no ’ in font ec-lmr10!
+) [39
 
 
 
 ]
- 6.
-) [15] (./thesis.bbl (./thesis.brf)
+\openout2 = `9_appendix/appendix.aux'.
+
+ (./9_appendix/appendix.tex [40
+
+
+
+]
+ 7.
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 24.
+[41] [42] [43] [44] [45
+
+] [46]
+
+LaTeX Warning: No positions in optional float specifier.
+               Default added (so using `tbp') on input line 211.
+
+
+Overfull \hbox (32.60674pt too wide) in paragraph at lines 213--218
+ [][] 
+ []
+
+) [47] (./thesis.bbl (./thesis.brf)
 \tf@brf=\write8
 \openout8 = `thesis.brf'.
 
- [16
+ [48
 
 
-])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 286.
- [17]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 286.
- (./thesis.aux (./0_frontmatter/abstract.aux) (./0_frontmatter/dedication.aux) (./0_frontmatter/acknowledgement.aux) (./1_introduction/introduction.aux) (./2_literaturereview/literaturereview.aux) (./3_methods/methods.aux) (./4_analysis&results/analysis&results.aux) (./5_discussions/discussions.aux) (./6_conclusion/conclusion.aux))
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 286.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 286.
+] [49]
+Missing character: There is no ’ in font ec-lmbx10!
+ [50])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 293.
+ [51]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 293.
+ (./thesis.aux (./0_frontmatter/abstract.aux) (./0_frontmatter/dedication.aux) (./0_frontmatter/acknowledgement.aux) (./1_introduction/introduction.aux) (./2_literaturereview/literaturereview.aux) (./3_methods/methods.aux) (./4_analysis&results/analysis&results.aux) (./5_discussions/discussions.aux) (./6_conclusion/conclusion.aux) (./9_appendix/appendix.aux))
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 293.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 293.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 75164D106ACBCB42831A03A42C0D6176;1892.
+(rerunfilecheck)             Checksum: 580095B80BE311D4F022E67E7AEF3BF6;4128.
 Package rerunfilecheck Info: File `thesis.brf' has not changed.
-(rerunfilecheck)             Checksum: C4A1DD82E72AE5AA67A9AC761A39BAA7;300.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 286.
+(rerunfilecheck)             Checksum: 5A0A9D6CE4BA0813F900CCC2CF7E2429;1017.
+
+
+LaTeX Warning: There were undefined references.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 293.
  ) 
 Here is how much of TeX's memory you used:
- 12009 strings out of 492472
- 175383 string characters out of 6127188
- 262377 words of memory out of 5000000
- 16177 multiletter control sequences out of 15000+600000
- 66092 words of font info for 73 fonts, out of 8000000 for 9000
+ 13459 strings out of 492472
+ 198150 string characters out of 6127188
+ 299365 words of memory out of 5000000
+ 17558 multiletter control sequences out of 15000+600000
+ 66411 words of font info for 74 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 54i,11n,49p,305b,491s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 54i,12n,49p,423b,495s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on thesis.pdf (27 pages).
+Output written on thesis.pdf (63 pages).

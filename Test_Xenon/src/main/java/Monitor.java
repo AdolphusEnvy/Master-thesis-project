@@ -7,28 +7,30 @@ import java.util.stream.Collectors;
 
 public class Monitor {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         Monitor m=new Monitor();
-        String info=m.getStatus();
-        m.writeToFile(info,"/home/yhu310/log/test");
-        System.out.println(info);
+
+        for(int i =0;i<600;i++)
+        {
+
+            String info=m.getStatus();
+            m.writeToFile(info,"/home/yhu310/log/test");
+            // System.out.println(info);
+            Thread.sleep(1000);
+        }
+
 
     }
 
     public String getStatus() throws IOException {
+        Long time=System.currentTimeMillis();
         Process squeueP=Runtime.getRuntime().exec("squeue");
         BufferedReader squeueReader = new BufferedReader(
                 new InputStreamReader(squeueP.getInputStream()));
-        List<String> squeueInputList=squeueReader.lines().collect(Collectors.toList());
+        List<String> squeueInputList=squeueReader.lines().map(x->time+" "+x).collect(Collectors.toList());
         String jobInfoString= String.join("\n",squeueInputList.subList(1,squeueInputList.size()));
 
-        Process sinfoP=Runtime.getRuntime().exec("sinfo -s");
-        BufferedReader sinfoReader = new BufferedReader(
-                new InputStreamReader(sinfoP.getInputStream()));
-        List<String> inputList=sinfoReader.lines().collect(Collectors.toList());
-        String clusterInfoString= String.join("\n",inputList.subList(1,inputList.size()));
-
-        return "<>\n"+System.currentTimeMillis()+"\n$$\n"+jobInfoString+"\n$$\n"+clusterInfoString+"<>";
+        return jobInfoString;
     }
     public void writeToFile(String info,String fileName)
     {
@@ -46,12 +48,22 @@ public class Monitor {
         }
     }
     public void run(String logFileName) throws IOException, InterruptedException {
-        while (true)
+        while (!Thread.currentThread().isInterrupted())
         {
-            String info=getStatus();
-            writeToFile(info,logFileName);
-            Thread.sleep(1000);
+            try {
+                String info=getStatus();
+                writeToFile(info,logFileName);
+                Thread.sleep(1000);
+            }catch (Exception e)
+            {
+
+                System.err.println(e.toString());
+                System.err.println("Exception handled!");
+                Thread.currentThread().interrupt();
+            }
+
         }
+
 
     }
 }

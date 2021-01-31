@@ -60,10 +60,12 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
         if (runningNodes.size() > 0) {
             for (Task t : runningNodes.values()) {
                 Job tmpJob = runningJobMap.get(t.getJobID());
+                assert tmpJob != null;
                 tmpJob.loadRedo(t);
                 runningJobMap.put(t.getJobID(), tmpJob);
             }
         }
+        runningNodes.clear();
         db.commit();
 
         // init job scheduler
@@ -83,9 +85,10 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
         while (!finished) {
             synchronized (runningJobMap) {
                 for (int i : runningJobMap.keySet()) {
-                    System.out.println("Job " + i + "Has " + runningJobMap.get(i).leftTasks() + " Tasks to do!");
+                    System.out.println("Job " + i + "Has " + runningJobMap.get(i).leftTasks() + " Tasks to do! and "+runningJobMap.get(i).getRunningTask()+" tasks are running!");
                 }
                 for (Map.Entry<IbisIdentifier, Task> entry : runningNodes.entrySet()) {
+
                     System.out.println("Node:" + entry.getKey() + " working on task " + entry.getValue().getTaskID());
                 }
                 db.commit();
@@ -96,19 +99,34 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
             Thread.sleep(1000);
         }
         db.close();
-        myIbis.registry().terminate();
+        // myIbis.registry().terminate();
     }
 
     private void client(Ibis myIbis, IbisIdentifier server) throws Exception {
 
         // Create a send port for sending requests and connect.
-        SendPort controlSendPort = myIbis.createSendPort(many2one_UPCALL, "controlSendPort");
-        controlSendPort.connect(server, "controlPort");
+        SendPort controlSendPort=null;
+        ReceivePort taskReceivePort=null;
+        while (true)
+        {
+            try {
+                controlSendPort = myIbis.createSendPort(many2one_UPCALL, "controlSendPort");
+                controlSendPort.connect(server, "controlPort");
 
 
-        ReceivePort taskReceivePort = myIbis.createReceivePort(one2one_UPCALL, "taskReceivePort", this);
-        taskReceivePort.enableConnections();
-        taskReceivePort.enableMessageUpcalls();
+                taskReceivePort = myIbis.createReceivePort(one2one_UPCALL, "taskReceivePort", this);
+                taskReceivePort.enableConnections();
+                taskReceivePort.enableMessageUpcalls();
+                break;
+            }catch (Exception e)
+            {
+                myibis.end();
+                Properties properties = new Properties();
+                myibis=IbisFactory.createIbis(ibisCapabilities, properties, true, this, new PortType[]{one2one, one2one_UPCALL, one2many, one2many_UPCALL, many2one, many2one_UPCALL});
+                myIbis=myibis;
+            }
+        }
+
         System.out.println("Worker start");
         WriteMessage w = controlSendPort.newMessage();
         w.writeObject(new ControlMessage(true));
@@ -122,6 +140,8 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
                 Thread.sleep(1000);
                 if (masterCrashed == true) {
                     System.err.println("SERVER FAILED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    controlSendPort.close();
+                    taskReceivePort.close();
                     throw new masterFailException();
                 }
                 continue;
@@ -146,6 +166,8 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
             System.out.println("establish new connect");
             if (masterCrashed == true) {
                 System.err.println("SERVER FAILED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                controlSendPort.close();
+                taskReceivePort.close();
                 throw new masterFailException();
             }
             try {
@@ -159,7 +181,6 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
                 w.finish();
                 System.out.println("write finished");
             } catch (Exception e) {
-                myIbis.registry().assumeDead(server);
                 writerOut.close();
                 writerErr.close();
                 throw new masterFailException();
@@ -190,7 +211,7 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
 
 
         String[] out = new String[]{stdInput.lines().collect(Collectors.joining()), stdError.lines().collect(Collectors.joining())};
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(f.getAbsolutePath() + "/result"));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("RESULT_DIR") +t.getJobID()+"/result_"+t.getTaskID()));
         bufferedWriter.write(out[0]);
         bufferedWriter.newLine();
         bufferedWriter.write(out[1]);
@@ -212,23 +233,21 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
         // If I am the server, run server, else run client.
         while (finished == false) {
             try {
+                masterCrashed=false;
                 if (masterId.equals(myibis.identifier())) {
+                    System.out.println(myibis.identifier()+" is server");
                     server(myibis);
                 } else {
+                    System.out.println(myibis.identifier()+" is worker");
                     client(myibis, masterId);
                 }
-            } catch (InterruptedException e) {
-                // myibis.registry().assumeDead(myibis.identifier());
-                myibis.end();
-            } catch (IOException e) {
-                System.out.println("-------------------Got IO Exception");
-                e.printStackTrace();
-                // myibis.registry().assumeDead(myibis.identifier());
-                myibis.end();
-                // throw new masterFailException();
             } catch (masterFailException e) {
                 System.out.println("-------------------Got Master Fail Exception");
                 masterId = r.elect("Server");
+                while (masterId==null)
+                {
+                    Thread.sleep(1000);
+                };
                 System.out.println("----------------------------------------------------------------\n" +
                         "MASTER FAILS, RESTART\n" +
                         "------------------------------------------------------------------\n");
@@ -236,8 +255,6 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
             } catch (Exception e) {
                 e.printStackTrace();
                 // myibis.registry().assumeDead(myibis.identifier());
-
-                break;
             }
         }
 
@@ -271,24 +288,25 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
             readMessage.finish();
             synchronized (idleWorkerQueue) {
                 synchronized (runningNodes) {
-                    Task runningTask = runningNodes.remove(readMessage.origin().ibisIdentifier());
-                    if (m.isEmptyRequest()) {
+                    synchronized (runningJobMap) {
+                        Task runningTask = runningNodes.remove(readMessage.origin().ibisIdentifier());
+                        if (m.isEmptyRequest()) {
 
-                        if (runningTask != null) {
-                            Job tmp = runningJobMap.get(runningTask.getJobID());
-                            assert tmp != null;
-                            tmp.loadRedo(runningTask);
-                            runningJobMap.put(runningTask.getJobID(), tmp);
-                            // runningJobMap.get(runningTask.getJobID()).loadRedo(runningTask);
+                            if (runningTask != null) {
+                                Job tmp = runningJobMap.get(runningTask.getJobID());
+                                assert tmp != null;
+                                tmp.loadRedo(runningTask);
+                                runningJobMap.put(runningTask.getJobID(), tmp);
+                                // runningJobMap.get(runningTask.getJobID()).loadRedo(runningTask);
 
-                            db.commit();
+                                db.commit();
+                            }
                         }
+
+                        idleWorkerQueue.offer(readMessage.origin().ibisIdentifier());
+                        db.commit();
                     }
-
-                    idleWorkerQueue.offer(readMessage.origin().ibisIdentifier());
-                    db.commit();
                 }
-
 
             }
 
@@ -394,7 +412,29 @@ public class Driver implements MessageUpcall, RegistryEventHandler {
 
     public void uploadRecommendMiniNode(OkHttpClient client) {
         int taskNum = runningJobMap.values().stream().map(Job::leftTasks).mapToInt(Integer::intValue).sum();
-        ServiceUtil.postJobStatus(System.getenv("IPL_ADDRESS"), client, taskNum > 10 ? taskNum / 10 : taskNum > 0 ? 1 : 0);
+        int recommendNode;
+        if(taskNum<5){
+            recommendNode=2;
+        }else if(taskNum<20){
+            recommendNode=4;
+        }else if(taskNum<100){
+            recommendNode=taskNum/20+3;
+        }else {
+            recommendNode=10;
+        }
+        int runningJobs=runningJobMap.size();
+        try
+        {
+            BufferedWriter out=new BufferedWriter(new FileWriter(System.getenv("MINI_NODE_LOG"),true));
+            out.write(String.join("\t","MiniNode="+recommendNode,"Time="+System.currentTimeMillis(),"RunningJobs="+runningJobs,"LeftTasks="+taskNum));
+            out.newLine();
+            out.close();
+        } catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        ServiceUtil.postJobStatus(System.getenv("IPL_ADDRESS")+":5000/miniNode", client, recommendNode);
     }
 
     public void startSideExecutor() throws IOException {
@@ -565,10 +605,11 @@ class DebugSignalHandler implements SignalHandler {
 
     public void handle(Signal signal) {
         System.out.println("Signal: " + signal);
-        if (signal.toString().trim().equals("SIGTERM")) {
+        if (signal.toString().trim().equals("SIGTERM")||signal.toString().trim().equals("SIGKILL")||signal.toString().trim().equals("SIGCONT")) {
             try {
                 //registry.assumeDead(identifier);
                 ibis.end();
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }

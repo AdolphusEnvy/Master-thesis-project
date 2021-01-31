@@ -7,11 +7,7 @@
 % ----------------------- paths to graphics ------------------------
 
 % change according to folder and file names
-\ifpdf
-    \graphicspath{{7/figures/PNG/}{7/figures/PDF/}{7/figures/}}
-\else
-    \graphicspath{{7/figures/EPS/}{7/figures/}}
-\fi
+
 
 
 % ----------------------- contents from here ------------------------
@@ -19,7 +15,35 @@
 
 
 %-----------------------------overview-----------------------------------
+In previous chapters we purposed a system, and performed experiments to evaluate how it contributes to the clusters. Besides these contents, there are still some points not covered in the previous chapters, but still vital for readers to understand our system.
 
+This system originates from the idea to improve the calibration of LOFAR use case.
+As mentioned, there are already two existed approaches for image calibration. 
+The main reason for not following and extending the current MPI and Spark versions lies in to the cluster setting. 
+We can let our executors carry out the MPI program, and process data. 
+However, the MPI applications require much work to fulfill the requirements of fault tolerance features and dynamic setting. 
+Moreover, for Spark versions, it is certainly a way to go. 
+One possible solution may be Kubernetes plus docker container, so that it can support the dynamic scaling setting. 
+Unfortunately, our test platform DAS-5, as a scientific cluster, does not support Docker containers, therefore, we cannot follow this path.
+
+There are a few points in the core algorithm that we would also like to discuss. 
+First, as mentioned in Chapter 3, this system does not support GPU features and job array of the SLURM. 
+The barriers originate from the middleware Xenon. For the GPU information, different clusters follow different ways to indicate which node carries the GPUs. 
+Since Xenon intends to provide uniformed interfaces adapted to multiple resource management tools, it cannot provide the cluster-specified information. 
+For job array, Xenon has a problem in extracting the information of the job array. 
+The job array can be configured with maximum running tasks, every time there will be a fixed number of tasks running. 
+Once a task is finished, a new task will be submitted to the queue. 
+Job array is a useful feature with a consistent workload and easy to predict. 
+If Xenon makes a solution to the issue, there will be a chance to make an adaption to the job array.
+ 
+At the computation layer, the performance is affected by many parameters. 
+The batch size is the one that end-user can make choices, which determines the granularity of sub-tasks of calibration jobs. 
+The longer a task to execute, the more performance lost when the node fails, and task redone. 
+However, on the other hand, the communication overhead is reduced. 
+Considering the dynamic change of cluster, an appropriate batch size should be determined based on the environment’s characteristics.
+Another critical parameter refers to the minimum number of nodes, which is determined by the mapping function and the real-time workload of calibration jobs. 
+The mapping function can be modified to coordinate with other features and aspects.
+ 
 
 
 

@@ -14,7 +14,7 @@ class DynPrvDriver_job(Resource):
         tmp=copy.deepcopy(Map_user_job)
         Map_user_job={}
         return tmp
-    def put(self):
+    def post(self):
         global Job_Globle_id
         Job_Globle_id += 1
         print(request.form)

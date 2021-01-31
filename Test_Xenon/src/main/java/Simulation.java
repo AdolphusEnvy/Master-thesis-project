@@ -3,24 +3,26 @@ import nl.esciencecenter.xenon.adaptors.schedulers.ScriptingScheduler;
 import nl.esciencecenter.xenon.credentials.PasswordCredential;
 import nl.esciencecenter.xenon.schedulers.JobDescription;
 import nl.esciencecenter.xenon.schedulers.Scheduler;
+import okhttp3.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Simulation {
     private static final boolean debugging=System.getenv("DEBUGGING").equals("True");
+    private static int jobId=0;
     private Queue<SimuJob> simulationQueue=new LinkedList<>();
     private String partitionName;
     private long checkpoint;
+    private OkHttpClient client;
     Simulation(String PartitionName)
     {
         partitionName=PartitionName;
         checkpoint=System.currentTimeMillis();
+        client=new OkHttpClient();
     }
     public static void main(String[] args) throws XenonException, IOException, InterruptedException {
         String location = System.getenv("XENON_LOCATION");
@@ -43,9 +45,10 @@ public class Simulation {
         Simulation simulation= new Simulation("defq");
         simulation.loadSubmitSequnce(System.getenv("SUBMIT_FILE_PATH"));
         // simulation.MIPMode(scheduler);
-        simulation.ScaleMode(scheduler);
+        // simulation.ScaleMode(scheduler);
         // simulation.randomSimulation(scheduler);
-        Thread.sleep(600000);
+        simulation.realExperiment(scheduler);
+        // Thread.sleep(600000);
         monitorThread.interrupt();
         scheduler.close();
     }
@@ -53,7 +56,7 @@ public class Simulation {
     {
         simulationQueue.offer(jobEntry);
     }
-    public void MIPMode(Scheduler scheduler) throws XenonException, InterruptedException {
+    public void MIPMode(Scheduler scheduler) throws XenonException, InterruptedException, IOException {
         long start =System.currentTimeMillis();
         SimuJob sj = simulationQueue.peek();
         while (sj!=null){
@@ -63,12 +66,14 @@ public class Simulation {
                 assert sj != null;
                 System.out.println("SUBMIT JOB AT START TIME:"+sj.getStartTime());
                 String jobID=submitOneJob(scheduler,sj);
+                Thread.sleep(500);
             }
             sj = simulationQueue.peek();
+
         }
         Thread.sleep(1800*1000);
     }
-    public void ScaleMode(Scheduler scheduler) throws XenonException, InterruptedException {
+    public void ScaleMode(Scheduler scheduler) throws XenonException, InterruptedException, IOException {
         Thread p=new Thread(()->{remoteCMD rm=new remoteCMD(4,"defq");
                                     rm.run(scheduler);});
         p.start();
@@ -87,10 +92,10 @@ public class Simulation {
                      */
                     if(debugging)
                     {
-                        System.out.println("\n---submit calibration job:Debug---\n");
+                        System.err.println("\n---submit calibration job:Debug---\n");
                     }else {
                         String log=submitCalibrationJob(scheduler,sj);
-                        System.out.println("\n---submit calibration job:Real submit---\n"+log);
+                        System.err.println("\n---submit calibration job:Real submit---\n"+log);
                     }
 
 
@@ -107,11 +112,23 @@ public class Simulation {
         p.interrupt();
 
     }
-    private String submitOneJob(@NotNull Scheduler Scheduler, @NotNull SimuJob job) throws XenonException {
+    private String submitOneJob(@NotNull Scheduler Scheduler, @NotNull SimuJob job) throws XenonException, IOException {
 
         JobDescription jobDescription = new JobDescription();
-        jobDescription.setExecutable("sleep");
-        jobDescription.setArguments(job.getRealTime());
+        if(job.getTypeFlag())
+        {
+            jobDescription.setExecutable(System.getenv("XENON_HOME")+"/scripts/fakeCalibration");
+            jobDescription.setArguments(new String[]{job.getRealTime(), String.valueOf(jobId)});
+            BufferedWriter out = new BufferedWriter(new FileWriter(System.getenv("JOB_LOG_DYNPRVDRIVER"), true));
+            out.write(String.join("\t", "JobID=" + jobId, "Action=" + System.currentTimeMillis(), "STATE=SUBMISSION"));
+            out.newLine();
+            out.close();
+            jobId+=1;
+        }else {
+            jobDescription.setExecutable("sleep");
+            jobDescription.setArguments(job.getRealTime());
+        }
+
         jobDescription.setTasks(job.getNodeNum());
         jobDescription.setTasksPerNode(1);
         jobDescription.setSchedulerArguments("--job-name="+(job.getTypeFlag()?"Calibration":"Normal")+" --time="+job.getTimeLimit());
@@ -129,6 +146,18 @@ public class Simulation {
         }
         return jobid;
     }
+    public void realExperiment(Scheduler scheduler) throws InterruptedException {
+        Thread p=new Thread(()->{remoteCMD rm=new remoteCMD(2,"defq");
+            rm.run(scheduler);});
+        p.start();
+        long start =System.currentTimeMillis();
+        long duration=7*24*3600*1000;
+        while (System.currentTimeMillis()-start<duration) {
+        Thread.sleep(5000);
+        }
+    }
+
+
     public int countPD(String info) {
         int count = 0;
         Pattern p = Pattern.compile("PD");
@@ -219,7 +248,8 @@ public class Simulation {
         return simuJob;
     }
     public String submitCalibrationJob(Scheduler Scheduler, @NotNull SimuJob job) throws XenonException {
-
+        String log =ServiceUtil.submitJob("http://"+System.getenv("IPL_ADDRESS")+":5000/job",client,job.getParameter());
+        System.err.println(log);
         try
         {
             BufferedWriter out=new BufferedWriter(new FileWriter("JobSubmit.log",true));
@@ -231,7 +261,7 @@ public class Simulation {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return null;
+        return log;
     }
 }
 

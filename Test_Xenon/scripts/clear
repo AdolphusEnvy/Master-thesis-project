@@ -2,6 +2,6 @@
 
 rm output
 rm JobSubmit.log
-rm ~/log/simulation.log
+# rm ~/log/simulation.log
 scancel --name=Calibration
 scancel --name=Normal

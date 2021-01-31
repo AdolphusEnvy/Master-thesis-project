@@ -102,7 +102,7 @@ public class remoteCMD {
             if(debugging)
             {
                 SameJob.put("exec","sleep");
-                SameJob.put("args","72000");
+                SameJob.put("args","infinity");
             }else {
                 SameJob.put("exec",System.getenv("DYNPRVDRIVER_HOME")+"/scripts/ipl-run");
             }
@@ -132,7 +132,7 @@ public class remoteCMD {
                         if(debugging)
                         {
                             SameJob.put("exec","sleep");
-                            SameJob.put("args","72000");
+                            SameJob.put("args","infinity");
                         }else {
                             SameJob.put("exec",System.getenv("DYNPRVDRIVER_HOME")+"/scripts/ipl-run");
                         }
@@ -161,6 +161,9 @@ public class remoteCMD {
         return MaxTime;
     }
 
+    private Time mostSoonTime() {
+        return parseTime(queueStatus.stream().filter(x -> x.get("STATE").equals("RUNNING")).sorted(jobComp).limit(0).collect(Collectors.toList()).get(0));
+    }
     private int makeWayBackfill(Time MaxTime, Map<String, String> PendingJobResource) throws IOException {
         // filter jobs possibly to run
         List<Map<String,String>> pendingJobs=queueStatus.stream().filter(x -> x.get("NODELIST(REASON)").contains("Priority")).filter(x-> parseTime(x).compareTo(MaxTime) < 0).collect(Collectors.toList());
@@ -233,7 +236,22 @@ public class remoteCMD {
     private Comparator<Map<String, String>> jobComp = new Comparator<Map<String, String>>() {
         @Override
         public int compare(Map<String, String> o1, Map<String, String> o2) {
-            return parseTime(o1).compareTo(parseTime(o2));
+            Time t1=parseTime(o1);
+            Time t2=parseTime(o2);
+            if(t1.isUnlimit())
+            {
+                if(t2.isUnlimit())
+                {
+                    return Integer.parseInt(o2.get("JOBID"))<Integer.parseInt(o1.get("JOBID"))?-1:1;
+                }
+                else
+                {
+                    return 1;
+                }
+            }else
+            {
+                return t1.compareTo(t2);
+            }
         }
     };
 
@@ -242,7 +260,17 @@ public class remoteCMD {
 
             JobDescription jobDescription = new JobDescription();
             jobDescription.setExecutable(job.get("exec"));
-            jobDescription.setArguments(job.get("args"));
+            if(job.containsKey("args"))
+            {
+                jobDescription.setArguments(job.get("args"));
+            }
+            Long time=System.currentTimeMillis();
+            jobDescription.setStderr(System.getenv("NODE_LOG_DIR")+time.toString()+".err");
+            jobDescription.setStdout(System.getenv("NODE_LOG_DIR")+time.toString()+".out");
+            jobDescription.setWorkingDirectory(System.getenv("DYNPRVDRIVER_HOME"));
+            Map env=new HashMap<String, String>();
+            env.put("DYNPRVDRIVER_HOME",System.getenv("DYNPRVDRIVER_HOME"));
+            jobDescription.setEnvironment(env);
             System.out.println(jobDescription.getSchedulerArguments());
             String schedulerArgs = job.entrySet().stream().filter(x -> x.getKey().contains("arg:")).map(x -> "-" + x.getKey().substring(4) + " " + x.getValue()).reduce((x, y) -> x + " " + y).get();
             // schedulerArgs=String.join(" ",job.);
@@ -276,7 +304,7 @@ public class remoteCMD {
         }
         List<String> cancelList = queueStatus.stream()
                 .filter(x -> x.get("STATE").equals("RUNNING") & x.get("NAME").equals("Calibration"))
-                .sorted(Comparator.comparing(this::parseTime))
+                .sorted(jobComp)
                 .limit(number).map(x->x.get("JOBID")).collect(Collectors.toList());
         for (String jobID : cancelList) {
             scheduler.cancelJob(jobID);
@@ -307,11 +335,17 @@ public class remoteCMD {
         }
     }
     public void updateMiniNode() {
-        int tmpNode=Integer.parseInt(ServiceUtil.getJobStatus(System.getenv("IPL_ADDRESS"),client));
+        String miniNode=ServiceUtil.getJobStatus("http://" +System.getenv("IPL_ADDRESS")+":5000/miniNode",client);
+        StringBuilder sb=new StringBuilder(miniNode);
+        sb.deleteCharAt(sb.length()-1);
+        sb.deleteCharAt(sb.length()-1);
+        sb.deleteCharAt(0);
+        int tmpNode=Integer.parseInt(sb.toString());
         if(tmpNode>0)
         {
             minNode=tmpNode;
         }
+
     }
     public void logNotChange(String reason) throws IOException {
         BufferedWriter out=new BufferedWriter(new FileWriter(System.getenv("DEBUGGING_FILE"),true));

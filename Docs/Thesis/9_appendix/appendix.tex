@@ -2,7 +2,7 @@
 % content in this file will be fed into the main document
 
 %: ----------------------- name of chapter  -------------------------
-\chapter*{Appendix} % top level followed by section, subsection
+\chapter{Appendix} % top level followed by section, subsection
 
 
 %: ----------------------- paths to graphics ------------------------
@@ -15,13 +15,209 @@
 \fi
 
 %: ----------------------- contents from here ------------------------
-\includepdf[pages=1-5]{CodesTable} 
-\includepdf[pages=1-4]{InterviewQuestions}
+%\includepdf[pages=1-5]{CodesTable} 
+\section{Algoritms}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
+\begin{algorithm}[htb]
+    \caption{Scaling policy}\label{algo:scalingPolicy}
+    \begin{algorithmic}[1]
+      \Procedure{Scaling}{}
+      \If { No pending job}
+        \State Submit $I$ one-node calibration jobs with $RT\gets UMLIMITED$;
+        
+      \Else 
+         \State Get the pending job on top of the queue $J_{Top}$
+         \State Get the $maxTime$ for backfilling
+         \If{$R<MiniNode$}
+            \State Take $I$ nodes, return
+         \EndIf
+         \If{$N_{Top}-I<=R-MiniNode$}
+            \State Release $N_{Top}-I$ nodes, return;give a way to job waiting for resource
+         \EndIf
+         \For {$J_{i}$ in $runningJobs$}
+          \If{$TL_{i}-RT_{i}<miniTime$}
+            \State A job will finish soon, not change, return 
+          \EndIf
+         \EndFor
+         \For {$J_{i}$ in $pendingJobs$}
+            \If{$TL_{i}<maxTime$}
+                \If{$N_{i}<=I$}
+                    \State SLURM will schedule it, not change, return 
+                \EndIf
+                \If{$N_{i}-I<=R-MiniNode$}
+                    \State Release $N_{i}-I$ nodes, return; give a way for $J_{i}$
+                \EndIf
+            \EndIf
+         \EndFor
+
+      \EndIf
+      \State No job can be filled in; take $I$ nodes, return
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
 
 
+\begin{algorithm}[htb]
+    \caption{Calculate $maxTime$}\label{algo:maxTime}
+    \begin{algorithmic}[1]
+        \Procedure{getMaxTime}{}
+        \State Get the job $J_{Top}$ on top of the queue
+        \State $requiredNode\gets I-N_{Top}$
+        \State $MaxTime\gets UNLIMITED$
+        \For{$J_{i}$ in Sorted($runningJobs$)}
+            \State $MaxTime\gets (TL_{I}-RT_{i})$
+            \State $requiredNode\gets requiredNode-N_{i}$
+            \If{$requiredNode<=0$}
+                \State Return $MaxTime$
+            \EndIf
+        \EndFor
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+% \includepdf[pages=1-4]{InterviewQuestions}
 
+\begin{algorithm}
+    \caption{Send tasks to worker}\label{algo:sendTask}
+    \begin{algorithmic}[1]
+        \Procedure{deliverTask}{}
+        \State Lock $idleWorkerQueue$ and $runningJobMap$
+        \For{$Job_{i}$ in $runningJobMap$.valueSet()}
+            \If{$Job_{i}$.isEmpty()}
+                \State All tasks sent, continue
+            \EndIf
+            \State $task_{j}$ $\gets$  $Job_{i}$.PopTask()
+            \State $srcId$ $\gets$  $idleWorkerQueue$.poll()
+            \While{$srcId$ !=null}
+                \State $masterSendPort$ connect to worker by $srcId$
+                \State Write message and send $task_{j}$
+                \If{sending succeed}
+                    \State Break while loop
+                \Else
+                    \State Fetch a new $srcId$
+                \EndIf
+            \EndWhile
+            \If{$srcId$ == null}
+                \State $Job_{i}$.loadRedo($task_{j}$)
+            \EndIf
+        \EndFor
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
 
+\begin{algorithm}
+    \caption{Upcall Procedure}\label{algo:upcall}
+    \begin{algorithmic}[1]
+        \Procedure{UpCall}{$readMassage$}
+        \If{$readMassage$ from worker} 
+            \State $message\gets$(ControlMessage) $readMessage$.readObject()
+            \State Lock $idleWorkerQueue$,$runningJobMap$ and $runningNodes$
+            \State $runningTask$ $\gets$ $runningNodes$.remove($readMessage$.origin().ibisIdentifier())
+            \If{$message$.isEmptyRequest() == true} \Comment{First request}
+                \If{$runningTask$ !=null}
+                    \State Insert $runningTask$ to the job in $runningJobMap$ according to Job ID 
+                \EndIf
+            \Else
+                \State $job$ $\gets$ $runningJobMap$.get($message$.getJobID())
+                \State $job$.finishOneTask()
+                \If{$job$.isFinished()}
+                    \State This job is finished; log results and remove it from $runningJobMap$
+                \EndIf
+            \EndIf
+            \State $idleWorkerQueue$.offer($readMessage$.origin().ibisIdentifier())
+        \Else \Comment{worker gets task from the master}
+            \State $task$ $\gets$ (Task) $readMessage$.readObject()
+            \State Lock $workerTaskQueue$
+            \State $workerTaskQueue$.offer($task$)
+        \EndIf
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
 
+\section{SubmitLists}
+\subsection{Submit list 1}\namedlabel{submit:1}{Submit list 1}
+
+\begin{description}
+    
+    \item[] NodeNum=4 \ Type=Normal \ TimeLimit=1:57:57 \ RealTime=7077 \ SubmitTimeStamp=3405
+
+\item[] NodeNum=2 \ Type=Normal \ TimeLimit=0:58:50 \ RealTime=3530 \ SubmitTimeStamp=6744
+
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=14400 \ SubmitTimeStamp=13125 \ Parameter
+
+\item[] NodeNum=7 \ Type=Normal \ TimeLimit=3:17:42 \ RealTime=11862 \ SubmitTimeStamp=21556
+
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=14400 \ SubmitTimeStamp=27934 \ Parameter
+
+\item[] NodeNum=3 \ Type=Normal \ TimeLimit=3:22:25 \ RealTime=12145 \ SubmitTimeStamp=3995500
+
+\item[] NodeNum=4 \ Type=Normal \ TimeLimit=3:20:2 \ RealTime=12002 \ SubmitTimeStamp=6235156
+
+\item[] NodeNum=6 \ Type=Normal \ TimeLimit=UNLIMITED \ RealTime=5017 \ SubmitTimeStamp=11996676
+
+\item[] NodeNum=4 \ Type=Normal \ TimeLimit=UNLIMITED \ RealTime=10373 \ SubmitTimeStamp=12551230
+
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=14400 \ SubmitTimeStamp=14016994 \ Parameter
+
+\item[] NodeNum=7 \ Type=Normal \ TimeLimit=2:28:50 \ RealTime=8930 \ SubmitTimeStamp=18259084
+
+\item[] NodeNum=9 \ Type=Normal \ TimeLimit=2:19:19 \ RealTime=8359 \ SubmitTimeStamp=24192376
+
+\item[] NodeNum=9 \ Type=Normal \ TimeLimit=2:39:51 \ RealTime=9591 \ SubmitTimeStamp=25775085
+
+\item[] NodeNum=9 \ Type=Normal \ TimeLimit=2:37:27 \ RealTime=9447 \ SubmitTimeStamp=36696690
+
+\item[] NodeNum=5 \ Type=Normal \ TimeLimit=2:37:39 \ RealTime=9459 \ SubmitTimeStamp=36697980
+
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=14400 \ SubmitTimeStamp=36767426 \ Parameter
+
+\item[] NodeNum=5 \ Type=Normal \ TimeLimit=3:22:26 \ RealTime=12146 \ SubmitTimeStamp=36771775
+
+\item[] NodeNum=8 \ Type=Normal \ TimeLimit=3:11:24 \ RealTime=11484 \ SubmitTimeStamp=36773060
+
+\item[] NodeNum=5 \ Type=Normal \ TimeLimit=2:43:18 \ RealTime=9798 \ SubmitTimeStamp=37318439
+\end{description}
+\subsection{Submit list 2}\namedlabel{submit:2}{Submit list 2}
+\begin{description}
+    \item[] NodeNum=4 \ Type=Normal \ TimeLimit=1:57:57 \ RealTime=7077 \ SubmitTimeStamp=3405
+\item[] NodeNum=2 \ Type=Normal \ TimeLimit=0:58:50 \ RealTime=3530 \ SubmitTimeStamp=6744
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=13500 \ SubmitTimeStamp=13125 \ Parameter
+\item[] NodeNum=7 \ Type=Normal \ TimeLimit=3:17:42 \ RealTime=11862 \ SubmitTimeStamp=21556
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=13500 \ SubmitTimeStamp=27934 \ Parameter
+\item[] NodeNum=7 \ Type=Normal \ TimeLimit=UNLIMITED \ RealTime=12412 \ SubmitTimeStamp=1241591
+\item[] NodeNum=3 \ Type=Normal \ TimeLimit=3:22:25 \ RealTime=12145 \ SubmitTimeStamp=3995500
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=13500 \ SubmitTimeStamp=4658139 \ Parameter
+\item[] NodeNum=4 \ Type=Normal \ TimeLimit=3:20:2 \ RealTime=12002 \ SubmitTimeStamp=6235156
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=13500 \ SubmitTimeStamp=8696543 \ Parameter
+\item[] NodeNum=6 \ Type=Normal \ TimeLimit=UNLIMITED \ RealTime=5017 \ SubmitTimeStamp=11996676
+\item[] NodeNum=4 \ Type=Normal \ TimeLimit=UNLIMITED \ RealTime=10373 \ SubmitTimeStamp=12551230
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=13500 \ SubmitTimeStamp=14016994 \ Parameter
+\item[] NodeNum=7 \ Type=Normal \ TimeLimit=2:28:50 \ RealTime=8930 \ SubmitTimeStamp=18259084
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=13500 \ SubmitTimeStamp=20726878 \ Parameter
+\item[] NodeNum=9 \ Type=Normal \ TimeLimit=2:19:19 \ RealTime=8359 \ SubmitTimeStamp=24192376
+\item[] NodeNum=9 \ Type=Normal \ TimeLimit=2:39:51 \ RealTime=9591 \ SubmitTimeStamp=25775085
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=13500 \ SubmitTimeStamp=27327961 \ Parameter
+\item[] NodeNum=9 \ Type=Normal \ TimeLimit=2:37:27 \ RealTime=9447 \ SubmitTimeStamp=32015325
+\item[] NodeNum=5 \ Type=Normal \ TimeLimit=2:37:39 \ RealTime=9459 \ SubmitTimeStamp=36697980
+\item[] NodeNum=5 \ Type=Calibration \ TimeLimit=4:00:01 \ RealTime=13500 \ SubmitTimeStamp=36767426 \ Parameter
+\item[] NodeNum=5 \ Type=Normal \ TimeLimit=3:22:26 \ RealTime=12146 \ SubmitTimeStamp=36771775
+\item[] NodeNum=8 \ Type=Normal \ TimeLimit=3:11:24 \ RealTime=11484 \ SubmitTimeStamp=36773060
+\item[] NodeNum=5 \ Type=Normal \ TimeLimit=2:43:18 \ RealTime=9798 \ SubmitTimeStamp=37318439
+ 
+\end{description}
+
+\section{Terminology table}
+\begin{table}[]
+    \centering
+    \begin{tabular}{ll}
+    Term               & Description                                                        \\
+    Horizontal scaling\label{Hscaling} & Scale by adding more machines into your pool of resources.         \\
+    Vertical scaling\label{Vscaling}   & Scale by adding more power (CPU, RAM, GPU) to an existing machine.
+    \end{tabular}
+    \caption{Terminology table}
+    \label{tab:my-table}
+\end{table}
 % ---------------------------------------------------------------------------
 %: ----------------------- end of thesis sub-document ------------------------
 % ---------------------------------------------------------------------------
