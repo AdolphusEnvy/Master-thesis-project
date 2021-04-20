@@ -16,105 +16,107 @@
 
 % ----------------------- contents from here ------------------------
 % 
-In this chapter, we will firstly go in to the detail for two implementations of LOAFR pipeline made by eScience center.
-And then, we will briefly describe resource management techniques in HPC clusters, focusing on high resource utilization for cluster computing environment.
-The batch scheduling has a long history covering the entire computer systems field from the mainframe age, up to today computing systems. Batch scheduling is still default scheduling method for modern computer systems. 
-The simple FIFO batch scheduling systems turned to be quite inefficient  and a number of optimization were proposed like Preempting, backfill, and heuristics.
-In the following sections, we will explore these kinds of solutions respectively 
+In this chapter, we firstly describe the detail for two implementations of LOFAR pipeline.
+And then, we briefly describe resource management techniques in HPC clusters, focusing on high resource utilization for cluster computing environment.
+
 %-----------------------------overview-----------------------------------
-\section{Existing solutions}
+\section{MPI and Spark implementation of SAGECal}
 \subsubsection*{MPI version}
 SAGECaL native supports multi-threads parallelization and GPU. The MPI version of SAGECaL\footnote{\url{https://github.com/nlesc-dirac/sagecal/tree/master/src/MPI}} employs a master/worker architecture to manage the task distribution among nodes.
-The task division is based on the data partitioning. Each worker node process a file at a time. 
-The master tries to equally distribute tasks, but the work load can not be adjusted during the runtime.
-Besides, this MPI version does not support fault tolerance in case worker nodes fail during the processing.
+The task division is based on data partitioning. Each worker node process a file at a time. 
+The master tries to equally distribute tasks, but the workload can not be adjusted during the runtime.
+Besides, this MPI version does not support fault tolerance in case the worker nodes fail during the processing.
 \subsubsection*{Spark version}
-To make better use of resources, eScience center also developed a spark version of SAGECaL\footnote{\url{https://github.com/nlesc-dirac/sagecal-on-spark/tree/master/excon/JAVA}}.
-The SAGECaL is compiled as dynamic library and utilized by Java native interface. The tasks are divided by file as well, and are managed by Spark. 
-Compared to MPI version, Spark provides better resource management and fault tolerance. 
+To make better use of resources, eScience Center also developed a spark version of SAGECaL\footnote{\url{https://github.com/nlesc-dirac/sagecal-on-spark/tree/master/excon/JAVA}}.
+The SAGECaL is compiled as a dynamic library and utilized by Java native interface. The tasks are divided by file as well and managed by Spark. 
+Compared to the MPI version, Spark provides better resource management and fault tolerance. 
 Besides, with the help of container technology and container orchestras like Kubernetes, we can scale the running Spark environment manually.
+
 \section{System dependency}
 \subsection{SLURM}
-SLURM, formerly known as Simple Linux Utility for Resource Management, is a cluster management and job scheduling system for large and small Linux clusters1 which is
+SLURM, formerly known as Simple Linux Utility for Resource Management, is a cluster management and job scheduling system for large and small Linux clusters which are
 open-source, fault-tolerant, and highly scalable. There are three critical functions, as it
 is stated, that is, allocating resources to users for a duration of time, providing a job
 management framework over-allocated node, and arbitrating contention for resources by
 a queue. SLURM can be configured with multiple kinds of queuing strategies, by default
 backfilling set up to maximize resource utilization in universal cases.
 
-In our project, the scaling relies on the submission and cancellation of jobs. To
+In our project, scaling relies on the submission and cancellation of jobs. To
 make a decision, the status of the cluster will also be periodically collected. The status
 includes the resource occupation and information of jobs in the queue. According to
 these statuses, the resource manager makes decisions to scale the calibration jobs. The
-SLURM receives instructions from Resource manager of our system and allocates/retrieves
-resources by commands. And in the same time, it provides status of the cluster to the
+SLURM receives instructions from the Resource manager of our system and allocates/retrieves
+resources by commands. And in the same time, it provides the status of the cluster to the
 Resource manager.
 
 \subsection{Xenon}
 Xenon\footnote{\url{https://xenon-middleware.github.io/xenon/}}, a middleware abstraction library, is utilized to manage the information and resources in an organized way, which enables our resource managers to communicate with the cluster in a more robust way, instead of parsing the output of command lines. 
 It is designed for simple access to distributed computing and storage resources, which provides a single programming interface to many types of remote resources. 
 \subsection{Shared file system}
-One of the fundamental requirements for this system lies in the shared file system which
+One of the fundamental requirements for our proposed system lies in the shared file system which
 allows us to achieve fault tolerance in a simple way. The shared file system can be accessed
-by all nodes, including head node and work nodes. It stores the container images of modules
-and processing environment for different kinds of jobs. The executors will read the raw
-data obtained from it, and generate result which will be sent back.
+by all nodes, including head nodes and work nodes. It stores the container images of modules
+and processing environments for different kinds of jobs. The executors will read the raw
+data obtained from it, and generate a result which will be sent back.
 
 \section{Traditional resource management strategies}
+Batch scheduling has a long history covering the entire computer systems field from the mainframe age, up to today's computing systems. Batch scheduling is still the default scheduling method for modern computer systems. 
+The simple FIFO batch scheduling systems turned to be quite inefficient and a number of optimization were proposed like preemption, backfill, and heuristics.
+In the following sections, we will explore these techniques in more details.
+
 \subsection{Preemption based resource management systems}
-Preemption is usually used to avoid job delaying and resources starvation. 
-Furthermore, apparently, resuming the execution of  preempted jobs is the most time-consuming part. 
+Preemption is usually used to avoid job delays and resource starvation. 
+Furthermore, apparently, resuming the execution of preempted jobs is the most time-consuming part. 
 At the resources level, the preemption strategy is not common to be directly used on job scheduling along, instead, it is combined with other additional techniques. 
-Sajjapongse et al. \cite{sajjapongse2013preemption} proposed a run- time system based on a preemption strategy to increase GPU utilization on heterogeneous clusters. 
-The paper describes the performance of hybrid MPI-CUDA applications showing the efficiency of preemption based mechanisms. 
+Sajjapongse et al. \cite{sajjapongse2013preemption} proposed a run-time system based on a preemption strategy to increase GPU utilization on heterogeneous clusters. 
+The paper describes the performance of hybrid MPI-CUDA applications showing the efficiency of preemption-based mechanisms. 
 To overcome the drawbacks related to preemption, including the waste of resources, many adaptions are proposed. 
-Lu Cheng et al. \cite{6103959} proposed a solution inspired from Mapreduce. 
+Lu Cheng et al. \cite{6103959} proposed a solution inspired by MapReduce. 
 They introduced a component Global Preemption to trade short-term fairness for better efficiency. 
-Another way approach is the checkpoint/restart mechanisms used by Berkely lab\cite{hargrove2006berkeley} in their Linux cluster. 
+Another approach is the checkpoint/restart mechanisms used by Berkely lab\cite{hargrove2006berkeley} in their Linux cluster. 
 However, in the real environment, people use preemption strategies very carefully. 
 Unless all jobs are equipped with a caching mechanism, otherwise, the cost of canceling running jobs will be unaffordable.
 
-\section{Backfill based resource management systems}
-The backfill algorithm is currently the default schedule algorithm to achieve as high resource utilization  in production environment, which gives small jobs a higher priority. 
+\subsection{Backfill based resource management systems}
+The backfill algorithm is currently the default schedule algorithm to achieve high resource utilization in the production environment, which gives small jobs a higher priority. 
 In Section \ref{sec:backfill}, a backfill algorithm will be addressed in detail. 
 Suresh et al. used a balanced spiral method for cloud metaschedules\cite{5972255}, which improves the performance and, at the same time, meets the requirement of QoS requirement of cloud systems.  
 While Nayak et al. proposed a novel backfilling-based task scheduling algorithm to schedule deadline-based tasks\cite{nayak2019dynamic}. 
 It aims to break the performance limit of the default backfilling algorithm of OpenNebula. 
-This VM-based solution achieved minor improvement of resource utilization. 
-Backfilling scheduling shows great generic and ability for using resource utilization.
+This VM-based solution achieved a minor improvement in resource utilization. 
+Backfilling scheduling shows great generic and the ability for using resource utilization.
 
-A number of variations of the backfill technique have been proposed for different system configurations.
+Several variations of the backfill technique have been proposed for different system configurations.
 EASY-backfill and conservative backfill hold the restriction not delay the job ahead\cite{4797220}.
 EASY-backfill is more aggressive, that is, for any job pending in the queue, backfill happens only when a small job does not delay the job at the head of the queue. 
-However, in conservative setting, a job’s backfill requires that the filling does not delay any job before it. 
-Additionally, Flexible\cite{talby1999supporting} and Multi-queue backfilling\cite{lawson2002multiple} are proposed to meet the requirements of more dynamic scenarios, and reduce the response time for some jobs. 
-Flexible tries to introduce slack factor to rise the priorities of big jobs in the queue. For multi-queue backfill, the partition will adapt as the workload change.
+However, in a conservative setting, a job’s backfill requires that the filling does not delay any job before it. 
+Additionally, Flexible\cite{talby1999supporting} and Multi-queue backfilling\cite{lawson2002multiple} are proposed to meet the requirements of more dynamic scenarios and reduce the response time for some jobs. 
+Flexible tries to introduce slack factor to raise the priorities of big jobs in the queue. For multi-queue backfill, the partition will adapt as the workload change.
 
 However, in terms of resource utilization, this algorithm still has some performance limitations, if there is no job that requires fewer processors than free processors, the free processors will remain idle. 
-In \cite{hafshejani2013efficient}, Hafshejani et al. turned to schedule jobs on thread instead of on processor. 
-They tried to improve the resource utilization via finer-granularity allocation. 
+In \cite{hafshejani2013efficient}, Hafshejani et al. turned to schedule jobs on the thread instead of on the processor. 
+They tried to improve resource utilization via finer-granularity allocation. 
 The results show that less response time on average is achieved compared with FCFS and traditional Backfilling.
  
-\section{Resource management stratgies in research}
-\subsection{Heuristics}
-Heuristics algorithms are usually more efficient, which take less time to decide as scheduling problem is NP-Hard. 
+\section{Resource management strategies in research}
+\subsection{Heuristics based resource management systems}
+Heuristics algorithms are usually more efficient, which takes less time to decide as the scheduling problem is NP-Hard. 
 Xhafa and Abraham did a survey\cite{xhafa2010computational} and explored the application of heuristics algorithms in job scheduling. 
 The most common and straightforward approach is local search, and the methods in this family include Hill Climbing (HC), Simulated Annealing (SA), and Tabu Search (TS), etc. 
-In \cite{ritchie2003fast}, local search facilitates the shortening of  schedule on benchmark problems. 
+In \cite{ritchie2003fast}, local search facilitates the shortening of schedule on benchmark problems. 
 Though the population-based approaches are more efficient, they require a longer time to convergence. 
 In \cite{abraham2000nature}, the Genetic Algorithm approach allows the sufficient utilization of the resources. 
-Moreover, of course, in this work, the above two approaches show that they can be combined to achieve a better performance. 
+Moreover, of course, in this work, the above two approaches show that they can be combined to achieve better performance. 
 
-\subsection{Machine learning}
-The machine/deep learning was greatly improved during the last few years, a couple of recent studies applied ML/DL approaches to resource  management.  Research made by Mao et al.\cite{mao2016resource} shows that (deep)reinforcement learning is able to outperform the  traditional state-of-art approaches. 
-It translates the problem of packing tasks with multiple resources (herein referred to CPU and memory) demands into a learning problem. 
+\subsection{Machine learning based resource management systems}
+Machine/deep learning was greatly improved during the last few years, a couple of recent studies applied ML/DL approaches to resource management.  Research made by Mao et al.\cite{mao2016resource} shows that (deep)reinforcement learning is able to outperform the traditional state-of-art approaches. 
+It translates the problem of packing tasks with multiple resources (herein referred to as CPU and memory) demands into a learning problem. 
 Another similar study\cite{8622393} also shows that the RL-based approach has great potential for resource management. 
-However, the approach was only tested in simulation with synthetic load generated using well known probability distribution like Bernoull process, Uniform distribution, and Beta distribution. 
+However, the approach was only tested in simulation with synthetic load generated using well-known probability distribution like Bernoulli process, Uniform distribution, and Beta distribution. 
 
-ML/DL techniques have also been used to improve more traditional resource management algorithm.
+ML/DL techniques have also been used to improve more traditional resource management algorithms.
 For instance, Gaussier et al.\cite{7832838} used machine learning to improve backfilling. 
 Backfill strategy relies on the estimated execution time which is normally assigned by users. Through predicting the execution time, better by ML model, backfill mechanism is available to make better decisions.
-
 
 
 % ---------------------------------------------------------------------------

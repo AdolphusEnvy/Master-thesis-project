@@ -1,7 +1,115 @@
 % this file is called up by thesis.tex
 % content in this file will be fed into the main document
 
-\chapter{Architecture and mechanisms}\label{chapter:4} % top level followed by section, subsection
+\chapter{Backfilling and scaling policy}\label{chapter:4-1} % top level followed by section, subsection
+
+\ifpdf
+    \graphicspath{{3_methods/figures/PNG/}{3_methods/figures/PDF/}{3_methods/figures/}}
+\else
+    \graphicspath{{3_methods/figures/EPS/}{3_methods/figures/}}
+\fi
+
+In this chapter, we first explain the backfill mechanism in more detail. 
+Then we will describe a specialized scaling policy to maximize resource utilization . 
+
+\section{Backfill mechanism}\label{sec:backfill}
+The backfill scheduling plug-in is loaded by default in the SLURM cluster. 
+In the previous chapter, we have listed a few works related to backfill policy. 
+Therefore, currently, we only consider the dynamic provision of CPU resources via SLURM job submission/canceling.
+By the setting of job submission and canceling, we designed the scaling policy of the resource manager to adapt to the backfill mechanism.
+
+As an optimization for the basic priority queue, the backfilling scheduling starts the lower priority jobs provided it does not delay the expected start time of any higher priority jobs. 
+In other words, the backfilling mechanism under discussion refers to the conservative backfill because standard configurations of clusters using in research aim to achieve a fair share of the computing resource among the users.
+An intuitive interpretation is shown in Fig. \ref{fig:backfillCas} and Fig. \ref{fig:backfillCase}.
+
+\begin{figure}[!h]
+    \centering
+    \begin{minipage}{.45\textwidth}
+      \centering
+      \includegraphics[width=1\linewidth]{3_methods/figures/backfilling1.png}
+      \caption[Backfill case 1]{{\small\textbf{Job 5 is backfilled} - Job 4 is estimated to start after the finishing of Job 2}}
+      \label{fig:backfillCas}
+    \end{minipage} 
+    \begin{minipage}{.45\textwidth}
+      \centering
+      \includegraphics[width=1\linewidth]{3_methods/figures/backfilling2.png}
+      \caption[Backfill case 2]{{\small\textbf{Job 7 is backfilled} - Running Job 7 will not impact Job 4 and Job 6 }}
+      \label{fig:backfillCase}
+    \end{minipage}
+\end{figure}
+According to the configuration of SLURM, the backfilling scheduling is triggered when jobs are submitted/finished. 
+Besides, the scheduler periodically checks whether a job in the queue is available to run.
+The decisions for backfilling depend on the number of resources, and the time limits of the jobs. 
+
+As shown in  Fig. \ref{fig:backfillCas}, Job 4 is pending in the queue due to the lack of resources.
+When Job 5 is appended to the queue, the scheduler estimates that Job 5 can be finished before Job 4 gets adequate resources. 
+Therefore, the resource is allocated to Job 5.
+
+Another scenario is shown in Fig. \ref{fig:backfillCase}. Job 7 is added to the queue while it requires minimal resources, which will last when Job 4 is on the run by the estimation. 
+Besides, it still gets the assigned resource as it does not affect the jobs ahead of it(by the estimation of starting time and priority).
+
+The typical cases above show how the backfill mechanism works. 
+In practice, the scheduler considers pending jobs in priority orders, that is, once a pending job fulfills the requirements of the backfill condition, it can start immediately. 
+The resource manager of our system employs an adaptive algorithm that utilizes the backfilling mechanism to achieve high resource utilization.
+
+\section{An approach to maximize resource utilization}
+In the previous section, we discussed how backfilling mechanism enlarges resource utilization.
+In the default setting, users may submit any kind of job. 
+However, in some cases like LOFAR use case, the users may execute the same program for different datasets.
+Therefore, we propose a resource management system that reorganizes one or more kinds of job execution and manages resources in a dynamic way.
+The system can retrieve and release resources according to scaling policy so that the overall resource can be fully used.
+\section{Scaling policy}
+The scaling policy aims to harvest every idle resource,  which requires continuous monitoring of the status of the cluster and the running or pending jobs. 
+The resource manager periodically fetches status information, and makes decisions based on a scaling algorithm which acts according to the following figures:
+\begin{itemize}
+    \item $I$ - The number of idle nodes in a (partition of) cluster
+    \item $T$ - The total number of nodes in a (partition of) cluster
+    \item $R$ - The number of nodes reserved for our system
+    \item $J_{i}$ - The pending or running job with ID $i$  
+    \item $N_{i}$ - The number of required nodes of $J_{i}$
+    \item $TL_{i}$ - The time limit of $J_{i}$
+    \item $RT_{i}$ - The running time of $J_{i}$
+    \item $MiniNode$ - The minimum number of nodes reserved for our system
+\end{itemize}
+
+In the following, we demonstrate three cases that explain what will happen under the given conditions. 
+Note that we describe background jobs as $Job i$ which are submitted by other users.
+At the same time, we will name The resources reserved for our system as $Calibration$ as we will use the LOFAR calibration pipeline as the test use case.
+
+\subsection{Case 1: RM harvest idle resources }
+First, considering that sometimes there is no job pending in the queue, there are $I$ nodes remaining idle.
+To increase the overall resource utilization, the resource manager will submit $I$ one-node jobs, thereby sharing the calibration application workload, which is the basic strategy for any auto-scaling system. 
+The distributed jobs will be accelerated, benefiting from more resources allocated.
+
+\subsection{Case 2: RM give free resources}
+To be friendly with other users, the system release resources when it gets sufficient resources($R>=MiniNode$), and other jobs are pending.
+In the case that the extra part of resources exceeds the requirement of the first pending job, resources will be released in our case from the set of resources needed for the LOFAR Calibration application.
+In other words, the system is trying to let as many jobs as possible run, provided that the giving out of resources will not slow down the calibration application($R<MiniNode$).
+\textbf{Example:}
+
+At a time, the resource manager collected the information from the cluster and jobs.
+Let $T=21$,$MiniNode=10$. And there two jobs $J_{1}$ and $J_{2}$ are running, where $N_{1}=5$, $N_{2}=5$, $TL_{1}=20 min$ and $TL_{2}=15 min$.
+Assume that both $RT_{1}$ and $RT_{2}$ are equal to $1 min$. And there are two pending jobs $J_{3}$ and $J_{4}$ with  $N_{3}=10$, $N_{4}=6$, $TL_{3}=25 min$ and $TL_{4}=10 min$.
+Now, the system has taken the rest 11 nodes in the cluster, which means $R=11$.
+If $J_{2}$ is canceled somehow, then $I=5$. It is easy to find that if the resource manager shares one more node, plus five idle nodes, $J_{6}$ can start according to the backfilling policy. 
+After that, $R$ is still not less than $MiniNode$. A graphic illustration is displayed in \ref{3_methods/figures/backfillingCase2.jpg}, where the dotted line represents the number of $MiniNode$. 
+\figuremacroW{3_methods/figures/backfillingCase2.jpg}{Scaling policy Case 2}{$J_{2}$ canceled, the system gives way, $J_{4}$ is backfilled }{1}
+Please be noted that if the job on top of the queue, herein refers to  $J_{3}$, is able to start once getting sufficient resources, the resource manager will give way for it. And in the implementation, the job on the head of the queue will be considered first, which is followed by the jobs behind.
+
+\subsection{Case 3: RM does not free resources }
+
+The prerequisite of giving way for other jobs is that giving out resources would not break down the $MiniNode$, and the time limit is appropriate.
+In the case that there are no suitable jobs available to be backfilled, the resource manager takes those idle resources.
+It first calculates the maximum time necessary to ensure that a job can be backfilled. If no job can be backfilled, the resource manager submits $I$ one-node jobs with $TL=maxTime-2mins$.
+The reason to subtract 2 minutes is to ensure that the jobs can be backfilled correctly so that we make them redundant.
+The backfilling scheduling takes a long time, especially when there are many jobs on the cluster(running and pending).
+
+\textbf{Example:}
+
+The setting and jobs are the same as the previous example, however, we changed the time limit of J4 to 25 minutes.
+Thus, the resource manager submits jobs with $TL=17 mins$ to take 5 idle nodes. This scenario is illustrated in Fig. \ref{3_methods/figures/backfillingCase3.jpg}.
+
+\figuremacroW{3_methods/figures/backfillingCase3.jpg}{Scaling policy Case 3}{$J_{2}$ canceled, calibration application takes the idle resources because backfilling $J_{4}$ will delay $J_{3}$. Then calibration application takes them }{1}
 
 
 % ----------------------- paths to graphics ------------------------
@@ -20,290 +128,215 @@
 
 %-----------------------------overview-----------------------------------
 
-
+\chapter{Architecture and implementation}\label{chapter:4} % top level followed by section, subsection
 
 \section{Overview design}
-Based on the review of the previous works and state-of-art or out-of-date technologies, a system is proposed for the research questions: a user-side solution for overall resource utilization of batch job clusters.
-The system consists of two layers, i.e.,  management layer at head node and computation layer at work nodes. The overview design is illustrated in Fig.\ref{3_methods/figures/SimpleLayers.jpg}. 
-At head node layer, the resource layer is responsible for making decision of resource allocation at runtime; 
+Based on the review of the previous works and the scaling policy described in previous chapter, a system is proposed for the research questions: a user-side solution for overall resource utilization of batch job clusters.
+The system consists of two layers, i.e., the management layer and the computation layer. The overview design is illustrated in Fig.\ref{3_methods/figures/SimpleLayers.jpg}. 
+At the management layer, the resource layer is responsible for deciding resource allocation at runtime; 
 therefore, the computation layer is enabled to scale on demand, which is responsible for parallel job execution. 
-It is composed of multiple executors on arbitrary working nodes by the demand. 
+The computation layer is composed of multiple executors on arbitrary working nodes by the demand. 
 All nodes can access the shared file system which is provided by the cluster. 
-In the following sections, we will first explain the functionality of each component and how these components interact with each other. 
-And then, we will explore the mechanisms on which this system relies.
+In the following sections, we first explain the functionality of each component and how these components interact with each other. 
+And then, we explore the detailed implementations of this system.
 
-\figuremacroW{3_methods/figures/SimpleLayers.jpg}{Layers and components}{Three components are placed in two layers with a shared file system at button}{1}
-
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\linewidth]{3_methods/figures/SimpleLayers.jpg}
+  \caption[Layers and components]{Three components are placed in two layers with a shared file system at button}
+  \label{3_methods/figures/SimpleLayers.jpg}
+\end{figure}
 
 \section{Components}
 \subsection{Resource manager}
-The Resource manager(RM) is mainly responsible for making the decision to change the amount of resources allocated to this system. 
-And the decision-making is based on the information obtained from SLURM and WebService. 
-The RM continues with querying statuses, making decision and executing commands to create and cancel jobs via Xenon interface.
+The Resource Manager(RM) is mainly responsible for deciding to change the number of resources allocated to this system. 
+The decision-making is based on the information obtained from SLURM and WebService. 
+The RM continuously queries the status of the available resources via the Xenon interface.
 
-Besides, the RM also fetches information about the status of users’ jobs from WebService periodically through Restful API. 
-These statistics will help the resource manager to make decisions.
+Besides, the RM also fetches information about the status of users’ jobs from WebService(Web server in Fig.\ref{3_methods/figures/SimpleLayers.jpg}) through Restful API. 
+These statistics help the resource manager to make decisions.
 
 \subsection{Service module}
 Consisted of two sub-components, the service module is a container instance hosting a web server and an Ibis server. 
-In this project, we assume that the head node will never crash, and the processes will not be terminated by any non-manual action.
+In this project, we assume that the head node never crashes, and the processes are not terminated by external action.
 
-The web server is based on Flask Restful framework. The end-users can submit jobs via Restful API, and the web server temporally stores the configuration	of those jobs. 
-Besides, this web server also allows the master of executors to update the recommended minimal working nodes. 
-This figure can be used for RM to make scaling decisions. 
-Please be noted that the term job herein refers to a job to process a set of raw data and generate the output of results. It is different from the job defined in SLURM. The other server is the Ibis server. In the computation layer, Ibis Portability Layer(IPL)\cite{5492667} is employed for communication. 
+The web server is based on Flask Restful framework. The end-users can submit jobs via Restful API, and the webserver temporally stores the configuration of those jobs. 
+Besides, this webserver also allows the master of executors to update the recommended minimal working nodes. 
+This number can be used for RM to make scaling decisions. 
+Note that the term job herein refers to application-related jobs. The other server is the Ibis server. In the computation layer, Ibis Portability Layer(IPL)\cite{5492667} is employed for communication. 
 The IPL requires an Ibis server as a centralized hub for managing the communication and events among Ibis instances. 
-Considering the requirement for stabilization, we choose to place Ibis server at the head node because the risk of crashing is greatly mitigated.
+Considering the requirement for stabilization, we choose to run the Ibis server on the head node to mitigate the risk of crashing.
  
 \subsection{Executors}
 The executors are the main power for data processing. 
 In this project, every time RM decides to scale up the computation ability of the system, it will submit a new pre-defined job to SLURM. 
-And according to the configuration,	once this job is allocated with resources, there will be a working node to execute the given Java program. 
-After that, it can be considered as an executor.
+Once this job is executed, a new executor is added to the pool of application executors.
 
 By exploiting IPL interfaces, the computation layer is designed as shown in Fig. \ref{3_methods/figures/computingModel.png}. 
-Every executor will create an Ibis instance for communication, and all the instances, after initialization, will poll an election to select the master. 
-The result of election will be fed back as the output of the election procedure. 
-When an instance carries the ID which is in accordance with the election result; 
-it branches into code block to act as a master. 
-The rest instances are charged with processing data. 
-In our project, the executors process data based on container, which enables our system to handle multiple types of jobs for different kinds of data set.
+Every executor creates an Ibis instance for communication, and all the instances, after initialization, will poll an election to select the master. 
+As a result, one executor is acting as the master and the rest of the executors are tasked with processing the data.
+In our project, the executors process data based on containers, which enables our system to handle multiple types of jobs for different kinds of data set.
 
-\figuremacroW{3_methods/figures/computingModel.png}{ Distributed computing model}{Master-worker architecture, red boxes indicate the batch size}{1}
+\begin{figure}
+  \centering
+  \includegraphics[width=1\linewidth]{3_methods/figures/computingModel.png}
+  \caption[Distributed computing model]{Master-worker architecture, red boxes indicate the batch size}
+  \label{3_methods/figures/computingModel.png}
+\end{figure}
 
 The master periodically fetches jobs from the WebService (a simple Flask Restful API service). 
-The information from WebService includes data directory, user, job id, and parameter list. 
-In this system, the objective is to process a data set that can be divided into multiple sub data sets. 
-Therefore, as shown in Fig, \ref{ 3_methods/figures/computingModel.png}, a job is represented by a data folder that consists of subfolders(as shown by the yellow blocks in the figure).
-The master reads the information of the date folder and creates a job object. 
-In this paper, $Job$ object is defined as an abstraction of jobs submitted by end-users, which carries information, including the data directory, batch size, and parameters for processing. 
-It also maintains a queue storing the tasks to be delivered to workers. The numbers of tasks both in running and left are recorded for task-redoing and job-finishing check. 
-In the case that a $Job$ object is initialized, it will list the sub-directories under the directory where job data is stored.
-According to the given batch size, the Task objects will be created and loaded to the queue. 
+The information returned by WebService includes data directory, user, job id, and parameter list. 
+In this system, the objective is to process a data set that can be divided into multiple sub-data sets. 
+Therefore, as shown in Fig, \ref{3_methods/figures/computingModel.png}, a job is represented by a data folder that consists of subfolders(as shown by the yellow blocks in the figure).
+The master reads the information of the data folder and creates a job object. 
+$Job$ object is defined as an abstraction of jobs submitted by end-users, which carries information, including the data directory, batch size, and parameters for processing. 
+It also maintains a queue storing the tasks to be delivered to workers. The numbers of running and waiting tasks are recorded for task-redoing and job-finishing checks. 
+In the case that a $Job$ object is initialized, it lists the sub-directories under the directory where job data is stored.
+According to the given batch size, the Task objects are created and loaded to the queue. 
 $Task$ Task object stores the paths of sub-dataset, job id, and parameters. 
-It is derived from $Serializable$ class, which makes it easy to be transformed. 
-Thus, master transport $Task$ objects to workers.
-Moreover, executors will send an acknowledgment to master every time they enter the idle state, and wait for a new task. 
+Moreover, executors send an acknowledgment to master every time they enter the idle state and wait for a new task. 
 After that, the master delivers tasks to idle executors when there are unfinished tasks/jobs.
 
-\section{Actions and mechanisms}
-In previous sections, we outlined the components in this system, and in the first two sections we will discuss the actions of the executors, and how fault tolerance is achieved. 
-After that, at resource management level, we will explain how backfilling works, and how our system reacts and adapts to the backfill mechanism.
 
-\subsection{Actions of executors}
+\section{Implementation in detail}
+\subsection{Actions of executors}\label{actionOfExcution}
 Taking the advantages of Ibis, all executors run the same Java code, and take different actions according to the result of election. 
 The first action of executors is to join the election for master. 
 The Ibis service ensures that there is only one master in a pool. 
-For both master and workers, the Upcall mechanism is utilized to receive incoming messages, which allows asynchronous sending and receiving of messages.
+For both master and workers, the Upcall mechanism is utilized to receive incoming messages, which allows asynchronous message communication.
 
-The master maintains two variables, i.e.,(BTreeMap <Integer, Job>) $runningJobMap$; (Queue <IbisIdentifier>) $idleWorkerQueue$; (BTreeMap <IbisIdentifier, Task>) $runningNodes$.
-Among them,  $runningJobMap$ stores the jobs with job ID as the key. And $idleWorkerQueue$ is filled by IbisIdentifiers of executors, which send acknowledgment reporting that they are idle.
-When entering into a master code block, it firstly initializes an HTTPClient, the variables for statuses caching, a job fetcher, and the send/receive ports. 
-After initialization, it starts looping, and each round master will try to send tasks to works.
+The master maintains three variables, i.e.
+\begin{itemize}
+  \item (BTreeMap <Integer, Job>) $runningJobMap$; 
+  \item (Queue <IbisIdentifier>) $idleWorkerQueue$; 
+  \item (BTreeMap <IbisIdentifier, Task>) $runningNodes$.
+\end{itemize}
+$runningJobMap$ stores the jobs with job ID as the key. And $idleWorkerQueue$ is filled by IbisIdentifiers of executors, which send acknowledgment reporting that they are idle.
+When entering a master code block, the master firstly initializes an HTTPClient, the variables for statuses caching, a job fetcher, and the sending/receiving ports. 
+After initialization, the master keep waits for notification from idle executors to assign the next task for execution.
 
-The job fetcher runs asynchronously on another thread, communicating with master main thread via managing  $runningJobMap$ and $running Nodes $ which are accessible to two threads.
+The job fetcher runs asynchronously on another thread, communicating with the master main thread via managing  $runningJobMap$ and $running Nodes $ which are accessible to two threads.
 It gets the jobs from web service, creates and initializes $Job$ objects, and then pushes them to the $runningJobMap$. The submission process can be visualized as shown in Fig. \ref{3_methods/figures/service2jobSche.png}.
-\figuremacroW{3_methods/figures/service2jobSche.png}{ Job fetcher forwards submitted jobs}{Users submit jobs to web service, Job fetcher parses JSON data pack and push $Job$ objects to  $runningJobMap$ }{1}
-The $runningJobMap$ is locked when either  main thread or job fetcher try to access and modify it.
-Besides, $runningJobMap$ is a treemap, , which is automatically sorted every time the elements inside are changed. 
-In this paper,  since the key is job ID, jobs are ordered by the job ID. 
+% \figuremacroW{3_methods/figures/service2jobSche.png}{ Job fetcher forwards submitted jobs}{Users submit jobs to web service, Job fetcher parses JSON data pack and push $Job$ objects to  $runningJobMap$ }{1}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\linewidth]{3_methods/figures/service2jobSche.png}
+  \caption[Job fetcher forwards submitted jobs]{Users submit jobs to web service, Job fetcher parses JSON data pack and push $Job$ objects to  $runningJobMap$}
+  \label{3_methods/figures/service2jobSche.png}
+\end{figure}
+
+The $runningJobMap$ is locked when either main thread or job fetcher try to access and modify it.
+Besides, $runningJobMap$ is a treemap, which is automatically sorted every time the elements inside are changed. 
+Since the key is job ID, jobs are ordered by the job ID. 
 In this manner, the order is kept, and jobs are processed in FIFO.
 
-In the infinite loop of sending tasks, the master will try to fetch a Task and an IbisIdentifier from $runningJobMap$ and $idleWorkerQueue$.
-In general, If both Task and IbisIdentifier objects are not null, the Task object will be sent to a node by the ID. Moreover, the Task and ID will be stored in $runningNodes$. 
-The detailed procedure is specified in Algo. \ref{algo:sendTask}. The actions when one of them is null are covered in this Pseudocode.
-Please be noted that if the master instance only takes the role of management, the computation resource is wasted due to the fact that the management does not require too much computation. 
-Therefore, in the initialization state, the master will create a process to lunch a new instance aside. 
-This side executor will be a worker that processing tasks.
+To assign tasks to executors, the master fetches a Task and an IbisIdentifier from $runningJobMap$ and $idleWorkerQueue$.
+In general, If both Task and IbisIdentifier objects are not null, the Task object is sent to a node by the ID. Moreover, the Task and ID are stored in $runningNodes$. 
+The detailed procedure is specified in \hypertarget{Algo3}{Algo.} \ref{algo:sendTask}. The actions when one of them is null are shown in this Pseudocode.
+Note that if the master instance only takes the role of management, the computation resource is wasted because of the fact that the management does not require too much computation. 
+Therefore, in the initialization state, the master creates a process to launch a new instance aside. 
+This side executor will be a worker which also processing tasks.
 
-At last, the master has to be charged with is handling acknowledgment from workers. 
+At last, the master handles acknowledgment from workers. 
 The upcall method is employed to process the incoming messages for both master and workers. 
-In Algo. \ref{algo:upcall}, the instances should take different actions to handle the incoming massages according to their roles. 
+In \hypertarget{Algo4}{Algo.} \ref{algo:upcall}, the instances should take different actions to handle the incoming messages according to their roles. 
 The master receives a control message which indicates whether this is the first time to join in the pool. 
-Regardless of whether this is the first message of the worker, the  $IbisIdentifier$ of worker will be filled into the $idleWorkerQueue$, indicating that this executor is waiting for the task.
-However, if this worker is in $runningNodes$ while the control message shows it is new joining, the task in $runningNodes$ will be fetched and redone.
-Otherwise, according to the job ID, the master will update the job status to indicate that a task is done. 
-When all tasks of this job are accomplished, it will be popped out from  $runningJobMap$ and logged.
-Besides, in the previous section, it is mentioned that the $MiniNode$ should be dynamically changed based on the workload.
-Therefore, a recommended $MiniNode$ will be sent to the WebService at the end of each round by the master, which is defined at the computation layer and based on how resource manager scales the application is configured at the resource managing layer.
+Regardless of whether this is the first message of the worker,  worker  $IbisIdentifier$ is filled into the $idleWorkerQueue$, indicating that this executor is waiting for the task.
+However, if this worker is in $runningNodes$ while the control message shows it is a new worker, the task in $runningNodes$ will be fetched and redone.
+According to the job ID, the master updates the job status to indicate that a task is done. 
+When all tasks of this job are accomplished, the job will be popped out from  $runningJobMap$ and logged.
+In the previous section, we mentioned that the $MiniNode$ should be dynamically changed based on the workload.
+Therefore, a recommended $MiniNode$ is sent to the WebService at the end of each round by the master, which is defined at the computation layer and based on the resource manager scaling policy.
 Now, the $MiniNode$ of the resource manager is strictly the same as the recommended $MiniNode$ uploaded by the master.
 
-The workers act more straightforward than the master, that is a worker first sends an acknowledgment to the master, and wait for a task to be processed. 
-The main thread of worker constantly tries to fetch  $Task$ object from (BlockingQueue<Task>) $workerTaskQueue$ and processes it.
-The $Task$ Task object contains paths to sub-datasets, and the worker processes sub-datasets referred in task objects. Once all data are processed, it sends a control message to the master as acknowledgment.
-Workers also are enabled with Upcall function as it is explained in Algo. \ref{algo:upcall}. The $Task$ objects are read and loaded to $workerTaskQueue$.
+The workers are simpler than the master, a worker first sends an acknowledgment to the master, and waits for a task to be processed. 
+The main thread of the worker constantly tries to fetch the $Task$ object from (BlockingQueue<Task>) $workerTaskQueue$ and processes it.
+The $Task$ Task object contains paths to sub-datasets, and the worker processes sub-datasets referred to in task objects. Once all data are processed, the worker sends a control message to the master as acknowledgment.
+Workers also are enabled with Upcall function as it is shown in Algo. \ref{algo:upcall}. The $Task$ objects are read and loaded to $workerTaskQueue$.
+
+
+\subsection{Decision flow of scaling policy}
+
+In the previous section, we described what the system should do in different scenarios.
+There is still a lot of detailed implementations to make it more robust to the environment. 
+The pseudo-code showed in Algo. \ref{algo:scalingPolicy} describe the scaling policy in a formal way.
+
+To ensure the stabilization of the system, in lines 14-16, the scaling is delayed because, within a particular time, some jobs will be finished. 
+Besides, in practice, the scheduler will take much time(few seconds to 1 min) for backfilling. 
+To avoid incorrect action, when a pending job has the possibility to be backfilled, the scaling procedure waits for the scheduler to handle it.
+This checking mechanism is specified in the lines from 20-22.
+
+Note that, according to the limit of Xenon, the interface which is provided for querying the status of jobs does not contain the information about the starting time (for reservation in advance), and preference on GPU nodes.
+Therefore, this system is not configured to deal with the GPU requirement, job array, and reservation in advance (start at a certain time).
+
+\subsection{Scaling up and down}
+Besides, when we should scale our system, it is also important to define how to scale via communicating with SLURM.
+In the implementation, scaling up relies on the submission of one-node SLURM jobs, and scaling down is done by canceling those jobs.
+In these actions, the job’s time-related features are significant; here is $ RT $(real time) and $ TL $(time limit).
+
+A job that can be backfilled needs an appropriate time limit configuration.
+The $maxTime$, mentioned in \hypertarget{Algo1}{Algo.} \ref{algo:scalingPolicy}, refers to the time duration to the estimated time when  $J_{Top}$ starts, that is, the maximum time limit within which those one-node jobs should be configured. 
+A visual interpretation of $maxTime$ is displayed in Fig. \ref{3_methods/figures/maxTime.png}.
+
+
+\figuremacroW{3_methods/figures/maxTime.png}{Max time for backfilling}{$J_{4}$ is on top of the queue, according to the requirement for resources, it will start when $J_{2}$ finishes.}{1}
+By applying \hypertarget{Algo2}{Algo.} \ref{algo:maxTime}, the resource manager can ensure the jobs expected to be backfilled start immediately.
+
+
+Note that in SLURM, jobs can be configured with a $UNLIMITED$ time limit\footnote{\url{https://slurm.schedmd.com/scontrol.html}}. The sorting of $runningJobs$ is based on the left time of each job, which is calculated as $TL_{i}-RT_{i}$.
+Therefore, when a job has a $UNLIMITED$ time limit, this algorithm returns $UNLIMITED$.
+
+Besides of calculation of $maxTime$, time-out is added to scaling up, thereby preventing status changes on the cluster during the scaling.
+If other jobs take the resources, the time-out will be triggered as it cannot run at this particular time.
+However, in practice, sometimes submission still suffers from time-out even if there are idle resources, and the time limit is set correctly, due to the time taken by the backfill algorithm to complete its task.
+We introduce an initial time-out value of 5 seconds.
+Once a job submission triggers time-out, the scaling algorithm exits, and a time-out increment of 5 seconds is achieved.
+Then in the next round, the resource manager can still submit jobs to take idle resources while time-out is extended by 5 more seconds. 
+In the case that the resources are taken by others, in the next round, it will not ask for scaling up again.
+Also, once a job is submitted successfully, the time-out is reset to 5 seconds again.
+
+Scaling down requires sorting of  $calibrationJobs$. Given a number $ N $ of resources to release, the top $ N $ jobs that are estimated to be almost close to finish will be canceled.
+In practice, the calibration jobs depend not only on the left time but also on the job id assigned by the SLURM because their left time is all infinite for jobs with a $UMLIMITED$ time limit.
+It is possible to cancel any jobs with the same left time randomly, and in principle, this will not cause any harm to the system.
+However, taking into consideration the master-worker of the structure computation layer, among the jobs with the same left time, jobs with larger job-ids will be killed first.
+This will make the old jobs last longer, and the node functioning as master will not be canceled frequently.
 
 \subsection{Fault tolerance}
 
 For the computation layer, it is very important to achieve fault tolerance. 
 The dynamic scaling relies on the continuous creation and cancellation of jobs. 
-Besides, the program does not have the information about the time limit of SLURM jobs, therefore, when the time is out, those jobs will be terminated. 
+Besides, the program does not have information about the time limit of SLURM jobs, therefore, when the time is out, those jobs will be terminated. 
 In other words, the executors may be terminated by themselves without notice.
 
 In the SLURM documentation, the job cancellation will result in the signals sent to the programs for cleaning up. 
 According to the document\footnote{\url{https://slurm.schedmd.com/scancel.html}}, by default, a job will first send a SIGCONT to wake all steps up when it is canceled, which is followed by a SIGTERM sent to terminate programs. 
 In the case that, after a duration, some steps are not terminated, a SIGKILL will be sent.
 This will also happen when the time limit is reached. 
-Therefore, at the beginning of the setup of executor, and after the registration of Ibis instance, a signal handler is created to handle the SIGTERM and SIGKILL. 
-Once a SIGTERM or SIGKILL is received, the Ibis instance will be terminated, and the Ibis server will be notified. 
-Then, other instances will notice the left/dead of this node, thereby taking actions according to their roles.
+Therefore, at the beginning of the setup of executor, and after the registration of the Ibis instance, a signal handler is created to handle the SIGTERM and SIGKILL. 
+Once a SIGTERM or SIGKILL is received, the Ibis instance is terminated, and the Ibis server is notified. 
+Then, other instances will notice that the node was left or terminated, thereby taking actions according to their roles.
 
-To handle the left/dead of instances better, the event handler provided by IPL is utilized. 
-Once the Ibis server notices that an instance is dead or left, it will forward an event to all alive instances. 
-An instance is able to handle the events which indicate the left/dead of other instances by the implementation of the member functions  $died(IbisIdentifier \ corpse)$ and $left(IbisIdentifier \ leftIbis)$.
-Therefore, instances react the events implicitly apart from the main logic.
+To handle the termination of instances better, the event handler provided by IPL is utilized. 
+Once the Ibis server notices that an instance is left or was terminated, it will forward an event to all alive instances. 
+An instance is able to handle the events which indicate the termination of other instances by the implementation of the member functions  $died(IbisIdentifier \ corpse)$ and $left(IbisIdentifier \ leftIbis)$.
+Therefore, instances react to the events implicitly apart from the main logic.
 
-For the master, in the case that a work node failed, it is important to ensure the running task of which this executor is in charge will not be lost. 
+For the master, in the case that a work node fails, it is important to ensure the running task of which this executor is in charge will not be lost. 
 Here, the tasks should be processed at least once. 
 \figuremacroW{3_methods/figures/RedoMechamism.png}{ Master redoes task by failed node }{ Fetch task and load it back for redo}{1}
 As shown in Fig. \ref{3_methods/figures/RedoMechamism.png}, the master first fetches and removes the key-value pair which belongs to  $runningNodes$, and reloads the failed task. 
 Thus, the tasks assigned to failed nodes can be re-computed, and the fault tolerance for workers is guaranteed.
 
-The cases that the master fails are more complicated. On the one hand, the system requires a new master among executors, which may lead to a new round of election.
-On the other hand, the new master should restore the jobs’ statuses, and continue with the unfinished jobs from users.
-To fulfill the requirements, the MapDB\footnote{\url{https://jankotek.gitbooks.io/mapdb/content/}} is introduced into our system for lightweight variable persistence, which is an embedded Java database engine and collection framework.
-The $runningJobMap$ and $runningNodes$ are constructed as BTreeMap;; every time the change is committed, this update will be stored to off-heap storage. 
+The cases that the master fails are more complicated. On the one hand, the system requires a new master among executors, which may lead to a new round of the election.
+On the other hand, the new master should restore the jobs’ statuses, and continue with the unfinished jobs.
+To fulfill the requirements, the MapDB\footnote{\url{https://jankotek.gitbooks.io/mapdb/content/}} is introduced into our system for lightweight persistence, which is an embedded Java database engine and collection framework.
+The $runningJobMap$ and $runningNodes$ are constructed as BTreeMap; every time the change is committed, this update will be stored to off-heap storage. 
 Therefore,  a new master can read the caching file to restore these two variables, and then continue to process the unfinished jobs. 
 Besides, to make the system simpler, every time a new master restores  $runningNodes$, all running tasks will be reloaded to be processed again.
-This means, theoretically, the failed master will lead to the redoing of all running tasks.
+This means, theoretically, the failed master leads to the redoing of all running tasks.
 
 Another fault tolerance concept lies in the failure of the Ibis server. In this system, the Ibis server is assumed not to fail in any case. And in the future, it will be extended with fault tolerance at this level.
 
-\subsection{Backfill mechanism}\label{sec:backfill}
-The backfill scheduling plug-in is loaded by default in the SLURM cluster. 
-In the previous chapter, we have listed a few works related to backfill policy. 
-Therefore, currently, we only consider the dynamic provision of CPU resources by nodes via SLURM job submission/canceling.
-In this case, we designed the scaling policy of the resource manager to adapt to the backfill mechanism.
-
-As an optimization for basic priority queue, the backfilling scheduling will start lower priority jobs provided this will not  delay the expected start time of any higher priority jobs. 
-In other words, the backfilling mechanism under discussion refers to the conservative backfill because normal scientific clusters are trying to achieve more fairness among jobs for different users. 
-. A more intuitive interpretation can be seen in Fig. \ref{fig:backfillCas} and Fig. \ref{fig:backfillCase}.
-\begin{figure}
-    \centering
-    \begin{minipage}{.45\textwidth}
-      \centering
-      \includegraphics[width=1\linewidth]{3_methods/figures/backfilling1.png}
-      \caption[Backfill case 1]{{\small\textbf{Job 5 is backfilled} - Job 4 is estimated to start after the finishing of Job 2}}
-      \label{fig:backfillCas}
-    \end{minipage} 
-    \begin{minipage}{.45\textwidth}
-      \centering
-      \includegraphics[width=1\linewidth]{3_methods/figures/backfilling2.png}
-      \caption[Backfill case 2]{{\small\textbf{Job 7 is backfilled} - Running Job 7 will not impact Job 4 and Job 6 }}
-      \label{fig:backfillCase}
-    \end{minipage}
-\end{figure}
-According to the configuration of SLURM, the backfilling scheduling will be triggered when jobs are submitted/finished. 
-Besides, the scheduler will periodically check whether a job in the queue is available to run.
-The decisions for backfilling depend on the number of resources, and the time limits of the jobs. 
-
-As shown in  Fig. \ref{fig:backfillCas}, Job 4 is pending in the queue due to the lack of resource.
-When Job 5 is appended to the queue, the scheduler estimates that Job 5 can be finished before Job 4 gets adequate resources. 
-Therefore, the resource is allocated to Job 5.
-
-Another scenario is shown in Fig. \ref{fig:backfillCase}. Job 7 is added to the queue while it requires minimal resources, which will last when Job 4 is on the run by the estimation. 
-Besides, it still gets the assigned resource as it does not affect the jobs ahead of it(by the estimation of starting time and priority).
-
-The typical cases above show how the backfill mechanism works. 
-In practice, the scheduler considers pending jobs in priority orders, that is, once a pending job fulfills the requirements of the backfill condition, it can start immediately. 
-The resource manager  of our system employs an algorithm that is adaptive to and utilizes the backfilling mechanism to achieve high resource utilization.
-
-\subsection{Scaling policy}
-The scaling policy aims to put every idle resource in use, which relies on the continuous collection of the status of the cluster and the running or pending jobs. 
-The resource manager constantly fetches status information, and makes decisions based on scaling algorithm which acts according to the following figures:
-\begin{itemize}
-    \item $I$ - The number of idle nodes in a (partition of) cluster
-    \item $T$ - The total number of nodes in a (partition of) cluster
-    \item $R$ - The number of nodes reserved for our system
-    \item $J_{i}$ - The pending or running job with ID $i$  
-    \item $N_{i}$ - The number of required nodes of $J_{i}$
-    \item $TL_{i}$ - The time limit of $J_{i}$
-    \item $RT_{i}$ - The running time of $J_{i}$
-    \item $MiniNode$ - The minimum number of nodes reserved for our system
-\end{itemize}
-
-In the following, we will demonstrate three cases which explain what will happen under the given conditions.
-\subsubsection{Case 1: Take idle resources}
-First, considering that sometimes there is no job pending in the queue, there are $I$ nodes remaining idle.
-To increase the overall resource utilization, the resource manager will submit $I$ one-node jobs,thereby sharing the calibration application workload, which is the basic strategy for any auto-scaling system. 
-The distributed jobs will be accelerated, benefiting from more resources allocated.
-
-\subsubsection{Case 2: Give a way}
-To be friendly with other users, the system will release resources when it gets sufficient resources($R>=MiniNode$), and other jobs are pending.
-In the case that the extra part of resources exceeds the requirement of the first pending job, resources will be released by calibration application.
-In other words, the system is trying to let as many jobs as possible to run, provided that the giving out will not slow down the calibration application($R<MiniNode$).
-
-\textbf{Example:}
-
-At a time, the resource manager collected the information from the cluster and jobs.
-Let $T=21$,$MiniNode=10$. And there two jobs $J_{1}$ and $J_{2}$ are running, where $N_{1}=5$, $N_{2}=5$, $TL_{1}=20 min$ and $TL_{2}=15 min$.
-Assume that both $RT_{1}$ and $RT_{2}$ are equal to $1 min$. And there are two pending jobs $J_{3}$ and $J_{4}$ with  $N_{3}=10$, $N_{4}=6$, $TL_{3}=25 min$ and $TL_{4}=10 min$.
-Now, the system has taken the rest 11 nodes in the cluster, which means $R=11$.
-If $J_{2}$ is canceled somehow, then $I=5$. It is easy to find that if the resource manager shares one more node, plus five idle nodes, $J_{6}$ can start according to the backfilling policy. 
-After that, $R$ is still not less than $MiniNode$. A graphic illustration is displayed in \ref{3_methods/figures/backfillingCase2.jpg}, where the dotted line represents the number of $MiniNode$. 
-\figuremacroW{3_methods/figures/backfillingCase2.jpg}{Scaling policy Case 2}{$J_{2}$ canceled, the system gives way, $J_{4}$ is backfilled }{1}
-Please be noted that if the job on top of the queue, herein refers to  $J_{3}$, , is able to start once getting sufficient resources, the resource manager will give way for it. And in the implementation, the job on the head of the queue will be considered first, which is followed by the jobs behind.
-
-\subsubsection{Case 3: Not give way}
-
-The prerequisite of giving way for other jobs is that giving out resources would not break down the $MiniNode$, and the time limit is appropriate.
-In the case that there are no suitable jobs available to be backfilled, the resource manager will take those idle resources.
-It will first calculate the maximum time necessary to ensure that a job can be backfilled. If no job can be backfilled, the resource manager submits $I$ one-node jobs with $TL=maxTime-2mins$.
-The reason to subtract 2 minutes is to ensure that the jobs can be backfilled correctly as in practice.
-The backfilling scheduling takes a long time, especially when there are many jobs on the cluster(running and pending).
-
-\textbf{Example:}
-
-The setting and jobs are the same as the previous example in addition to the fact that the time limit of $J_{4}$ is changed to 25 minutes. 
-Therefore, when $J_{2}$ is canceled, $J_{4}$ is not able to be backfilled due to the fact that it is estimated to be too long according to the time limit.
-Thus, the resource manager submits jobs with $TL=17 mins$ to take 5 idle nodes. This scenario is illustrated in Fig. \ref{3_methods/figures/backfillingCase3.jpg}.
-
-\figuremacroW{3_methods/figures/backfillingCase3.jpg}{Scaling policy Case 3}{$J_{2}$ canceled, calibration application takes the idle resources because backfilling $J_{4}$ will delay $J_{3}$. Then calibration application takes them }{1}
-
-\subsubsection{Decision flow of scaling policy}
-
-Including the typical cases, there is still a lot of detailed implementations to make it more robust to the environment. The pseudo-code showed in Algo. \ref{algo:scalingPolicy} is able to represent the scaling policy.
-
-To ensure the stabilization of the system, in lines 14-16, the scaling is delayed due to the fact that, within a particular time, some jobs will be finished. 
-Besides, in practice, the scheduler will take much time(few seconds to 1 min) for backfilling. 
-To avoid incorrect action, when a pending job has the possibility to be backfilled, the scaling procedure should exit, and wait for the scheduler to handle it.
-This checking mechanism is specified in the lines from 20-22.
-
-Please be noted that, according to the limit of Xenon, the interface which is provided for querying the status of jobs does not contain the information about the starting time (for reservation in advance), and preference on GPU nodes.
-Therefore, this system is not configured to deal with the GPU requirement, job array, and reservation in advance (start at a certain time).
-
-\subsection{Scaling up and down}
-In the previous subsection, the scaling policy has been explained.
-In the implementation, scaling up relies on the submission of one-node jobs, and scaling down is done by canceling those jobs.
-In these actions, the job’s time-related features are significant; here is $ RT $ and $ TL $.
-
-A job that can be backfilled needs an appropriate time limit configuration.
-The $maxTime$, mentioned in Algo. \ref{algo:scalingPolicy}, refers to the time duration to the estimated time when  $J_{Top}$ starts, that is, the maximum time limit within which those one-node jobs should be configured. 
-A visual interpretation of $maxTime$ is displayed in Fig. \ref{3_methods/figures/maxTime.png}.
-
-
-\figuremacroW{3_methods/figures/maxTime.png}{Max time for backfilling}{$J_{4}$ is on top of the queue, according to the requirement for resources, it will start when $J_{2}$ finishes.}{1}
-By applying Algo. \ref{algo:maxTime}, the resource manager can ensure the jobs expected to be backfilled start immediately.
-
-
-Please be noted  that in SLURM, jobs can be configured with a $UNLIMITED$ time limit. The sorting of $runningJobs$ is based on the left time of each job, which is calculated as $TL_{i}-RT_{i}$.
-Therefore, when a job has a $UNLIMITED$ time limit, this algorithm returns $UNLIMITED$.
-
-Besides of calculation of $maxTime$, time-out is added to scaling up, thereby preventing status changes on the cluster during the scaling.
-If other jobs take resources, the time-out will be triggered as it cannot run in a particular time.
-However, in practice, sometimes submission still suffers from time-out even if there are idle resources, and the time limit is set correctly.
-This is because that backfilling takes a long time. A small optimization is applied to achieve the balance between too long fixed time-out and too small jobs which lead to blocking and unavailability of running respectively. A 5-seconds initial value of time-out is set. 
-Once a job submission triggers time-out, the scaling algorithm exits, and time-out increment of 5 seconds is achieved.
-Then in the next round, the resource manager can still submit jobs to take idle resources while time-out is extended. 
-In the case that the resources are taken by others, in the next round, it will not ask for scaling up again.
-Also, once a job is submitted successfully, the time-out is reset to 5 seconds again.
-
-
-Scaling down requires sorting of  $calibrationJobs$. Given a number(It must be legal) $ N $ of resources to release, the top $ N $ jobs that are estimated to be almost close to finish will be canceled.
-In practice, the calibration jobs depend not only on the left time, but also on the job id assigned by the SLURM because their left time is all infinite for jobs with a $UMLIMITED$ time limit.
-It is possible to cancel any jobs with the same left time randomly, and in principle, this will not cause any harm to the system.
-However, taking in consideration the master-worker structure computation layer, the jobs with larger job-id will be killed first among those with the same left time.
-This will make the old jobs last longer, and the node functioning as master will not be canceled frequently.
 
 % \section{Auto provision management}
 % The goal of auto-provision management is to reduce the number of idle computation resources by dynamic resource provision. In section \ref{section:intro.contex}, few features of LOAFR use cases are mentioned. 

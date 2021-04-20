@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{6}
+\begin{thebibliography}{4}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -37,16 +37,6 @@
 \providecommand\natexlab[1]{#1}
 \providecommand\showeprint[2][]{arXiv:#2}
 
-\bibitem[\protect\citeauthoryear{??}{Sta}{2020}]%
-        {Start2020}
- \bibinfo{year}{2020}\natexlab{}.
-\newblock \showarticletitle{{PROviding Computing solutions for ExaScale
-  ChallengeS}}.
-\newblock  \bibinfo{number}{777533} (\bibinfo{year}{2020}),
-  \bibinfo{pages}{1--163}.
-\newblock
-
-
 \bibitem[\protect\citeauthoryear{Bardsiri and Hashemi}{Bardsiri and
   Hashemi}{2014}]%
         {Bardsiri2014}
@@ -62,19 +52,6 @@
 \urldef\tempurl%
 \url{https://doi.org/10.5815/ijisa.2014.12.04}
 \showDOI{\tempurl}
-
-
-\bibitem[\protect\citeauthoryear{Becerra, Carrera, and Ayguad{\'e}}{Becerra
-  et~al\mbox{.}}{2009}]%
-        {becerra2009batch}
-\bibfield{author}{\bibinfo{person}{Yolanda Becerra}, \bibinfo{person}{David
-  Carrera}, {and} \bibinfo{person}{Eduard Ayguad{\'e}}.}
-  \bibinfo{year}{2009}\natexlab{}.
-\newblock \showarticletitle{Batch job profiling and adaptive profile
-  enforcement for virtualized environments}. In \bibinfo{booktitle}{\emph{2009
-  17th Euromicro International Conference on Parallel, Distributed and
-  Network-based Processing}}. IEEE, \bibinfo{pages}{414--418}.
-\newblock
 
 
 \bibitem[\protect\citeauthoryear{Jennings and Stadler}{Jennings and
@@ -111,20 +88,18 @@
 \showDOI{\tempurl}
 
 
-\bibitem[\protect\citeauthoryear{Spreeuw, Madougou, Haren, Weel, Belloum, and
-  Maassen}{Spreeuw et~al\mbox{.}}{2019}]%
-        {Spreeuw2019}
-\bibfield{author}{\bibinfo{person}{Hanno Spreeuw}, \bibinfo{person}{Souley
-  Madougou}, \bibinfo{person}{Ronald~Van Haren}, \bibinfo{person}{Berend Weel},
-  \bibinfo{person}{Adam Belloum}, {and} \bibinfo{person}{Jason Maassen}.}
-  \bibinfo{year}{2019}\natexlab{}.
-\newblock \showarticletitle{{Unlocking the LOFAR LTA}}.
-\newblock  (\bibinfo{year}{2019}), \bibinfo{pages}{467--470}.
+\bibitem[\protect\citeauthoryear{Wang, Von~Laszewski, Younge, He, Kunze, Tao,
+  and Fu}{Wang et~al\mbox{.}}{2010}]%
+        {wang2010cloud}
+\bibfield{author}{\bibinfo{person}{Lizhe Wang}, \bibinfo{person}{Gregor
+  Von~Laszewski}, \bibinfo{person}{Andrew Younge}, \bibinfo{person}{Xi He},
+  \bibinfo{person}{Marcel Kunze}, \bibinfo{person}{Jie Tao}, {and}
+  \bibinfo{person}{Cheng Fu}.} \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Cloud computing: a perspective study}.
+\newblock \bibinfo{journal}{\emph{New generation computing}}
+  \bibinfo{volume}{28}, \bibinfo{number}{2} (\bibinfo{year}{2010}),
+  \bibinfo{pages}{137--146}.
 \newblock
-\showISBNx{9781728124513}
-\urldef\tempurl%
-\url{https://doi.org/10.1109/eScience.2019.00061}
-\showDOI{\tempurl}
 
 
 \end{thebibliography}

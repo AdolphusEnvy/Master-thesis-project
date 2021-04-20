@@ -4,26 +4,26 @@
 \contentsline {figure}{\numberline {1.2}{\ignorespaces MPIUti}}{2}{figure.1.2}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Layers and components}}{12}{figure.3.1}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Distributed computing model}}{14}{figure.3.2}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Job fetcher forwards submitted jobs}}{16}{figure.3.3}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Master redoes task by failed node }}{19}{figure.3.4}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Backfill case 1}}{20}{figure.3.5}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Backfill case 2}}{20}{figure.3.6}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Scaling policy Case 2}}{22}{figure.3.7}%
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Scaling policy Case 3}}{23}{figure.3.8}%
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Max time for backfilling}}{24}{figure.3.9}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Backfill case 1}}{12}{figure.3.1}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Backfill case 2}}{12}{figure.3.2}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Scaling policy Case 2}}{14}{figure.3.3}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Scaling policy Case 3}}{15}{figure.3.4}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Performance of computation layer with different number of nodes}}{29}{figure.4.1}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Resource utilization on MPI mode ,non busy case}}{32}{figure.4.2}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Gantt chart of calibration jobs}}{32}{figure.4.3}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Resource utilization after introducing this system ,non busy case}}{32}{figure.4.4}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Gantt chart of calibration jobs}}{32}{figure.4.5}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Resource utilization on MPI mode ,busy case}}{34}{figure.4.6}%
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Gantt chart of calibration jobs}}{34}{figure.4.7}%
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Resource utilization after introducing this system ,busy case}}{35}{figure.4.8}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Gantt chart of calibration jobs}}{35}{figure.4.9}%
-\contentsline {figure}{\numberline {4.10}{\ignorespaces 7 days experiment with other users come and go}}{36}{figure.4.10}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Layers and components}}{18}{figure.4.1}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Distributed computing model}}{19}{figure.4.2}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Job fetcher forwards submitted jobs}}{21}{figure.4.3}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Max time for backfilling}}{23}{figure.4.4}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Master redoes task by failed node }}{25}{figure.4.5}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Performance of computation layer with different number of nodes}}{29}{figure.5.1}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Resource utilization on SLURM-only mode ,non busy case}}{32}{figure.5.2}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Gantt chart of calibration jobs}}{32}{figure.5.3}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Resource utilization after introducing this system ,non busy case}}{33}{figure.5.4}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Gantt chart of calibration jobs}}{33}{figure.5.5}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Resource utilization on SLURM-only mode, busy case}}{34}{figure.5.6}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Gantt chart of calibration jobs}}{34}{figure.5.7}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Resource utilization after introducing this system ,busy case}}{34}{figure.5.8}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Gantt chart of calibration jobs}}{34}{figure.5.9}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }

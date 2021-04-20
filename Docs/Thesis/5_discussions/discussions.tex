@@ -15,33 +15,37 @@
 
 
 %-----------------------------overview-----------------------------------
-In previous chapters we purposed a system, and performed experiments to evaluate how it contributes to the clusters. Besides these contents, there are still some points not covered in the previous chapters, but still vital for readers to understand our system.
+In previous chapters, we purposed a user-level resource management system and performed experiments to evaluate how it impacts the overall cluster resource management. 
+There are still some points not covered in the previous chapters, which can help readers to understand our system.
 
-This system originates from the idea to improve the calibration of LOFAR use case.
-As mentioned, there are already two existed approaches for image calibration. 
-The main reason for not following and extending the current MPI and Spark versions lies in to the cluster setting. 
-We can let our executors carry out the MPI program, and process data. 
-However, the MPI applications require much work to fulfill the requirements of fault tolerance features and dynamic setting. 
-Moreover, for Spark versions, it is certainly a way to go. 
-One possible solution may be Kubernetes plus docker container, so that it can support the dynamic scaling setting. 
+The system is driven by the idea to improve the calibration of the LOFAR use case.
+As mentioned, there are already two existed implementations for image calibration. 
+The main reason for not following and extending the current MPI and Spark versions lies in the cluster setting. 
+We can let our executors carry out the MPI program and process data. 
+However, the MPI application expects much work to fulfill the requirements of fault tolerance features and dynamic settings.
+With IPL and Xenon, the workload and difficulty for development are reduced significantly.  
+Moreover, it is possible to extend the current Spark version of the implementation. 
+One possible solution on top of Spark implementation may be Kubernetes plus docker container so that it can support the dynamic scaling setting. 
 Unfortunately, our test platform DAS-5, as a scientific cluster, does not support Docker containers, therefore, we cannot follow this path.
 
 There are a few points in the core algorithm that we would also like to discuss. 
-First, as mentioned in Chapter 3, this system does not support GPU features and job array of the SLURM. 
+First, as mentioned in Chapter 3, this system does not support GPU features and the job array of the SLURM. 
 The barriers originate from the middleware Xenon. For the GPU information, different clusters follow different ways to indicate which node carries the GPUs. 
 Since Xenon intends to provide uniformed interfaces adapted to multiple resource management tools, it cannot provide the cluster-specified information. 
-For job array, Xenon has a problem in extracting the information of the job array. 
-The job array can be configured with maximum running tasks, every time there will be a fixed number of tasks running. 
-Once a task is finished, a new task will be submitted to the queue. 
-Job array is a useful feature with a consistent workload and easy to predict. 
-If Xenon makes a solution to the issue, there will be a chance to make an adaption to the job array.
+For the job array, Xenon has a problem in extracting the information of the job array. 
+The job array can be configured with maximum running tasks, so there are a fixed number of tasks running at a specific time. 
+Once a task is finished, a new task is submitted to the queue. 
+Job array is a useful feature that ensures a consistent workload and highly predictable. 
+We are not fully capable to adapt to GPUs and job array until Xenon provides a solution to the issues.
  
-At the computation layer, the performance is affected by many parameters. 
-The batch size is the one that end-user can make choices, which determines the granularity of sub-tasks of calibration jobs. 
-The longer a task to execute, the more performance lost when the node fails, and task redone. 
-However, on the other hand, the communication overhead is reduced. 
+The performance of the computation layer is affected by many parameters. 
+For example, the batch size is the one that end-user can make choices, which determines the granularity of sub-tasks of calibration jobs. 
+The longer a task to execute, the more performance lost when the node fails or gets released by the system. 
+However, on the other hand, finer granularity leads to larger communication overhead. 
 Considering the dynamic change of cluster, an appropriate batch size should be determined based on the environment’s characteristics.
-Another critical parameter refers to the minimum number of nodes, which is determined by the mapping function and the real-time workload of calibration jobs. 
+Another critical parameter is the minimum number of nodes. 
+It is determined by the mapping function and the real-time workload of calibration jobs. 
+An example is shown in Eq. \eqref{con:mininode}.
 The mapping function can be modified to coordinate with other features and aspects.
  
 

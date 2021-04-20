@@ -30,26 +30,26 @@
 \section{Context} \label{section:intro.contex}
 The Low Frequency Array(LOFAR) telescope\footnote{\url{http://www.lofar.org/}} consists of 51 stations across Europe, and a typical LOFAR observation has the size of 100 TB which can be reduced to 16 TB after frequency averaging\cite{Spreeuw2019}.
 Collectively, there are over 5 PB of data to be stored each year\cite{Start2020}. 
-In the case that the data-collecting speed exceeds the processing capability, the data will be stored and archived first, and then processed at the request of the researchers on astronomy, physics and computer science. 
+In the case that the data-collecting speed exceeds the processing capability, the data will be stored and archived first, and then processed at the request of the researchers on astronomy, physics, and computer science. 
 The pipeline is divided into multiple steps, and in this thesis, we focus on the calibration which is available to reduce the noise of observation. 
-The Netherlands eScience Center\footnote{\url{https://www.esciencecenter.nl/}} has developed solutions for calibrating imaged observation collected by LOFAR. As one of the implementation for image calibration, Sky map is based on direction independent calibration. 
-SAGECaL is designed and implemented to calibrate the observation by a given sky map\cite{Kazemi2011}.
+The Netherlands eScience Center\footnote{\url{https://www.esciencecenter.nl/}} has developed solutions for calibrating imaged observation collected by LOFAR. 
+As one of the implementations for image calibration, SAGECaL is designed and implemented to calibrate the observation by a given sky map\cite{Kazemi2011}.
+Based on the sky map, SAGECaL is able to process data in parallel.
 
-Using the given pre-processed observation data, sky model and parameters for computation i.e. number of iterations, the input data can be processed in parallel, which is, however still a computational intensive application. 
-Currently, GPU, MPI\footnote{\url{https://github.com/nlesc-dirac/sagecal}}, and Spark\footnote{\url{https://github.com/nlesc-dirac/sagecal-on-spark}} versions are developed by eScience Center to speed up the data processing, which all have achieved high acceleration compared with the naive uni-node version.
-The GPU version provides great acceleration. 
-Though the computation capability of single node is expanded, it is still vertical scaling\ref{Vscaling}.
- On the other hand, MPI and Spark implementations can be considered as horizontal scaling\ref{Hscaling}, and the entire computational power increases via adding more resources. 
- Of course, these two horizontal scaling approaches are also able to add GPU to make worker nodes more powerful. 
- However, all these three solutions show their own limitations.
+Using the given pre-processed observation data, sky model, and parameters for computation i.e. number of iterations, the input data can be processed in parallel, which is, however still a computationally intensive application. 
+Currently, GPU-MPI\footnote{\url{https://github.com/nlesc-dirac/sagecal}}, and Spark\footnote{\url{https://github.com/nlesc-dirac/sagecal-on-spark}} versions of SAGECaL are developed by eScience Center to speed up the data processing, which all have achieved high acceleration compared with the naive version.
+The GPU provides great acceleration which expands the computation capability of single nodes. 
+However, it only scales by adding more power (CPU, RAM, GPU) to an existing machine (vertical scaling) where the growth of computation capability can not catch up with the growth of data.
+On the other hand, MPI and Spark implementations can scale by adding more machines to the resource pool (horizontal scaling), and the entire computational power increases via adding more resources. 
+Of course, we can also enable GPU features to MPI and Spark implementations to make worker nodes more powerful. 
+However, all these three solutions show their own limitations, in the following few paragraphs, we will outline these limitations. 
 
-LOAFR is one of the use cases of ASTRON\footnote{\url{https://www.astron.nl/}}.
-ASTRON builds its own clusters to meet the demands for data processing. 
+LOFAR is one of the applications of ASTRON\footnote{\url{https://www.astron.nl/}}and will likely run on ASTRON cluster which is designed to meet the demands of data processing applications. 
 Therefore, the resource utilization of its infrastructures is also essential. 
 The current implementations focus on the efficiency and utilization of assigned resources.  
-In theory, MPI and Spark solutions may lead to a potential waste of resources to the whole cluster, which ASTRON expects to minimize.
-Fig. \ref{fig:sparkUti} shows an example of computing resource waist of the spark implementation when the required computation resources decrease, Spark does not release idle resources(compute nodes). 
-On the other hand, a pure batch-job system may get easily into a special situation that a big job is waiting for the resource while idle resources cannot fulfill the requirement, an example is shown in Fig. \ref{fig:MPIUti}. 
+In theory, MPI and Spark solutions may lead to a potential waste of resources of the whole cluster.
+Fig. \ref{fig:sparkUti} shows an example of computing resource waste of the Spark implementation when the required computation resources decrease, Spark does not release idle resources(compute nodes). 
+On the other hand, a pure batch-job system may get easily in a situation that a big job is waiting for the resource while idle resources cannot fulfill the requirement, an example is shown in Fig. \ref{fig:MPIUti}. 
 The figure shows the possible resource waste represented by the blank area.
 
 
@@ -58,8 +58,8 @@ The figure shows the possible resource waste represented by the blank area.
     \centering
     \begin{minipage}{.5\textwidth}
       \centering
-      \includegraphics[width=0.9\linewidth]{1_introduction/figures/spark_NP.jpg}
-      \caption[SparkUti]{{\small\textbf{Resource utilization by Spark} - Spark occupies fixed resources}}
+      \includegraphics[width=0.9\linewidth]{1_introduction/figures/spark_NP.png}
+      \caption[SparkUti]{{\small\textbf{Resource utilization by Spark} - Spark occupies fixed resources, but it would not release the idle resources}}
       \label{fig:sparkUti}
     \end{minipage}%
     \begin{minipage}{.5\textwidth}
@@ -69,23 +69,23 @@ The figure shows the possible resource waste represented by the blank area.
       \label{fig:MPIUti}
     \end{minipage}
 \end{figure}
-The eScience center has developed Xenon\footnote{\url{https://xenon-middleware.github.io/xenon/}} a middleware which aims to provide uniformed and simple interface to enable application program to access both computation and storage resources.
-Using Xenon interfaces, it is possible to submit jobs, and access the status of jobs and the cluster without parsing the output of control commands from resource manager. 
-Besides, the computer system group of VU Amsterdam has developed Ibis\footnote{\url{https://www.cs.vu.nl/ibis/}} a platform  for efficient distributed computing. 
+In this work, we will develop a dynamic resource management system that is able to adapt the resource used by an application to the backfill scheduling mechanism. 
+To achieve this goal we will use Xenon\footnote{\url{https://xenon-middleware.github.io/xenon/}} a middleware which aims to provide a uniformed and simple interface to enable application program to access both computation and storage resources.
+Using Xenon interfaces, it is possible to submit jobs and access the status of jobs and the cluster without parsing the output of control commands from the resource manager. 
+We will also use Ibis\footnote{\url{https://www.cs.vu.nl/ibis/}} a platform for distributed computing developed by the computer system group of VU Amsterdam. 
 The Ibis Portability Layer, a sub-module of Ibis, enables computing entities to communicate with each other in a reliable cluster environment.
-
-In this work, we use both Xenon and Ibis to manage the jobs and resource at a high level.
 \section{Objective}
 
-The mian objective of this project, is to achieve higher resource utilization of the cluster. 
+The main objective of this project is to achieve higher resource utilization of the cluster. 
 At the same time, as a secondary objective, we aim to accelerate the calibration processing. 
 In theory, higher resource utilization may lead to more active computation resources involved. 
-To achieve these goals, we develop a system which reduces the time to wait for large distributed jobs.
+To achieve these goals, we develop a system that reduces the waiting time of large distributed jobs.
 \section{Research Question}
 The overall research question is how to design and implement a distributed resource management system which can reduce the waste of resources.
 
 \section{Research Method}
-In this research, firstly, we briefly describe the common used resource management techniques in HPC clusters and analyse the  MPI and SPARK implementations to identify bottleneck, or limitation.
-Secondly, we will implement a resource management system that is able to scale up and down the computing resources dynamically according to the application workloads,  and so that the whole cluster can achieve overall higher resource utilization. 
+In this research, firstly, we briefly describe the commonly used resource management techniques in HPC clusters and analyse the  MPI and Spark implementations to identify bottlenecks or limitations.
+Secondly, we will implement a resource management system that is able to scale up and down the computing resources dynamically according to the application workloads, so that the whole cluster can achieve overall higher resource utilization. 
 Finally, we will test the performance of the system by comparing the resource utilization before and after the employment of this system. 
-To validate our results, we will use the LOFAR calibration pipeline(SAGECaL), and the calibration jobs can be divided well due to the features of SAGECaL.
+To validate our results, we will use the LOFAR calibration pipeline(SAGECaL). 
+Calibration jobs independent and thus well-suited help validating our approach to application-centric resource management.

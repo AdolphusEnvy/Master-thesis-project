@@ -16,47 +16,47 @@
 
 % ----------------------- contents from here ------------------------
 % 
-In this chapter, we will list and analyze the results of a few experiments for performance testing. 
-The performance of this system includes the efficiency of scheduling algorithm which can be measured by resource utilization of the cluster, and the efficiency of parallel computation among executors, which can be measured by drawing its speedup line and comparing it with the theoretical speedup.
+In this chapter, we describe and analyze the results of a few experiments we have done to test the performance of the proposed system. 
+The performance of this system includes
+\begin{itemize}
+  \item The efficiency of scheduling algorithm - measured by resource utilization of the experiment cluster.
+  \item The efficiency of parallel computation among executors - measured by drawing its speedup line and comparing it with the theoretical speedup.
+\end{itemize}
 
-In the following sections, first, the use case for testing this system will be explained, which is a calibration use case on LOFAR data set.
-After that, we will show how a data processing job from users can be accelerated via adding up more computation resources.
-In the last part, we will test the overall performance of this system by comparing the resource utilization of cluster and the user waiting time between the cases to which we introduce this system or not.
-The experiments are all performed on the DAS-5 Leiden site which contains 24 computation nodes, and each has dual 8-core CPU with 2.4GHz speed and 64 GB memory.
+In the following sections, first, we describe the test scenarios we have used to evaluate the performance of the proposed system.
+After that, we show how data processing jobs can be accelerated by adding more computation resources.
+In the last part, we test the overall performance of the proposed system by comparing the resource utilization of the cluster and the user waiting time before and after we introduced the proposed user-level resource scheduling.
+All experiments are performed on the DAS-5 Leiden site which contains 24 computation nodes, and each has dual 8-core CPUs with 2.4GHz speed and 64 GB memory.
 
 %-----------------------------overview-----------------------------------
-\section{Sagecal calibration use case}
-To test this system, we setup our test case to process and calibrate the data collected by the LOFAR telescope. 
-As a radio astronomical calibration package\footnote{\url{http://sagecal.sourceforge.net/}}, SAGECal (Space Alternating Generalized Expectation Maximization Calibration) is fast, distributed, and GPU accelerated.
-It firstly solves the problem that most original solutions are direction-dependent, which means that the algorithm cannot be horizontally scaled.
-And then, it is extended by MPI for horizontal scaling, and GPU for vertical acceleration.
+\section{SAGECal calibration use case}
+To test the proposed user-level resource management system, we use the calibration data pipeline of the LOFAR to process and calibrate the data collected by the LOFAR telescope. 
+The latest radio astronomical calibration package in use is SAGECal (Space Alternating Generalized Expectation Maximization Calibration)\footnote{\url{http://sagecal.sourceforge.net/}}.
+It is fast and enabled with distribution and GPU acceleration features.
+In the test set, all worker nodes exploit SAGECal to process data in parallel by given configuration.
 
-First, the paths to the dataset, sky model, and output file should be given.
-There are plenty of parameters, and the most critical parameter that we should concern in this system for resource utilization is the number of threads.
-Normally, it will be configured as the number of (physical)cores in the node where the process is executed due to the fact that hyper-thread is not helpful for Sagecal.
-This number can be fetched from runtime parameters of JVM, and will return the logic core.
-After that, the number divided by 2 gives the number of physical cores, which makes it flexible to any environment.
-However, as mentioned before, there is a side executor alongside the master.
-To prevent Sagecal from exhausting all the computation ability, the number of threads is configured by subtracting 2 from the  core number.
+To run SAGECal we need to provide a number of parameters, we discuss here only the one that is relevant to our tests, namely the number of threads.
+The number of threads is equal to the physical cores, it is based on the logic core number collected from the JVM runtime.  
+However, as mentioned before in Section \ref{actionOfExcution}, there is a side executor alongside the master to maximize the resource utilization.
+To prevent the side executor from exhausting all the computation ability of the physical machine shared with the master executor, the number of threads for this worker executor is configured by subtracting 2 from the physical core number.
 
-The Sagecal is well-encapsulated, and a typical use on single node can be done by  the command line below.
+The SAGECal is well-encapsulated, and a typical use on a single node can be done by the command line below.
 
 \begin{verbatim}
   $ sagecal -d myData.MS -s mySkymodel -c myClustering -n no.of.threads \
             -t 60 -p mySolutions -e 3 -g 2 -l 10 -m 7 -w 1 -b 1
 \end{verbatim}
-Due to the fact that the Sagecal and related environment are packed in a Singularity container, an example for computing is shown below.
+SAGECal is deployed as singularity container, and can be run as follows:
 \begin{verbatim}
   $ singularity exec Sagecal.simg /opt/sagecal/bin/sagecal PARAMETERS
 \end{verbatim}
-Therefore, the workers execute task by creating new process and running command line above. 
-And the main thread of workers will be blocked until the task is finished.
+
+The way worker executors exploit SAGECal to process data is to create a new process inside the Java program and use system call to launch data processing.
+
 
 \section{Distributed parallel computation}
-
-For distributed parallel computation, the only and most important key metric lies in the acceleration by the increase of the computation resource.
-A test data set is created by duplicating a sample data set 150 times as sub-data sets. 
-For each sub-data set, the size is 67 MB, and it takes around 20 seconds for computation.
+A test data set is created by duplicating a sample data set 150 times and each of them is a sub-data set. 
+For each sub-data set, the size is 67 MB, and it takes about 20 seconds for computation.
 
 
 \begin{table}[]
@@ -69,82 +69,95 @@ For each sub-data set, the size is 67 MB, and it takes around 20 seconds for com
     Theoretical speed-up & 1         & 2.333     & 5.000   & 10.333  \\
     Efficiency rate   & 100\%     & 86.7\%    & 80.5\%  & 75.7\% 
     \end{tabular}
-    \caption{Time consumption by the different number of node}
+    \caption{Execution time by the different number of node}
     \label{tab:acc}
 \end{table}
 
-Therefore, we performed four experiments, and record the time spent on the same test by different number of nodes. The results are shown in Table.  \ref{tab:acc}. To make the demonstration  more intuitive, the speed-up is visualized, as shown in Fig.\ref{4_analysis&results/figures/acc.png}.
+We performed four experiments and recorded the execution time of each test in the function of the number of computing nodes.
+ The results are shown in Table.  \ref{tab:acc} and the speed-up is visualized in Fig.\ref{4_analysis&results/figures/acc.png}.
 \figuremacroW{4_analysis&results/figures/acc.png}{Performance of computation layer with different number of nodes}{The ideal speed-up should follow $y=\frac{8}{6}x-\frac{1}{3}$ instead of $y=x$}{1}
 
-In most cases, the theoretical speed-up should follow the linear one.
-However, it can be seen from the results that the speed-up is super-linear.
-The reason is that the baseline here is the case with one master, and one side executor.
-As mentioned before, the side executor uses the maximum number which subtracts two cores.
-Therefore, a new node shows 8/6 $\approx$ 1.33 times of computation power compared with the side executor.  
-The theoretical linear speed-up should follow the line  $y=\frac{8}{6}x-\frac{1}{3}$.
-Thus, we consider this line as the upper-bound of the theoretical speed-up.
+In most cases, the curve of theoretical speed-up should be lower than that of linear speedup.
+However, as it can be seen from Fig. \ref{4_analysis&results/figures/acc.png}, the speed-up is super-linear.
+This super-linear speed-up originates from the inequality of computation speed between the side executor and the following additional worker executors.
+When there is only one physical node assigned to the system, it only uses full minus 2 cores to process data.
+In an 8-core cluster, every new involved physical node contributes 8/6 $\approx$ 1.33 times of computation power to the system in theory.
+Therefore, an adjusted theoretical linear speed-up should follow the line  $y=\frac{8}{6}x-\frac{1}{3}$.
 
 After the adjustment of the theoretical linear speed-up, the problem of inefficiency is revealed.
 It can be seen from Table. \ref{tab:acc} that, by calculating the ratio between the real acceleration and theoretical speed-up, the efficiency keeps dropping with the increase of the resource introduced.
-According to the detailed performance metrics, the huge performance lost is due to the frequent connection build-up. 
+According to the detailed performance metrics, the performance loss comes from connection build-up. 
 In the implementation, the connection between ports is configured as an exclusive one-to-one connection.
-This means that every time the master sends a task to an idle worker, it has to disconnect to the previous worker’s port, and connect to a new worker.
-This overhead cost is around one second per time.
-According to Amdahl’s law, with the increase of acceleration, this part of the time cost becomes increasingly larger.
-In this experiment setting, for the master, it will take 150 seconds for constant connecting, sending, and disconnecting.
-Of course, if the entire job requires hours to be processed, the connection overhead will have fewer effects on the performance.
+This means that every time the master sends a task to an idle worker, it has to disconnect to the previous worker’s port and connect to a new worker.
+This overhead cost is around one second per connection.
+In the experiment setting, with 150 tasks, connection takes 150 seconds for constant connecting, sending, and disconnecting.
+Of course, For long executions (hours) this overhead can be negligible 
 Another optimization is to increase the batch size, which reduces the number of tasks and connections.
 
 
-Besides the computation performance, the fault tolerance features are also tested.
+Besides the computation performance, we also tested the fault tolerance feature.
 The crash of either workers or the master will not result in the crash of the entire system.
 The jobs will be finished eventually as long as not all the resources are released.
+The dynamic scaling of the system depends on the fault tolerance mechanism.
+The completion of jobs in a dynamic scaling setting can support the conclusion that the fault tolerance feature is enabled.
 
 \section{Resource utilization optimization}
-For the user of this system, resource utilization is the key metric as promised.
-And of course, the processing speed is vital as well. In this section, the overall performance of the system is tested.
-There are two key metrics that can be observed and considered for performance, as expressed below.
+For the user of this system, resource utilization is the key metric.
+In this section, the overall performance of the system is tested.
+We observe and consider two key metrics for performance.
 \begin{itemize}
     \item Nominal utilization: $A/T$; for cluster, it measures the resource utilization.
-    \item User waiting time: $FinishTime-SubmitTime$; for calibration users, it represents the time they should wait during the processing.
+    \item User waiting time: $FinishTime-SubmitTime$; for calibration users, it represents the time they should wait.
 \end{itemize}
-The nominal utilization is called \textit{Nominal} because it is not able to reflect the real utilization.
-For example, when there is no calibration job on the run, the system still tries to make the resources fully used.
+The nominal utilization is called \textit{Nominal} because it does not reflect the real utilization.
+For example, when there is no calibration job running, the system still tries to fully use the resource of the system.
 Besides the nominal utilization, the average resource usages of each kind of job are also monitored.
-This system should not be harmful to other users’ jobs, which means by deploying this system, the average resource usage of other jobs should not drop too much.
+One of the key features of the proposed use level resource management is not to be greedy and lead to being harmful to other users’ jobs, which means the average resource usage of other jobs should not drop too much.
 
 \subsection{Simulation settings}
-To test the system’s performance, and measure its efficiency, a reproducible simulation procedure is implemented.
-It should simulate the submission and process of different kinds of jobs under both the traditional environment and the environment where this system is introduced.
-The simulation should provide a fair comparison for this system, and the job submission should be repeatable in the case either with or without it.
+To test the system’s performance, and measure its efficiency, a program to simulate various loads on the cluster has been implemented.
+We wrote an application that simulates multi-user jobs submission.
 
-Therefore, a simulation program is created by loading a $submitList$, which lists the normal jobs and calibration jobs, and submits those jobs at a specific time with corresponding configuration. 
-Each line in the $submitList$ file contains the number of nodes, type of job(named \textit{normal/calibration}), time limit, real running time, submission time(from the start of the simulation), and parameters.
-The simulation has two modes, that is, MPI mode where all jobs are considered as a batch job submitted by SLURM interface; and the scale mode where the resource manager is on, and the calibration jobs will be submitted to the web service instead of SLURM, besides, the reset is the same.
-According to the submission time, the jobs are sent by the configuration. 
-And the simulation will end 30 minutes after the submission of the last job on the list.
+The application submits jobs including SAGECal jobs at various times to simulate the different load of the clusters.
+Each job submission specifies the time limit, real running time, submission time (from the
+start of the simulation), and other job-specific parameters.
+The application has two modes: SLURM-only mode where all jobs are considered as a batch job submitted by SLURM interface; and the scale mode where the resource manager is on, and the calibration jobs will be submitted to the web service instead of SLURM.
+The application will end 30 minutes after the last submission of the job. 
 
-The calibration jobs in MPI mode are not real processing, instead, they are the same as normal jobs, i.e., executing $sleep$ command with a certain time.
-With the configuration, the calibration jobs in MPI mode will take five nodes for 240 minutes, which is close to the real case that executes test data set by five nodes.
+The calibration jobs in SLURM-only mode are not real processing, instead, they are the same as normal jobs, i.e., executing the $sleep$ command.
+With the configuration, the calibration jobs in SLURM-only mode will take five nodes for 240 minutes, which is close to the real case where the test data is processed using five nodes.
 
-Besides, there is a monitor process which records the status of the cluster.
-The monitor keeps recording the resource occupation of different jobs (e.g., calibration, normal, others, and pending).
-The simulation program records the submission of the calibration jobs, and the calibration application itself logs the finishing of calibration jobs.
+Besides, there is a monitor process that records the status of the cluster.
+The monitor records the resource occupation of different jobs (e.g., calibration, normal, others, and pending).
+The simulation program logs the submission time of the calibration jobs, and the calibration application itself logs the finishing of calibration jobs.
 Thus, the waiting time can be calculated.
-In addition to these types of data, the calibration application will keep recording the $miniNodes$ and the number of left tasks by the time.
-
-\subsection{Non-busy case simulation }
+Additionally, the simulation application also records two internal values: the $miniNodes$ and $leftTasks$, which is the number of pending and running tasks.
+Monitoring these two values helps us to validate whether the scaling policy acts as expected.
+The mapping between $miniNodes$ and $leftTasks$ can be formulized as Eq. \eqref{con:mininode}.
+\begin{equation}
+    miniNodes=\left\{
+        \begin{aligned}
+        2 &      & {leftTasks      <      5}\\
+        4 &      & {5< leftTasks      <      20}\\
+        leftTasks/20+3 &      & {20< leftTasks      <      100}\\
+        10 &      & {else}\\
+        \end{aligned}
+        \right.\label{con:mininode}
+\end{equation}
+The mapping function is also part of the performance parameters where we can configure the proposed system how greedy on resources for the calibration use case.
+ 
+\subsection{Scenario 1: Not heavily loaded cluster }
 First, we consider the scenario of the Non-busy cluster. In this case, most of the time, the cluster is not fully utilized due to a lack of jobs.
-The simulation is described in \ref{submit:1}, which consists of 19 jobs, including four calibration jobs and 15 normal jobs as the submission of other users. 
-With the submitList, the simulation will take around 11 hours, and in the middle, there will be a lot of idle nodes for a few hours in MPI mode. 
-The resource utilization of different kinds of jobs is illustrated in \ref{fig:nonBusyMPIUTI}. The cluster has 24 working nodes, and during the experiments, the average of resource occupation is 19.79(nodes), which means the overall resource utilization rate is 82.47\%.
-In detail, the calibration jobs take 5.81 nodes on average, and normal users take 13.99 nodes.
+The synthetic workload is described in \ref{submit:1}, which consists of 19 jobs, including four calibration jobs and 15 other jobs. 
+With this workload, the test takes about  11 hours, and during the test, in the SLURM-only mode, the resource usage is not optimal in Fig. \ref{fig:nonBusyMPIUTI} this idle resource is shown by the white area under the horizontal line.
+The cluster has 24 working modes, and during the experiments, the average resource occupation is 19.79(nodes), which means the overall resource utilization rate is 82.47\%.
+The calibration jobs take 5.81 nodes on average, and other users take 13.99 nodes.
 \begin{figure}
     \centering
     \begin{minipage}{.48\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{4_analysis&results/figures/MPIUtiNonBusy.png}
-      \caption[Resource utilization on MPI mode ,non busy case]{{\small\textbf{Resource utilization on MPI mode ,non busy case} - The overall resource utilization is 82.47\%}}
+      \caption[Resource utilization on SLURM-only mode ,non busy case]{{\small\textbf{Resource utilization on SLURM-only mode ,non busy case} - The overall resource utilization is 82.47\%}}
       \label{fig:nonBusyMPIUTI}
     \end{minipage} 
     \begin{minipage}{.48\textwidth}
@@ -155,7 +168,7 @@ In detail, the calibration jobs take 5.81 nodes on average, and normal users tak
     \end{minipage}
 \end{figure}
 %\figuremacroW{4_analysis&results/figures/MPIUtiNonBusy.png}{Resource utilization on MPI mode ,non busy case}{The overall resource utilization is 82.47\%}{0.85}
-And in Fig. \ref{fig:nonBusyMPIgantt},the Gantt chart shows that the waiting duration approximates to the running time of each job due to the fact that all jobs almost start immediately.
+According to Fig. \ref{fig:nonBusyMPIgantt} and \ref{submit:1}, each job almost starts immediately after submitted due to the enough resources.
 %\figuremacroW{4_analysis&results/figures/MPIGanttNonBusy.png}{Gantt chart of calibration jobs}{ Benefit from adequate resources jobs start once they are submitted}{0.85}
 \begin{figure}
     \centering
@@ -172,40 +185,30 @@ And in Fig. \ref{fig:nonBusyMPIgantt},the Gantt chart shows that the waiting dur
       \label{fig:nonBusyScalegantt}
     \end{minipage}
 \end{figure}
-And then, we perform simulation with our system and the same submitList. From Fig. \ref{fig:nonBusyScaleUTI}, we can observe the space under the horizontal line, which indicates that the maximum resource is almost filled.
-The nominal overall resource utilization is  99.83\%.The average resource occupation of normal jobs is 13.97 nodes, and for calibration application, it increases to 9.99 nodes.
-Taking into consideration the waiting time, Fig. \ref{fig:nonBusyScalegantt} shows that automatic scaling policy calibration jobs can be accelerated based on to the extra resources.
-The waiting time is shortened from 240 minutes to 121 minutes. Besides the resource occupation, the change of $miniNodes$, and the number of left tasks is displayed in Fig. \ref{fig:nonBusyScaleUTI} as well.
-The relation between $miniNodes$ and $leftTasks$ can be formulized as Eq. \eqref{con:mininode}.
-\begin{equation}
-    miniNodes=\left\{
-        \begin{aligned}
-        2 &      & {leftTasks      <      5}\\
-        4 &      & {5< leftTasks      <      20}\\
-        leftTasks/20+3 &      & {20< leftTasks      <      100}\\
-        10 &      & {else}\\
-        \end{aligned}
-        \right.\label{con:mininode}
-\end{equation}
-Please be noted that the waiting time reduction of Job 45 is not due to the auto-scaling, instead, it is because of the uniformed job entrance and the job queue.
-The uniformed job queue follows the FCFS order, besides, with the resources for two jobs, the first job can take all the resources occupied by this system, while the second one has to wait. 
-Once the first job is done, the second job may be able to take double resources, and finished as expected.
+In the second part of the test, we switch to scale mode. Fig. \ref{fig:nonBusyScaleUTI} comparing to Fig. \ref{fig:nonBusyMPIUTI}, the white area under the horizontal line shows the idle resources has completely disappeared.
+The nominal overall resource utilization is  99.83\%. The average resource occupation of normal jobs is 13.97 nodes, and for calibration applications, it increases to 9.99 nodes.
+In terms of waiting time, Fig. \ref{fig:nonBusyScalegantt} shows that jobs cost less time to finish the same task.
+The waiting time is reduced from 240 minutes to 121 minutes.
 
-This simulation shows that their jobs can be accelerated for the users of the calibration application when the cluster is not busy.
-At the same time, other users will not have a bad effect.
+Note that the waiting time reduction of Job 45 is not completely due to the auto-scaling.
+As within the proposed system, the execution order follows First come, first served(FCFS).
+Job 45 takes 10 nodes which is double the number in SLURM mode. 
+Job 46 waits for Job 45 to finish instead of processing data at the same time.  
 
-\subsection{Busy case simulation}
+This simulation shows in a non-busy scenario, the system can help to accelerate jobs for every user.
 
-In a non-busy scenario, the overall resource utilization is not high in nature for normal batch cluster.
-This system initially aims to solve the problems of the limitations of the backfilling scheduling policy.
-Therefore, we should make a simulation with a large number of jobs to investigate how resource utilization can be improved on top of backfilling optimization. 
-The \ref{submit:2} describes the scenario of busy cluster. There will be 24 jobs submitted to the cluster/system which includes 8 calibration jobs and 16 normal jobs.
+\subsection{Scenario 2: Heavily loaded cluster}
+
+In a non-busy scenario, the overall resource utilization is not high.
+The proposed user-level resource management system initially aims to solve the problems of the limitations of the backfilling scheduling policy.
+Therefore, we create a heavy synthetic workload to study the resource utilization taking into account the backfill scheduling algorithm.
+There will be 24 jobs submitted to the cluster/system which includes 8 calibration jobs and 16 normal jobs in this busy scenario. The workload is listed in \ref{submit:2}.
 \begin{figure}
     \centering
     \begin{minipage}{.48\textwidth}
       \centering
       \includegraphics[width=1\linewidth]{4_analysis&results/figures/MPIUtiBusy.png}
-      \caption[Resource utilization on MPI mode ,busy case]{{\small\textbf{Resource utilization on MPI mode ,busy case} - The overall resource utilization is 90.57\%}}
+      \caption[Resource utilization on SLURM-only mode, busy case]{{\small\textbf{Resource utilization on SLURM-only mode, busy case} - The overall resource utilization is 90.57\%}}
       \label{fig:BusyMPIUTI}
     \end{minipage} 
     \begin{minipage}{.48\textwidth}
@@ -216,13 +219,12 @@ The \ref{submit:2} describes the scenario of busy cluster. There will be 24 jobs
     \end{minipage}
 \end{figure}
 It can be seen from Fig. \ref{fig:BusyMPIUTI}, the utilization can be measured, and on average 90.57\% of the resources are occupied.
-However, sometimes, part of the resources is idle due to the limit of scheduling policy, even though there are plenty of jobs on the pending.
-Fig. \ref{fig:BusyMPIgantt} shows that users have to wait longer for finishing the calibration jobs compared with the non-busy case.
+However, during the test, part of the resources is idle due to the limit of scheduling policy, even though there are plenty of jobs on the pending.
+Fig. \ref{fig:BusyMPIgantt} shows that that calibration jobs take a longer time to complete compared to scenario 1 (non-busy scenario).
 
 
 
-
-\begin{figure}
+\begin{figure}[h]
     \centering
     \begin{minipage}{.48\textwidth}
       \centering
@@ -237,35 +239,40 @@ Fig. \ref{fig:BusyMPIgantt} shows that users have to wait longer for finishing t
       \label{fig:BusyScalegantt}
     \end{minipage}
 \end{figure}
+
 \begin{table}[]
     \centering
     \begin{tabular}{ccccccccc}
     \hline
     Job ID         & 0      & 1      & 2      & 3      & 4      & 5      & 6      & 7     \\
     \hline
-    MPI mode(Min)   & 240.01 & 240.01 & 402.60 & 335.53 & 414.91 & 316.52 & 206.51 & 49.17 \\
+    SLURM-only mode(Min)   & 240.01 & 240.01 & 402.60 & 335.53 & 414.91 & 316.52 & 206.51 & 49.17 \\
     Scale mode(Min) & 118.15 & 251.99 & 191.73 & 328.04 & 332.95 & 281.57 & 206.51 & 49.18
     \end{tabular}
-    \caption{Waiting time of jobs comparison on MPI mode and Scale mode}
+    \caption{Waiting time of jobs comparison on SLURM-only mode and Scale mode}
     \label{tab:waittimecomparison}
 \end{table}
-After the introduction of this system, the overall nominal utilization climbs to 99.86\%. 
-In Fig. \ref{fig:BusyScaleUTI}, the curve of the left task maintains a high position, which means that even though there will be resource waste during the down-scaling stage, the resources allocated to calibration application are always fully used compared with the non-busy case.
-In this experiment, the average resource occupation by calibration jobs increases from 10.44 nodes to 11.88 nodes, and for other users, the average resource occupation is also increased from 11.30 nodes to 12.08 nodes.
-Thus, all users in the cluster benefit from this system.
+In the second part of the test we switched to scale mode, the overall nominal utilization climbs to 99.86\%. 
+In Fig. \ref{fig:BusyScaleUTI}, the pink curve represents the number of pending and running tasks.
+During the entire simulation, the curve stays at a high position, which indicates there is no wasted resource taken by the system.
+Therefore, the nominal resource utilization is close to the real resource utilization of physical computation capability.
 
-In detail, for the calibration applications, by comparing the waiting time of calibration jobs, the extra resources also benefit the calibration jobs.
-It can be observed from  Table. \ref{tab:waittimecomparison}that, except for the jobs of 0 and 1, they are affected by the queue strategy and the jobs of 6 and 7, which are not finished at the end of the simulation. 
+The calibration applications, by comparing the waiting time of calibration jobs, the extra resources also benefit the calibration jobs.
+It can be observed from  Table. \ref{tab:waittimecomparison} and Fig. \ref{fig:BusyScalegantt} that, except for the jobs of 0 and 1, they are affected by the queue strategy and the jobs of 6 and 7, which are not finished at the end of the simulation. 
 All other jobs, the jobs from 2-5, take less time after the introduction of this system.
 
-\subsection{Resource utilization testing on real environment}
-The simulations above are constructed manually.
-To evaluate the performance of resource management in real scenarios, a 7-day experiment was performed, which started at 0:00 AM 22ed of August and ends at 11.59 PM 28th of August in 2020.
-The experiment was performed in the DAS5-Leiden site with full 23 available working nodes. 
-The resource occupation is displayed in Fig. \ref{4_analysis&results/figures/7days.png}  
-\figuremacroW{4_analysis&results/figures/7days.png}{7 days experiment with other users come and go}{The overall resource utilization is 99.99\%}{1}
-Unfortunately, due to the summer session, only two other users submitted the jobs during the experiment time.
-The overall nominal resource utilization achieves 99.99\%.
+Besides the scenario experiments, we also performed a test in the production environment hoping to measure the resource utilization under different workload patterns.
+The experiment was performed in the DAS5-Leiden site with full 23 available working nodes in seven days. 
+But unfortunately, due to the lack of other users, the workload is lighter than our non-busy scenario. 
+Therefore, we were not able to test the performance in different environments.
+% \subsection{Resource utilization testing on real environment}
+% The simulations above are constructed manually.
+% To evaluate the performance of resource management in real scenarios, a 7-day experiment was performed, which started at 0:00 AM 22ed of August and ends at 11.59 PM 28th of August in 2020.
+% The experiment was performed in the DAS5-Leiden site with full 23 available working nodes. 
+% The resource occupation is displayed in Fig. \ref{4_analysis&results/figures/7days.png}  
+% \figuremacroW{4_analysis&results/figures/7days.png}{7 days experiment with other users come and go}{The overall resource utilization is 99.99\%}{1}
+% Unfortunately, due to the summer session, only two other users submitted the jobs during the experiment time.
+% The overall nominal resource utilization achieves 99.99\%.
 % ---------------------------------------------------------------------------
 % ----------------------- end of thesis sub-document ------------------------
 % ---------------------------------------------------------------------------

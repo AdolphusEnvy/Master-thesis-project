@@ -164,6 +164,7 @@ public class remoteCMD {
     private Time mostSoonTime() {
         return parseTime(queueStatus.stream().filter(x -> x.get("STATE").equals("RUNNING")).sorted(jobComp).limit(0).collect(Collectors.toList()).get(0));
     }
+
     private int makeWayBackfill(Time MaxTime, Map<String, String> PendingJobResource) throws IOException {
         // filter jobs possibly to run
         List<Map<String,String>> pendingJobs=queueStatus.stream().filter(x -> x.get("NODELIST(REASON)").contains("Priority")).filter(x-> parseTime(x).compareTo(MaxTime) < 0).collect(Collectors.toList());
